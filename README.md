@@ -1,4 +1,4 @@
-# finance-dashboard
+# stocks-dashboard
 ### Page 1: **Real-Time Market Overview**
 
 #### **1. Real-Time Stock Performance**
