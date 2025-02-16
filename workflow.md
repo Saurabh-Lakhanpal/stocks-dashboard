@@ -1,4 +1,6 @@
-### **Stocks Dashboard Workflow**
+## stocks-dashboard
+
+### Workflow Summary with API Calls
 
 ### **Step 1: Set Up Your Environment**
 1. **Install Python**:
@@ -160,7 +162,6 @@
          app.run(debug=True)
      ```
 ### **Step 7: Deploy on AWS**
-Deploying your Flask app on an AWS EC2 instance can seem daunting, but I'll guide you through each step in detail. Let's break it down:
 
 #### **1. Set Up an EC2 Instance**
 1. **Create an AWS Account**:
@@ -262,42 +263,43 @@ Deploying your Flask app on an AWS EC2 instance can seem daunting, but I'll guid
    flask run --host=0.0.0.0  # This makes the app accessible from any IP address
    ```
 
-#### **6. Configure EC2 for Web Access**
-1. **Install and Configure Gunicorn**:
-   - Gunicorn is a production-ready WSGI server for running Python applications. Install it:
-     ```bash
-     pip install gunicorn
-     ```
-   - Start Gunicorn:
-     ```bash
-     gunicorn -w 4 -b 0.0.0.0:8000 app:app  # Adjust the number of workers (-w) as needed
-     ```
+### **Step 6: Configure EC2 for Web Access**
 
-2. **Set Up Nginx (Optional)**:
-   - For better performance and security, you can use Nginx as a reverse proxy. Install Nginx:
-     ```bash
-     sudo yum install nginx -y  # For Amazon Linux
-     sudo apt-get install nginx -y  # For Ubuntu
-     ```
-   - Configure Nginx to proxy requests to Gunicorn. Edit the Nginx configuration file (`/etc/nginx/nginx.conf` or `/etc/nginx/sites-available/default` on Ubuntu):
-     ```nginx
-     server {
-         listen 80;
-         server_name your-domain.com;
+#### **1. Install and Configure Gunicorn**
+- Gunicorn is a production-ready WSGI server for running Python applications. Install it:
+  ```bash
+  pip install gunicorn
+  ```
+- Start Gunicorn:
+  ```bash
+  gunicorn -w 4 -b 0.0.0.0:8000 app:app  # Adjust the number of workers (-w) as needed
+  ```
 
-         location / {
-             proxy_pass http://127.0.0.1:8000;
-             proxy_set_header Host $host;
-             proxy_set_header X-Real-IP $remote_addr;
-             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-             proxy_set_header X-Forwarded-Proto $scheme;
-         }
-     }
-     ```
-   - Restart Nginx:
-     ```bash
-     sudo service nginx restart
-     ```
+#### **2. Set Up Nginx (Optional)**
+- For better performance and security, you can use Nginx as a reverse proxy. Install Nginx:
+  ```bash
+  sudo yum install nginx -y  # For Amazon Linux
+  sudo apt-get install nginx -y  # For Ubuntu
+  ```
+- Configure Nginx to proxy requests to Gunicorn. Edit the Nginx configuration file (`/etc/nginx/nginx.conf` or `/etc/nginx/sites-available/default` on Ubuntu):
+  ```nginx
+  server {
+      listen 80;
+      server_name your-domain.com;
 
-### **Final Check**
+      location / {
+          proxy_pass http://127.0.0.1:8000;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+      }
+  }
+  ```
+- Restart Nginx:
+  ```bash
+  sudo service nginx restart
+  ```
+
+### Final Check
 - Open your browser and navigate to your EC2 instance's public DNS. You should see your Stocks Dashboard up and running!
