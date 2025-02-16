@@ -294,3 +294,8 @@ Yahoo Finance API documentation that will help you with your plan:
 2. [Yahoo Developer Network - APIs](https://developer.yahoo.com/api/): This page includes documentation for various Yahoo APIs, including the Yahoo Finance API.
 3. [YH Finance - RapidAPI](https://rapidapi.com/sparior/api/yahoo-finance15): This page offers detailed information on how to use the Yahoo Finance API through RapidAPI.
 
+Here are the links to sign up for the API keys:
+1. [Yahoo Finance API](https://www.yahoofinanceapi.com/)
+2. [StockGeist API](https://stockgeist.ai/)
+3. [Eden AI Sentiment Analysis API](https://www.edenai.co/)
+4. [Alpaca News API](https://alpaca.markets/)
