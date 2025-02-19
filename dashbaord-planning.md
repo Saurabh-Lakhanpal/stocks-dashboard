@@ -291,11 +291,15 @@
   }
   ```
 
-APIs:
+Sources:
 1. [Google Finance API](https://algotrading101.com/learn/google-finance-api-guide/)
 2. [Yahoo Finance API Guide - AlgoTrading101](https://algotrading101.com/learn/yahoo-finance-api-guide/): This guide provides a comprehensive overview of the Yahoo Finance API, including how to access historical and real-time data.
 3. [Yahoo Developer Network - APIs](https://developer.yahoo.com/api/): This page includes documentation for various Yahoo APIs, including the Yahoo Finance API.
 4. [YH Finance - RapidAPI](https://rapidapi.com/sparior/api/yahoo-finance15): This page offers detailed information on how to use the Yahoo Finance API through RapidAPI.
+5. [Daily Historical Stock Prices (1970 - 2018)](https://www.kaggle.com/datasets/ehallmar/daily-historical-stock-prices-1970-2018): This is a 2GB csv for historical analysis.
+6. [Historical price data of the stocks of Apple, Adobe, Amazon, Bitcoin, Facebook, Gold, 13 weeks treasury bill, Microsoft, Nvidia, Qualcomm, Tesla and Texas instruments from 31 of May of 2019 to 1 of July of 2021.](https://www.kaggle.com/datasets/prodzar/stocks-historical-price-data)
+7. [S&P 500 stock data](https://www.kaggle.com/datasets/camnugent/sandp500)
+8. [Daily Historical Stock Prices (1970 - 2018)](https://www.kaggle.com/datasets/ehallmar/daily-historical-stock-prices-1970-2018)
 
 Here are the links to sign up for the API keys:
 1. [Yahoo Finance API](https://www.yahoofinanceapi.com/)
