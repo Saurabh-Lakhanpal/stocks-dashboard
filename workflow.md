@@ -4,31 +4,7 @@
 
 ### Workflow Summary with API Calls
 
-### **Step 1: Set Up Your Environment**
-1. **Install Python**:
-   - Download and install Python from [python.org](https://www.python.org/). Make sure to add Python to your PATH during installation.
-
-2. **Set Up a Virtual Environment**:
-   - Open your terminal or command prompt and create a new directory for your project:
-     ```bash
-     mkdir stocks_dashboard
-     cd stocks_dashboard
-     ```
-   - Create a virtual environment:
-     ```bash
-     python -m venv venv
-     ```
-   - Activate the virtual environment:
-     - On Windows:
-       ```bash
-       venv\Scripts\activate
-       ```
-     - On macOS/Linux:
-       ```bash
-       source venv/bin/activate
-       ```
-
-3. **Install Required Libraries**:
+### **Step 1: Install Required Libraries**:
    - Install the necessary Python libraries using pip:
      ```bash
      pip install flask pandas requests plotly sqlalchemy psycopg2-binary
@@ -36,133 +12,22 @@
 
 ### **Step 2: Choose Your Dataset**
 1. **Get an API Key**:
-   - Sign up for the required API keys from [Yahoo Finance](https://www.yahoofinanceapi.com/) and other third-party APIs like StockGeist, Eden AI, and Alpaca.
+   - Sign up for the required API keys from [YYH Finance API](https://financeapi.net/tutorial) and other third-party APIs like StockGeist, Eden AI, and Alpaca.
 
 ### **Step 3: Create the ETL Script (Extract, Transform, Load)**
 1. **Extract Data**:
-   - Create a Python script to fetch data from the Yahoo Finance API. Save it as `etl.py`:
-     ```python
-     import requests
-     import pandas as pd
-     from sqlalchemy import create_engine
-
-     API_KEY = 'YOUR_API_KEY'
-     symbol = 'AAPL'
-     url = f'https://yfapi.net/v8/finance/chart/{symbol}?interval=1m&range=1d'
-
-     headers = {'x-api-key': API_KEY}
-     response = requests.get(url, headers=headers)
-     data = response.json()
-     ```
-
+   - Create a Python script to fetch data from the Yahoo Finance API. 
 2. **Transform Data**:
-   - Clean and organize the data using Pandas:
-     ```python
-     # Transform the data
-     df = pd.DataFrame.from_dict(data['chart']['result'][0]['indicators']['quote'][0])
-     df['timestamp'] = pd.to_datetime(data['chart']['result'][0]['timestamp'], unit='s')
-     df.set_index('timestamp', inplace=True)
-     ```
-
+   - Clean and organize the data using Pandas
 3. **Load Data**:
-   - Save the data into a PostgreSQL database. First, make sure you have PostgreSQL installed and create a database named `stock_data`:
-     ```python
-     # Load data into PostgreSQL
-     engine = create_engine('postgresql://username:password@localhost/stock_data')
-     df.to_sql(symbol, engine, if_exists='replace')
-     ```
-
+   - Save the data into a PostgreSQL database. First, make sure you have PostgreSQL installed and create a database.
 ### **Step 4: Create the Flask Backend**
 1. **Set Up Flask**:
-   - Create a new Python file named `app.py` for your Flask backend:
-     ```python
-     from flask import Flask, jsonify
-     from sqlalchemy import create_engine
-     import pandas as pd
-
-     app = Flask(__name__)
-     engine = create_engine('postgresql://username:password@localhost/stock_data')
-
-     @app.route('/data/<symbol>')
-     def get_data(symbol):
-         query = f'SELECT * FROM {symbol}'
-         df = pd.read_sql(query, engine)
-         return jsonify(df.to_dict(orient='records'))
-
-     if __name__ == '__main__':
-         app.run(debug=True)
-     ```
-
+   - Create a new Python file `app.py` for Flask backend.
 ### **Step 5: Create the Front-End**
 1. **Set Up HTML and Bootstrap**:
-   - Create an HTML file named `index.html` in a directory called `templates`:
-     ```html
-     <!DOCTYPE html>
-     <html>
-     <head>
-         <title>Stocks Dashboard</title>
-         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-     </head>
-     <body>
-         <div class="container">
-             <h1>Stocks Dashboard</h1>
-             <div id="real-time-stock-performance"></div>
-             <div id="market-sentiment-analysis"></div>
-             <div id="volume-analysis"></div>
-         </div>
-
-         <script>
-             // Real-Time Stock Performance
-             fetch('/data/AAPL')
-                 .then(response => response.json())
-                 .then(data => {
-                     const timestamps = data.map(row => row.timestamp);
-                     const prices = data.map(row => row.close);
-
-                     const trace = {
-                         x: timestamps,
-                         y: prices,
-                         type: 'scatter'
-                     };
-
-                     const layout = {
-                         title: 'AAPL Real-Time Stock Performance',
-                         xaxis: { title: 'Time' },
-                         yaxis: { title: 'Price' }
-                     };
-
-                     Plotly.newPlot('real-time-stock-performance', [trace], layout);
-                 });
-         </script>
-     </body>
-     </html>
-     ```
-
+   - Create an HTML file 
 ### **Step 6: Integrate Front-End and Back-End**
-1. **Update Flask App to Serve HTML**:
-   - Modify `app.py` to serve the HTML file:
-     ```python
-     from flask import Flask, render_template, jsonify
-     from sqlalchemy import create_engine
-     import pandas as pd
-
-     app = Flask(__name__)
-     engine = create_engine('postgresql://username:password@localhost/stock_data')
-
-     @app.route('/')
-     def index():
-         return render_template('index.html')
-
-     @app.route('/data/<symbol>')
-     def get_data(symbol):
-         query = f'SELECT * FROM {symbol}'
-         df = pd.read_sql(query, engine)
-         return jsonify(df.to_dict(orient='records'))
-
-     if __name__ == '__main__':
-         app.run(debug=True)
-     ```
 ### **Step 7: Deploy on AWS**
 
 #### **1. Set Up an EC2 Instance**
