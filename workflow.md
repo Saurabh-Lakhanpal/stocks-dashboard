@@ -1,5 +1,5 @@
 ## stocks-dashboard-workflow
-![2025-02-19 08_14_56-Untitled – FigJam and 1 more page - Personal - Microsoft​ Edge](https://github.com/user-attachments/assets/77d362d2-fee6-4220-9a39-a6148586e25d)
+![image](https://github.com/user-attachments/assets/0abd04e2-7742-4e29-b18c-02afdfd59ffb)
 ### Workflow Summary with API Calls
 
 ### **Step 1: Install Required Libraries**:
