@@ -1,6 +1,6 @@
 # stocks-dashboard
 
-![Portfolio](https://github.com/user-attachments/assets/042b31c4-69a5-4f5e-b0fc-e264482c224b)
+![Portfolio](https://github.com/user-attachments/assets/eebb92a3-9476-433f-8325-71ffcbd2911e)
 
 ### Page 1: **Real-Time Market Overview**
 
