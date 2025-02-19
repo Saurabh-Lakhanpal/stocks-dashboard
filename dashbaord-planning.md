@@ -1,4 +1,7 @@
 # stocks-dashboard
+
+![Portfolio](https://github.com/user-attachments/assets/d2b7fe0c-52f4-4352-81da-a7681c3c87b0)
+
 ### Page 1: **Real-Time Market Overview**
 
 #### **1. Real-Time Stock Performance**
