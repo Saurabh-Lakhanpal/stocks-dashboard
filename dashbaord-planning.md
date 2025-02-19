@@ -288,11 +288,11 @@
   }
   ```
 
-Yahoo Finance API documentation that will help you with your plan:
-
-1. [Yahoo Finance API Guide - AlgoTrading101](https://algotrading101.com/learn/yahoo-finance-api-guide/): This guide provides a comprehensive overview of the Yahoo Finance API, including how to access historical and real-time data.
-2. [Yahoo Developer Network - APIs](https://developer.yahoo.com/api/): This page includes documentation for various Yahoo APIs, including the Yahoo Finance API.
-3. [YH Finance - RapidAPI](https://rapidapi.com/sparior/api/yahoo-finance15): This page offers detailed information on how to use the Yahoo Finance API through RapidAPI.
+APIs:
+1. [Google Finance API](https://algotrading101.com/learn/google-finance-api-guide/)
+2. [Yahoo Finance API Guide - AlgoTrading101](https://algotrading101.com/learn/yahoo-finance-api-guide/): This guide provides a comprehensive overview of the Yahoo Finance API, including how to access historical and real-time data.
+3. [Yahoo Developer Network - APIs](https://developer.yahoo.com/api/): This page includes documentation for various Yahoo APIs, including the Yahoo Finance API.
+4. [YH Finance - RapidAPI](https://rapidapi.com/sparior/api/yahoo-finance15): This page offers detailed information on how to use the Yahoo Finance API through RapidAPI.
 
 Here are the links to sign up for the API keys:
 1. [Yahoo Finance API](https://www.yahoofinanceapi.com/)
