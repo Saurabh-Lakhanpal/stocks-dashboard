@@ -182,40 +182,39 @@
         ```
           - Make a POST Request with JavaScript
                - JavaScript Code:**
-   ```html
-   <!DOCTYPE html>
-   <html>
-   <head>
-       <title>Trigger Jupyter Notebook</title>
-       <script>
-           function runNotebook() {
-               fetch('http://your-ec2-public-dns:5000/run-notebook', {
-                   method: 'POST',
-                   headers: {
-                       'Content-Type': 'application/json'
-                   }
-               })
-               .then(response => response.json())
-               .then(data => {
-                   if (data.status === 'success') {
-                       alert('Notebook executed successfully!');
-                   } else {
-                       alert('Error executing notebook: ' + data.message);
-                   }
-               })
-               .catch(error => console.error('Error:', error));
-           }
-       </script>
-   </head>
-   <body>
-       <button onclick="runNotebook()">Run Notebook</button>
-   </body>
-   </html>
-   ```
-Notes
-1. Security Considerations:
-   - Ensure your API endpoint is secured to prevent unauthorized access.
-   - You may want to use authentication and restrict access to the endpoint.
-2. AWS Security Group:
-   - Make sure your AWS Security Group allows inbound traffic on port 5000 (or the port you choose for your Flask app).
-By following these steps, you can successfully trigger the execution of a Jupyter notebook on an AWS EC2 server using a JavaScript POST request. If you have any further questions or need additional assistance, feel free to ask!
+             ```html
+             <!DOCTYPE html>
+             <html>
+             <head>
+                 <title>Trigger Jupyter Notebook</title>
+                 <script>
+                     function runNotebook() {
+                         fetch('http://your-ec2-public-dns:5000/run-notebook', {
+                             method: 'POST',
+                             headers: {
+                                 'Content-Type': 'application/json'
+                             }
+                         })
+                         .then(response => response.json())
+                         .then(data => {
+                             if (data.status === 'success') {
+                                 alert('Notebook executed successfully!');
+                             } else {
+                                 alert('Error executing notebook: ' + data.message);
+                             }
+                         })
+                         .catch(error => console.error('Error:', error));
+                     }
+                 </script>
+             </head>
+             <body>
+                 <button onclick="runNotebook()">Run Notebook</button>
+             </body>
+             </html>
+             ```
+          - Notes
+               - Security Considerations:
+                    - Ensure your API endpoint is secured to prevent unauthorized access.
+                    - You may want to use authentication and restrict access to the endpoint.
+               - AWS Security Group:
+                    - Make sure your AWS Security Group allows inbound traffic on port 5000 (or the port you choose for your Flask app).
