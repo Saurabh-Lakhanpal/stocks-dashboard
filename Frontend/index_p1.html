@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stocks Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Stocks Dashboard</h1>
+            <div class="score">
+                <div class="score-meter">
+                    <div class="score-value">485</div>
+                    <div class="score-label">Fair</div>
+                </div>
+                <div class="score-range">
+                    <span>300</span>
+                    <span>850</span>
+                </div>
+            </div>
+            <div class="last-updated">Last Updated - 2025-02-19 06:44 am</div>
+            <div class="selectors">
+                <div class="selector">
+                    <label for="ticker-selector">Ticker Selector</label>
+                    <select id="ticker-selector">
+                        <option value="APPL">APPL</option>
+                    </select>
+                </div>
+                <div class="selector">
+                    <label for="range-selector">Range Selector</label>
+                    <select id="range-selector">
+                        <option value="5days">5Days</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="navigation">
+                <button class="nav-button">Ticker Overview</button>
+                <button class="nav-button">Historical Data</button>
+                <button class="nav-button">Health & Ratios</button>
+            </div>
+            <div class="portfolio">
+                <div class="portfolio-item">
+                    <div class="portfolio-header">
+                        <img src="apple-logo.png" alt="Apple Inc.">
+                        <span>AAPL +0.66%</span>
+                    </div>
+                    <div class="portfolio-body">
+                        <span>Portfolio</span>
+                        <span>15,215.70</span>
+                    </div>
+                </div>
+                <!-- Repeat portfolio-item for other cards -->
+            </div>
+            <div class="stock-details">
+                <div class="stock-header">
+                    <h2>APPL</h2>
+                    <span class="stock-change">+1.66%</span>
+                </div>
+                <div class="stock-price">
+                    <h3>US $50.25</h3>
+                    <p>Oct 25, 5:26:38PM UTC-4</p>
+                </div>
+                <div class="layer-selector">
+                    <label for="layer-selector">Layer Selector</label>
+                    <select id="layer-selector">
+                        <!-- Options here -->
+                    </select>
+                </div>
+                <div class="chart">
+                    <div class="chart-intervals">
+                        <button class="interval-button">1d</button>
+                        <button class="interval-button">5d</button>
+                        <button class="interval-button">1m</button>
+                        <button class="interval-button active">6m</button>
+                        <button class="interval-button">1y</button>
+                        <button class="interval-button">5y</button>
+                        <button class="interval-button">Max</button>
+                    </div>
+                    <!-- Chart will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

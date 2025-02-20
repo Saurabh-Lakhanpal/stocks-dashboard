@@ -1,0 +1,154 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.main-content {
+    width: 80%;
+    padding: 20px;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-around;
+    background-color: #00aaff;
+    padding: 10px 0;
+    color: #fff;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    background-color: #008fd4;
+}
+
+.portfolio {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.portfolio-item {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 10px;
+    text-align: center;
+}
+
+.portfolio-header img {
+    width: 40px;
+    height: 40px;
+}
+
+.portfolio-header span {
+    margin-left: 10px;
+    color: green;
+}
+
+.portfolio-body span:first-child {
+    font-size: 14px;
+    color: #888;
+}
+
+.portfolio-body span:last-child {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.stock-details {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.stock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stock-header h2 {
+    margin: 0;
+}
+
+.stock-change {
+    color: green;
+    font-size: 18px;
+}
+
+.stock-price h3 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.stock-price p {
+    font-size: 14px;
+    color: #888;
+}
+
+.layer-selector {
+    margin-top: 20px;
+}
+
+.chart {
+    width: 100%;
+    height: 300px;
+    background-color: #e0f7fa;
+    margin-top: 20px;
+}
+
+.chart-intervals {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.interval-button {
+    background: #00aaff;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.interval-button.active,
+.interval-button:hover {
+    background: #008fd4;
+}
+
+.selector {
+    margin-top: 20px;
+}
+
+.selector label {
+    font-size: 14px;
+    color: #333;
+}
+
+.selector select {
+    padding: 5px;
+    font-size: 14px;
+}
