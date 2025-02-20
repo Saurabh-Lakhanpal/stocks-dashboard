@@ -300,9 +300,3 @@ Sources:
 6. [Historical price data of the stocks of Apple, Adobe, Amazon, Bitcoin, Facebook, Gold, 13 weeks treasury bill, Microsoft, Nvidia, Qualcomm, Tesla and Texas instruments from 31 of May of 2019 to 1 of July of 2021.](https://www.kaggle.com/datasets/prodzar/stocks-historical-price-data)
 7. [S&P 500 stock data](https://www.kaggle.com/datasets/camnugent/sandp500)
 8. [Daily Historical Stock Prices (1970 - 2018)](https://www.kaggle.com/datasets/ehallmar/daily-historical-stock-prices-1970-2018)
-
-Here are the links to sign up for the API keys:
-1. [Yahoo Finance API](https://www.yahoofinanceapi.com/)
-2. [StockGeist API](https://stockgeist.ai/)
-3. [Eden AI Sentiment Analysis API](https://www.edenai.co/)
-4. [Alpaca News API](https://alpaca.markets/)
