@@ -1,6 +1,5 @@
 ## stocks-dashboard-workflow
 ![image](https://github.com/user-attachments/assets/0abd04e2-7742-4e29-b18c-02afdfd59ffb)
-### Workflow Summary with API Calls
 
 1. Install the necessary libraries using pip:
      ```bash
@@ -10,33 +9,29 @@
      - [Kaggle API](https://www.kaggle.com/datasets/camnugent/sandp500) for S&P 500 stock data for Historical analysis.
      - [YH Finance API](https://financeapi.net/tutorial) for live stocks overview analytics.
      - Either of the StockGeist, Eden AI, or Alpaca for MArket sentiments gauge.
-
-### **Step 3: Create the ETL Script (Extract, Transform, Load)**
-1. **Extract Data**:
-   - Create a Python script to fetch data from the Yahoo Finance API. 
-2. **Transform Data**:
-   - Clean and organize the data using Pandas
-3. **Load Data**:
-   - Save the data into a PostgreSQL database. First, make sure you have PostgreSQL installed and create a database.
-### **Step 4: Create the Flask Backend**
-1. **Set Up Flask**:
-   - Create a new Python file `app.py` for Flask backend.
-### **Step 5: Create the Front-End**
-1. **Set Up HTML and Bootstrap**:
-   - Create an HTML file 
-### **Step 6: Integrate Front-End and Back-End**
-### **Step 7: Deploy on AWS**
-
-#### **1. Set Up an EC2 Instance**
-1. **Create an AWS Account**:
-   - If you don't have an AWS account, sign up at [aws.amazon.com](https://aws.amazon.com/).
-
-2. **Launch an EC2 Instance**:
-   - Log in to your AWS Management Console.
-   - Navigate to the **EC2 Dashboard**.
-   - Click on **Launch Instance**.
-
-3. **Configure Instance**:
+3. For Historical analysis:
+     - Create the ETL Script (Extract, Transform, Load).
+     - Use Kaggle API to fetch the csv data.
+     - Clean the data, model the data using pandas.
+     - Connect to Postgress to load table schema and data into the tables.
+     - Also create a fake portfolio table.
+4. Create the Flask Backend:
+     - Create a new Python file `app.py` for Flask backend.
+     - Connect to Postgress to query the tables.
+     - Create flask routes to provide the Json for Historical data analysis to the frontend.
+6. Frontend Javascript:
+     - Create a `app.js` that uses the YH Finance API to produce ineractive live graphics.
+     - This should also show a fake portfolio using the flask routes.
+     - This should also populate the Historical data analysis using the Flask routes.
+8. HTML and Bootstrap:
+     - Create an HTML file with a style sheet to create the webpages.
+     - Html to plot the Javascript D3 plots.
+9. Deploy on AWS:
+     - Set Up an EC2 Instance: [aws.amazon.com](https://aws.amazon.com/).
+     - Launch an EC2 Instance:
+          - Log in to your AWS Management Console.
+          - Navigate to the EC2 Dashboard and Launch Instance.
+     - Configure Instance:
    - **Choose an Amazon Machine Image (AMI)**: Select the **Amazon Linux 2 AMI** (or Ubuntu if you prefer).
    - **Instance Type**: Select the **t2.micro** instance type, which is free-tier eligible.
    - **Configure Instance Details**: You can leave the default settings here.
