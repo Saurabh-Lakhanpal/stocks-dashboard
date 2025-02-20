@@ -8,7 +8,7 @@
 2. Prepare and understand the datasets:
      - [Kaggle API](https://www.kaggle.com/datasets/camnugent/sandp500) for S&P 500 stock data for Historical analysis.
      - [YH Finance API](https://financeapi.net/tutorial) for live stocks overview analytics.
-     - Either of the StockGeist, Eden AI, or Alpaca for Market sentiments gauge.
+     - Either of the [StockGeist API](https://stockgeist.ai/), [Eden AI Sentiment Analysis API](https://www.edenai.co/), [Alpaca News API](https://alpaca.markets/) for Market sentiments gauge.
 3. For Historical analysis:
      - Create the ETL Script (Extract, Transform, Load).
      - Use Kaggle API to fetch the csv data.
