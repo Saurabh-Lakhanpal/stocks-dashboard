@@ -43,17 +43,24 @@ body {
     background-color: #008fd4;
 }
 
-.portfolio {
-    display: flex;
-    justify-content: space-around;
+.portfolio-carousel {
+    position: relative;
+    overflow: hidden;
     margin-bottom: 20px;
 }
 
+.portfolio {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
 .portfolio-item {
+    min-width: 25%;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     padding: 10px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .portfolio-header img {
@@ -74,6 +81,30 @@ body {
 .portfolio-body span:last-child {
     font-size: 24px;
     font-weight: bold;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #00aaff;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.carousel-button.prev {
+    left: 0;
+}
+
+.carousel-button.next {
+    right: 0;
+}
+
+.carousel-button:hover {
+    background-color: #008fd4;
 }
 
 .stock-details {

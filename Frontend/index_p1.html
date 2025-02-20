@@ -42,18 +42,71 @@
                 <button class="nav-button">Historical Data</button>
                 <button class="nav-button">Health & Ratios</button>
             </div>
-            <div class="portfolio">
-                <div class="portfolio-item">
-                    <div class="portfolio-header">
-                        <img src="apple-logo.png" alt="Apple Inc.">
-                        <span>AAPL +0.66%</span>
+            <div class="portfolio-carousel">
+                <div class="portfolio">
+                    <div class="portfolio-item">
+                        <div class="portfolio-header">
+                            <img src="apple-logo.png" alt="Apple Inc.">
+                            <span>AAPL +0.66%</span>
+                        </div>
+                        <div class="portfolio-body">
+                            <span>Portfolio</span>
+                            <span>15,215.70</span>
+                        </div>
                     </div>
-                    <div class="portfolio-body">
-                        <span>Portfolio</span>
-                        <span>15,215.70</span>
+                    <div class="portfolio-item">
+                        <div class="portfolio-header">
+                            <img src="apple-logo.png" alt="Apple Inc.">
+                            <span>AAPL +0.66%</span>
+                        </div>
+                        <div class="portfolio-body">
+                            <span>Portfolio</span>
+                            <span>15,215.70</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-header">
+                            <img src="apple-logo.png" alt="Apple Inc.">
+                            <span>AAPL +0.66%</span>
+                        </div>
+                        <div class="portfolio-body">
+                            <span>Portfolio</span>
+                            <span>15,215.70</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-header">
+                            <img src="apple-logo.png" alt="Apple Inc.">
+                            <span>AAPL +0.66%</span>
+                        </div>
+                        <div class="portfolio-body">
+                            <span>Portfolio</span>
+                            <span>15,215.70</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-header">
+                            <img src="apple-logo.png" alt="Apple Inc.">
+                            <span>AAPL +0.66%</span>
+                        </div>
+                        <div class="portfolio-body">
+                            <span>Portfolio</span>
+                            <span>15,215.70</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-header">
+                            <img src="apple-logo.png" alt="Apple Inc.">
+                            <span>AAPL +0.66%</span>
+                        </div>
+                        <div class="portfolio-body">
+                            <span>Portfolio</span>
+                            <span>15,215.70</span>
+                        </div>
                     </div>
                 </div>
-                <!-- Repeat portfolio-item for other cards -->
+                <button class="carousel-button prev">❮</button>
+                <button class="carousel-button next">❯</button>
             </div>
             <div class="stock-details">
                 <div class="stock-header">
@@ -85,5 +138,31 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const prevButton = document.querySelector('.carousel-button.prev');
+            const nextButton = document.querySelector('.carousel-button.next');
+            const portfolio = document.querySelector('.portfolio');
+            let currentPosition = 0;
+
+            prevButton.addEventListener('click', function() {
+                if (currentPosition > 0) {
+                    currentPosition--;
+                    updateCarousel();
+                }
+            });
+
+            nextButton.addEventListener('click', function() {
+                if (currentPosition < portfolio.children.length - 4) {
+                    currentPosition++;
+                    updateCarousel();
+                }
+            });
+
+            function updateCarousel() {
+                portfolio.style.transform = `translateX(-${currentPosition * 25}%)`;
+            }
+        });
+    </script>
 </body>
 </html>
