@@ -2,13 +2,13 @@
 ![image](https://github.com/user-attachments/assets/0abd04e2-7742-4e29-b18c-02afdfd59ffb)
 ### Workflow Summary with API Calls
 
-### **Step 1: Install Required Libraries**:
-   - Install the necessary Python libraries using pip:
+1. Install Required Libraries: Install the necessary Python libraries using pip:
      ```bash
      pip install flask pandas requests plotly sqlalchemy psycopg2-binary
      ```
-
-### **Step 2: Choose Your Dataset**
+2. Choose The Dataset:
+     - Kaggle API to get the static csvs for Historical analysis.
+     - yfapi
 1. **Get an API Key**:
    - Sign up for the required API keys from [YYH Finance API](https://financeapi.net/tutorial) and other third-party APIs like StockGeist, Eden AI, and Alpaca.
 
