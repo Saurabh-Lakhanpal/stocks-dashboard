@@ -32,18 +32,19 @@
           - Log in to your AWS Management Console.
           - Navigate to the EC2 Dashboard and Launch Instance.
      - Configure Instance:
-   - **Choose an Amazon Machine Image (AMI)**: Select the **Amazon Linux 2 AMI** (or Ubuntu if you prefer).
-   - **Instance Type**: Select the **t2.micro** instance type, which is free-tier eligible.
-   - **Configure Instance Details**: You can leave the default settings here.
-   - **Add Storage**: The default storage settings should be sufficient.
-   - **Add Tags**: Optionally, add a tag to identify your instance.
-   - **Configure Security Group**:
-     - Create a new security group with the following rules:
-       - **SSH**: Port 22 from your IP address.
-       - **HTTP**: Port 80 from anywhere.
-     - Review and launch your instance.
+          - Choose an Amazon Machine Image (AMI):
+               - Select the Amazon Linux 2 AMI (or Ubuntu if you prefer).
+               - Select the t2.micro instance type, which is free-tier eligible.
+               - You can leave the Instance Details at default settings here.
+               - The default storage settings should be sufficient.
+               - Optionally, add a tag to identify your instance.
+          - Configure Security Group:
+               - Create a new security group with the following rules:
+                    - Port 22 from your IP address.
+                    - Port 80 from anywhere.
+          - Review and launch your instance.
 
-4. **Key Pair**:
+     - Key Pair:
    - **Create a new key pair** or use an existing one. Download the key pair file (.pem) and keep it safe, as it will be needed to connect to your instance.
 
 #### **2. Connect to Your EC2 Instance**
