@@ -2,15 +2,14 @@
 ![image](https://github.com/user-attachments/assets/0abd04e2-7742-4e29-b18c-02afdfd59ffb)
 ### Workflow Summary with API Calls
 
-1. Install Required Libraries: Install the necessary Python libraries using pip:
+1. Install the necessary libraries using pip:
      ```bash
      pip install flask pandas requests plotly sqlalchemy psycopg2-binary
      ```
-2. Choose The Dataset:
-     - Kaggle API to get the static csvs for Historical analysis.
-     - yfapi
-1. **Get an API Key**:
-   - Sign up for the required API keys from [YYH Finance API](https://financeapi.net/tutorial) and other third-party APIs like StockGeist, Eden AI, and Alpaca.
+2. Prepare and understand the datasets:
+     - [Kaggle API](https://www.kaggle.com/datasets/camnugent/sandp500) for S&P 500 stock data for Historical analysis.
+     - [YH Finance API](https://financeapi.net/tutorial) for live stocks overview analytics.
+     - Either of the StockGeist, Eden AI, or Alpaca for MArket sentiments gauge.
 
 ### **Step 3: Create the ETL Script (Extract, Transform, Load)**
 1. **Extract Data**:
