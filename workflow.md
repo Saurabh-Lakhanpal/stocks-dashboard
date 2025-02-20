@@ -49,13 +49,13 @@
      - SSH into Your Instance:
           - Open your terminal (or command prompt on Windows) and navigate to the directory where your key pair file is saved.
           - Change the file permissions to ensure it's only readable by you:
-     ```bash
+          ```bash
      chmod 400 your-key-pair-file.pem
-     ```
+          ```
           - Connect to your instance using SSH:
-     ```bash
-     ssh -i "your-key-pair-file.pem" ec2-user@your-instance-public-dns
-     ```
+          ```bash
+          ssh -i "your-key-pair-file.pem" ec2-user@your-instance-public-dns
+          ```
 9. Set Up the Environment on EC2
      - Update Packages:
      ```bash
@@ -89,25 +89,24 @@
 11. Configure and Start Your Flask App
      - Set Up PostgreSQL:
           - Initialize PostgreSQL:
-     ```bash
-     sudo service postgresql initdb
-     ```
+          ```bash
+          sudo service postgresql initdb
+          ```
           - Start PostgreSQL:
-     ```bash
-     sudo service postgresql start
-     ```
+          ```bash
+          sudo service postgresql start
+          ```
           - Create a new user and database:
-     ```bash
-     sudo -u postgres createuser --interactive  # Follow prompts to create a user
-     sudo -u postgres createdb stock_data  # Create a database
-     ```
+          ```bash
+          sudo -u postgres createuser --interactive  # Follow prompts to create a user
+          sudo -u postgres createdb stock_data  # Create a database
+          ```
      - Update Database Connection String: In your `app.py` and `etl.py`, update the PostgreSQL connection string to reflect the new database credentials.
 
      - Run ETL Script: Execute your ETL script to populate the database:
      ```bash
      python etl.py
      ```
-
      - Start Flask App:
      ```bash
      flask run --host=0.0.0.0  # This makes the app accessible from any IP address
@@ -156,33 +155,33 @@
      - On the EC2 server, the Flask API endpoint will handle the POST request and execute the Jupyter notebook using a tool like `papermill` or a subprocess call.
      - Step-by-Step Instructions
           - Install Flask and Required Libraries:
-   ```bash
-   pip install flask papermill
-   ```
+             ```bash
+             pip install flask papermill
+             ```
                - Create a Flask Application (app.py):
-   ```python
-   from flask import Flask, request, jsonify
-   import subprocess
-   app = Flask(__name__)
-   @app.route('/run-notebook', methods=['POST'])
-   def run_notebook():
-       # Assuming your notebook is named 'notebook.ipynb'
-       notebook_path = 'notebook.ipynb'
-       output_path = 'output.ipynb'
-       try:
-           subprocess.run(['papermill', notebook_path, output_path], check=True)
-           return jsonify({'status': 'success', 'message': 'Notebook executed successfully'}), 200
-       except subprocess.CalledProcessError as e:
-           return jsonify({'status': 'error', 'message': str(e)}), 500
-   if __name__ == '__main__':
-       app.run(host='0.0.0.0', port=5000)
-   ```
+             ```python
+             from flask import Flask, request, jsonify
+             import subprocess
+             app = Flask(__name__)
+             @app.route('/run-notebook', methods=['POST'])
+             def run_notebook():
+                 # Assuming your notebook is named 'notebook.ipynb'
+                 notebook_path = 'notebook.ipynb'
+                 output_path = 'output.ipynb'
+                 try:
+                     subprocess.run(['papermill', notebook_path, output_path], check=True)
+                     return jsonify({'status': 'success', 'message': 'Notebook executed successfully'}), 200
+                     except subprocess.CalledProcessError as e:
+             return jsonify({'status': 'error', 'message': str(e)}), 500
+                  if __name__ == '__main__':
+                 app.run(host='0.0.0.0', port=5000)
+             ```
           - Run the Flask Application:**
-   ```bash
-   python app.py
-   ```
-#### Step 2: Make a POST Request with JavaScript
-1. **JavaScript Code:**
+        ```bash
+        python app.py
+        ```
+          - Make a POST Request with JavaScript
+               - JavaScript Code:**
    ```html
    <!DOCTYPE html>
    <html>
@@ -213,10 +212,10 @@
    </body>
    </html>
    ```
-### Notes
-1. **Security Considerations:**
+Notes
+1. Security Considerations:
    - Ensure your API endpoint is secured to prevent unauthorized access.
    - You may want to use authentication and restrict access to the endpoint.
-2. **AWS Security Group:**
+2. AWS Security Group:
    - Make sure your AWS Security Group allows inbound traffic on port 5000 (or the port you choose for your Flask app).
 By following these steps, you can successfully trigger the execution of a Jupyter notebook on an AWS EC2 server using a JavaScript POST request. If you have any further questions or need additional assistance, feel free to ask!
