@@ -150,5 +150,73 @@
      sudo service nginx restart
      ```
 
-13. Final Check
-     - Open your browser and navigate to your EC2 instance's public DNS. You should see your Stocks Dashboard up and running!
+13. JavaScript to make a POST request to an AWS EC2 server to trigger the execution of a Python Jupyter notebook.
+     - Set up a Flask application on your EC2 server that listens for POST requests and triggers the Jupyter notebook execution.
+     - Use JavaScript to make a POST request to the Flask API endpoint.
+     - On the EC2 server, the Flask API endpoint will handle the POST request and execute the Jupyter notebook using a tool like `papermill` or a subprocess call.
+     - Step-by-Step Instructions
+          - Install Flask and Required Libraries:
+   ```bash
+   pip install flask papermill
+   ```
+               - Create a Flask Application (app.py):
+   ```python
+   from flask import Flask, request, jsonify
+   import subprocess
+   app = Flask(__name__)
+   @app.route('/run-notebook', methods=['POST'])
+   def run_notebook():
+       # Assuming your notebook is named 'notebook.ipynb'
+       notebook_path = 'notebook.ipynb'
+       output_path = 'output.ipynb'
+       try:
+           subprocess.run(['papermill', notebook_path, output_path], check=True)
+           return jsonify({'status': 'success', 'message': 'Notebook executed successfully'}), 200
+       except subprocess.CalledProcessError as e:
+           return jsonify({'status': 'error', 'message': str(e)}), 500
+   if __name__ == '__main__':
+       app.run(host='0.0.0.0', port=5000)
+   ```
+          - Run the Flask Application:**
+   ```bash
+   python app.py
+   ```
+#### Step 2: Make a POST Request with JavaScript
+1. **JavaScript Code:**
+   ```html
+   <!DOCTYPE html>
+   <html>
+   <head>
+       <title>Trigger Jupyter Notebook</title>
+       <script>
+           function runNotebook() {
+               fetch('http://your-ec2-public-dns:5000/run-notebook', {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json'
+                   }
+               })
+               .then(response => response.json())
+               .then(data => {
+                   if (data.status === 'success') {
+                       alert('Notebook executed successfully!');
+                   } else {
+                       alert('Error executing notebook: ' + data.message);
+                   }
+               })
+               .catch(error => console.error('Error:', error));
+           }
+       </script>
+   </head>
+   <body>
+       <button onclick="runNotebook()">Run Notebook</button>
+   </body>
+   </html>
+   ```
+### Notes
+1. **Security Considerations:**
+   - Ensure your API endpoint is secured to prevent unauthorized access.
+   - You may want to use authentication and restrict access to the endpoint.
+2. **AWS Security Group:**
+   - Make sure your AWS Security Group allows inbound traffic on port 5000 (or the port you choose for your Flask app).
+By following these steps, you can successfully trigger the execution of a Jupyter notebook on an AWS EC2 server using a JavaScript POST request. If you have any further questions or need additional assistance, feel free to ask!
