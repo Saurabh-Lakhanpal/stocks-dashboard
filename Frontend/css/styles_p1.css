@@ -229,12 +229,6 @@ html, body {
     border-radius: 5px;
 }
 
-.interval-button.active {
-    background: #008fd4;
-    color: white;
-    font-weight: bold;
-}
-
 #suggestions {
     list-style-type: none;
     padding: 0;

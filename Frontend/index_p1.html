@@ -10,21 +10,20 @@
     <div class="container">
         <div class="sidebar">
             <h1>Stocks Dashboard</h1>
-            <div id="score-meter" class="score">
-            </div>
-            <div class="last-updated">Last Updated - 2025-02-19 06:44 am</div>
+            <div id="score-meter" class="score"></div>
+            <div id='timestamp' class="last-updated">Last Updated - 2025-02-19 06:44 am</div>
             <div class="selectors">
                 <div class="selector">
-                    <p>Search for Ticker/s to select</p>
+                    <p>Search Ticker/s</p>
                     <input type="text" id="ticker-selector" placeholder="Type to search..." onkeyup="fetchSuggestions()" onclick="showSuggestions()">
-                    <ul id="suggestions" style="display: none;"></ul>                    
+                    <ul id="suggestions" style="display: none;"></ul>
                 </div>
                 <div class="selected-tickers">
                     <h3>Selected ticker/s</h3>
                     <ul id="selected-list" class="selected-list"></ul>
                 </div>
                 <div class="selector">
-                    <p>Select Plot Date Range</p>
+                    <p>Plot's Date Range</p>
                     <select id="range-selector">
                         <option value="5days">5Days</option>
                     </select>
@@ -34,107 +33,106 @@
         <div class="main-content">
             <div class="header">
                 <div class="navigation">
-                    <button class="nav-button">Ticker Overview</button>
-                    <button class="nav-button">Historical Data</button>
-                    <button class="nav-button">Health & Ratios</button>
+                    <button id= 'overview' class="nav-button">Ticker Overview</button>
+                    <button id= 'historical' class="nav-button">Historical Data</button>
+                    <button id= 'ratios' class="nav-button">Health & Ratios</button>
                 </div>
             </div>
-        <div class = "shadow">
-            <div class="portfolio-carousel">
-                <div class="portfolio">
-                    <div class="portfolio-item">
-                        <div class="portfolio-header">
-                            <img src="apple-logo.png" alt="Apple Inc.">
-                            <span>AAPL +0.66%</span>
+            <div class="shadow">
+                <div class="portfolio-carousel">
+                    <div class="portfolio">
+                        <div class="portfolio-item">
+                            <div class="portfolio-header">
+                                <img src="apple-logo.png" alt="Apple Inc.">
+                                <span>Apple, Inc</span>
+                            </div>
+                            <div id= 'portfolio-body-1' class="portfolio-body">
+                                <span>Portfolio</span>
+                                <span>15,215.70</span>
+                            </div>
                         </div>
-                        <div class="portfolio-body">
-                            <span>Portfolio</span>
-                            <span>15,215.70</span>
+                        <div class="portfolio-item">
+                            <div class="portfolio-header">
+                                <img src="apple-logo.png" alt="Apple Inc.">
+                                <span>Apple, Inc</span>
+                            </div>
+                            <div id= 'portfolio-body-2'class="portfolio-body">
+                                <span>Portfolio</span>
+                                <span>15,215.70</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-header">
+                                <img src="apple-logo.png" alt="Apple Inc.">
+                                <span>Apple, Inc</span>
+                            </div>
+                            <div id= 'portfolio-body-3'class="portfolio-body">
+                                <span>Portfolio</span>
+                                <span>15,215.70</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-header">
+                                <img src="apple-logo.png" alt="Apple Inc.">
+                                <span>Apple, Inc</span>
+                            </div>
+                            <div id= 'portfolio-body-4'class="portfolio-body">
+                                <span>Portfolio</span>
+                                <span>15,215.70</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-header">
+                                <img src="apple-logo.png" alt="Apple Inc.">
+                                <span>Apple, Inc</span>
+                            </div>
+                            <div id= 'portfolio-body-5'class="portfolio-body">
+                                <span>Portfolio</span>
+                                <span>15,215.70</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-header">
+                                <img src="apple-logo.png" alt="Apple Inc.">
+                                <span>Apple, Inc</span>
+                            </div>
+                            <div id= 'portfolio-body-6'class="portfolio-body">
+                                <span>Portfolio</span>
+                                <span>15,215.70</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-header">
-                            <img src="apple-logo.png" alt="Apple Inc.">
-                            <span>AAPL +0.66%</span>
-                        </div>
-                        <div class="portfolio-body">
-                            <span>Portfolio</span>
-                            <span>15,215.70</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-header">
-                            <img src="apple-logo.png" alt="Apple Inc.">
-                            <span>AAPL +0.66%</span>
-                        </div>
-                        <div class="portfolio-body">
-                            <span>Portfolio</span>
-                            <span>15,215.70</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-header">
-                            <img src="apple-logo.png" alt="Apple Inc.">
-                            <span>AAPL +0.66%</span>
-                        </div>
-                        <div class="portfolio-body">
-                            <span>Portfolio</span>
-                            <span>15,215.70</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-header">
-                            <img src="apple-logo.png" alt="Apple Inc.">
-                            <span>AAPL +0.66%</span>
-                        </div>
-                        <div class="portfolio-body">
-                            <span>Portfolio</span>
-                            <span>15,215.70</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <div class="portfolio-header">
-                            <img src="apple-logo.png" alt="Apple Inc.">
-                            <span>AAPL +0.66%</span>
-                        </div>
-                        <div class="portfolio-body">
-                            <span>Portfolio</span>
-                            <span>15,215.70</span>
-                        </div>
-                    </div>
+                    <button class="carousel-button prev">❮</button>
+                    <button class="carousel-button next">❯</button>
                 </div>
-                <button class="carousel-button prev">❮</button>
-                <button class="carousel-button next">❯</button>
-            </div>            
-            <div class="stock-details">
-                <div class="stock-header">
-                    <h2>APPL</h2>
-                    <span class="stock-change">+1.66%</span>
-                </div>
-                <div class="stock-price">
-                    <h3>US $50.25</h3>
-                    <p>Oct 25, 5:26:38PM UTC-4</p>
-                </div>
-                <div class="layer-selector">
-                    <label for="layer-selector">Layer Selector</label>
-                    <select id="layer-selector">
-                        <!-- Options here -->
-                    </select>
-                </div>
-                <div class="chart rounded">
-                    <div class="chart-intervals">
-                        <button class="interval-button">1d</button>
-                        <button class="interval-button">5d</button>
-                        <button class="interval-button active">6m</button>
-                        <button class="interval-button">1m</button>
-                        <button class="interval-button">1y</button>
-                        <button class="interval-button">5y</button>
-                        <button class="interval-button">Max</button>
+                <div class="stock-details">
+                    <div class="stock-header">
+                        <span id= 'selected-ticker'class="ticker">APPL</span>
+                        <span id= 'stock-change-calc'class="stock-change">+1.66%</span>
                     </div>
-                    <!-- Chart will be rendered here -->
+                    <div class="stock-price">
+                        <span id= 'selected-ticker-price'class="price">USD 50.25</span>
+                    </div>
+                    <div class="layer-selector">
+                        <label for="layer-selector">Layer Selector</label>
+                        <select id="layer-selector">
+                            <!-- Options here -->
+                        </select>
+                    </div>
+                    <div class="chart rounded">
+                        <div class="chart-intervals">
+                            <button id= 'interval-1' class="interval-button">1d</button>
+                            <button id= 'interval-2' class="interval-button">5d</button>
+                            <button id= 'interval-3' class="interval-button active">6m</button>
+                            <button id= 'interval-4' class="interval-button">1m</button>
+                            <button id= 'interval-5' class="interval-button">1y</button>
+                            <button id= 'interval-6' class="interval-button">5y</button>
+                            <button id= 'interval-7' class="interval-button">Max</button>
+                        </div id='plot'>
+                        <!-- Chart will be rendered here -->
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
     <script src="js/config.js"></script>
