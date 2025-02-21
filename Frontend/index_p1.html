@@ -6,6 +6,8 @@
     <title>Stocks Dashboard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+<script>
+</script>
 <body>
     <div class="container">
         <div class="sidebar">
@@ -23,10 +25,9 @@
             <div class="last-updated">Last Updated - 2025-02-19 06:44 am</div>
             <div class="selectors">
                 <div class="selector">
-                    <label for="ticker-selector">Ticker Selector</label>
-                    <select id="ticker-selector">
-                        <option value="APPL">APPL</option>
-                    </select>
+                    <h1>Autocomplete Search</h1>
+                    <input type="text" id="ticker-selector" placeholder="Type to search..." onkeyup="fetchSuggestions()">
+                    <ul id="suggestions"></ul>
                 </div>
                 <div class="selector">
                     <label for="range-selector">Range Selector</label>
@@ -123,7 +124,7 @@
                         <!-- Options here -->
                     </select>
                 </div>
-                <div class="chart">
+                <div class="chart rounded">
                     <div class="chart-intervals">
                         <button class="interval-button">1d</button>
                         <button class="interval-button">5d</button>
@@ -139,6 +140,50 @@
         </div>
     </div>
     <script>
+        // ticket selector search suggestions
+async function fetchSuggestions() {
+    const query = document.getElementById('ticker-selector').value;
+    if (query.length < 1) {
+        document.getElementById('suggestions').innerHTML = '';
+        return;
+    }
+
+    const response = await fetch(`https://yfapi.net/v6/finance/autocomplete?region=US&lang=en&query=${query}`, {
+        headers: {
+            'X-API-KEY': '2eWtFJIAct8oF5xJrkvWi1naF3w5KPfd5sqA6z2E'
+        }
+    });
+    const data = await response.json();
+    const suggestions = data.ResultSet.Result;
+
+    const suggestionsList = document.getElementById('suggestions');
+    suggestionsList.innerHTML = '';
+
+    suggestions.forEach(suggestion => {
+        const li = document.createElement('li');
+        li.textContent = `${suggestion.name} (${suggestion.symbol})`;
+        li.onclick = () => {
+            document.getElementById('ticker-selector').value = suggestion.name;
+            suggestionsList.innerHTML = '';
+        };
+        suggestionsList.appendChild(li);
+    });
+}
+        // This script allows us to select 
+            document.addEventListener("DOMContentLoaded", function() {
+        const intervalButtons = document.querySelectorAll(".interval-button");
+
+        intervalButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                // Remove active class from all buttons
+                intervalButtons.forEach(btn => btn.classList.remove("active"));
+                
+                // Add active class to the clicked button
+                this.classList.add("active");
+            });
+        });
+    });
+
         document.addEventListener('DOMContentLoaded', function() {
             const prevButton = document.querySelector('.carousel-button.prev');
             const nextButton = document.querySelector('.carousel-button.next');
