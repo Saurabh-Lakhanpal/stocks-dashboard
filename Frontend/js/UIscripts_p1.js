@@ -7,7 +7,7 @@ async function fetchSuggestions() {
     const query = document.getElementById('ticker-selector').value;
     if (query.length < 1) {
         document.getElementById('suggestions').innerHTML = '';
-        document.getElementById('suggestions').style.display = 'none'; // Hide the suggestions box
+        document.getElementById('suggestions').style.display = 'none';
         return;
     }
 
@@ -47,11 +47,11 @@ async function fetchSuggestions() {
 
 function handleSelection(checkbox) {
     if (checkbox.checked) {
-        if (selectedTickers.length < 3) {
+        if (selectedTickers.length < 5) {
             selectedTickers.push(checkbox.value);
         } else {
             checkbox.checked = false;
-            alert('You can select up to 3 tickers only.');
+            alert('You can select up to 5 tickers only.');
         }
     } else {
         selectedTickers = selectedTickers.filter(ticker => ticker !== checkbox.value);
@@ -60,7 +60,11 @@ function handleSelection(checkbox) {
     document.getElementById('ticker-selector').value = selectedTickers.join(', ');
 }
 
-// Hide the suggestions box when clicking outside
+function showSuggestions() {
+    const suggestionsList = document.getElementById('suggestions');
+    suggestionsList.style.display = 'block';
+}
+
 document.addEventListener('click', function(event) {
     const suggestionsList = document.getElementById('suggestions');
     const searchBox = document.getElementById('ticker-selector');
@@ -68,7 +72,6 @@ document.addEventListener('click', function(event) {
         suggestionsList.style.display = 'none';
     }
 });
-
 
 // This script allows us to select
 document.addEventListener("DOMContentLoaded", function() {
