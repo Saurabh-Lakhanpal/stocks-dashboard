@@ -50,7 +50,7 @@
           - Open your terminal (or command prompt on Windows) and navigate to the directory where your key pair file is saved.
           - Change the file permissions to ensure it's only readable by you:
           ```bash
-     chmod 400 your-key-pair-file.pem
+          chmod 400 your-key-pair-file.pem
           ```
           - Connect to your instance using SSH:
           ```bash
