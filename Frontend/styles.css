@@ -26,7 +26,7 @@ body {
 .navigation {
     display: flex;
     justify-content: space-around;
-    background-color: #00aaff;
+    background-color: red;
     padding: 10px 0;
     color: #fff;
 }
@@ -112,6 +112,7 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     padding: 20px;
     margin-top: 20px;
+
 }
 
 .stock-header {
@@ -183,3 +184,36 @@ body {
     padding: 5px;
     font-size: 14px;
 }
+
+/* Round corners for portfolio boxes */
+.portfolio-item {
+    border-radius: 10px;
+}
+
+/* Round corners for stock details section */
+.stock-details {
+    border-radius: 10px;
+}
+
+    /* Round corners for chart rounded class */
+    .chart {
+        border-radius: 10px;
+    }
+
+        /* Round corners for interval buttons */
+        .interval-button {
+        border-radius: 5px;
+        }
+
+/* Round corners for select dropdowns */
+.selector select {
+    border-radius: 5px;
+}
+
+/* Make active button darker */
+.interval-button.active {
+    background: #008fd4; /* Darker blue */
+    color: white;
+    font-weight: bold;
+}
+
