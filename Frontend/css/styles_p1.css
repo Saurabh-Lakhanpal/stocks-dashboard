@@ -217,3 +217,23 @@ body {
     font-weight: bold;
 }
 
+#suggestions {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    max-height: 200px; /* Set a max height */
+    overflow-y: auto; /* Add scroll for overflow */
+    background-color: #fff;
+}
+
+#suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+#suggestions li input[type="checkbox"] {
+    margin-right: 10px;
+}
