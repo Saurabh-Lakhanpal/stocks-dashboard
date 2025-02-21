@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stocks Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles_p1.css">
 </head>
-<script>
-</script>
 <body>
     <div class="container">
         <div class="sidebar">
@@ -128,8 +126,8 @@
                     <div class="chart-intervals">
                         <button class="interval-button">1d</button>
                         <button class="interval-button">5d</button>
-                        <button class="interval-button">1m</button>
                         <button class="interval-button active">6m</button>
+                        <button class="interval-button">1m</button>
                         <button class="interval-button">1y</button>
                         <button class="interval-button">5y</button>
                         <button class="interval-button">Max</button>
@@ -139,75 +137,7 @@
             </div>
         </div>
     </div>
-    <script>
-        // ticket selector search suggestions
-async function fetchSuggestions() {
-    const query = document.getElementById('ticker-selector').value;
-    if (query.length < 1) {
-        document.getElementById('suggestions').innerHTML = '';
-        return;
-    }
-
-    const response = await fetch(`https://yfapi.net/v6/finance/autocomplete?region=US&lang=en&query=${query}`, {
-        headers: {
-            'X-API-KEY': '2eWtFJIAct8oF5xJrkvWi1naF3w5KPfd5sqA6z2E'
-        }
-    });
-    const data = await response.json();
-    const suggestions = data.ResultSet.Result;
-
-    const suggestionsList = document.getElementById('suggestions');
-    suggestionsList.innerHTML = '';
-
-    suggestions.forEach(suggestion => {
-        const li = document.createElement('li');
-        li.textContent = `${suggestion.name} (${suggestion.symbol})`;
-        li.onclick = () => {
-            document.getElementById('ticker-selector').value = suggestion.name;
-            suggestionsList.innerHTML = '';
-        };
-        suggestionsList.appendChild(li);
-    });
-}
-        // This script allows us to select 
-            document.addEventListener("DOMContentLoaded", function() {
-        const intervalButtons = document.querySelectorAll(".interval-button");
-
-        intervalButtons.forEach(button => {
-            button.addEventListener("click", function() {
-                // Remove active class from all buttons
-                intervalButtons.forEach(btn => btn.classList.remove("active"));
-                
-                // Add active class to the clicked button
-                this.classList.add("active");
-            });
-        });
-    });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const prevButton = document.querySelector('.carousel-button.prev');
-            const nextButton = document.querySelector('.carousel-button.next');
-            const portfolio = document.querySelector('.portfolio');
-            let currentPosition = 0;
-
-            prevButton.addEventListener('click', function() {
-                if (currentPosition > 0) {
-                    currentPosition--;
-                    updateCarousel();
-                }
-            });
-
-            nextButton.addEventListener('click', function() {
-                if (currentPosition < portfolio.children.length - 4) {
-                    currentPosition++;
-                    updateCarousel();
-                }
-            });
-
-            function updateCarousel() {
-                portfolio.style.transform = `translateX(-${currentPosition * 25}%)`;
-            }
-        });
-    </script>
+    <script src="js/config.js"></script>
+    <script src="js/UIscripts_p1.js"></script>
 </body>
 </html>
