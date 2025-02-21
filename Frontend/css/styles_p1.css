@@ -4,12 +4,11 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
     background-color: #F5F7F9;
+    overflow: hidden;
 }
 
-.shadow{
+.shadow {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
     height: 90%;
     padding: 30px;
@@ -21,32 +20,35 @@ html, body {
     flex-direction: row;
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 .sidebar {
-    width: 20%;
+    width: 15%;
     height: 100%;
     background-color: #fff;
     padding: 20px;
-}
-
-.main-content {
-    width: 80%;
-    height: 100%;
+    overflow: hidden;
 }
 
 .header {
     top: 0;
     background-color: #fff;
     width: 100%;
-    height:10%;
+    height: 10%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navigation {
     display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
+    justify-content: space-between;
+    width: 80%;
     color: #fff;
+    height: 50%;
+    gap: 30px;
 }
 
 .nav-button {
@@ -55,6 +57,11 @@ html, body {
     color: #fff;
     font-size: 16px;
     cursor: pointer;
+    flex: 1;
+    text-align: center;
+    height: 100%;
+    background-color: #6ebbe2;
+    border-radius: 10px;
 }
 
 .nav-button:hover {
@@ -64,15 +71,17 @@ html, body {
 .portfolio-carousel {
     position: relative;
     overflow: hidden;
-    height:15%;
+    height: 15%;
     margin-bottom: 30px;
-    background-color: red;
-
+    box-shadow: -10px 0 10px -5px rgba(0, 0, 0, 0.05);
+    box-shadow: 10px 0 10px -5px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
 }
 
 .portfolio {
     display: flex;
     transition: transform 0.5s ease;
+    height: 100%;
 }
 
 .portfolio-item {
@@ -81,6 +90,8 @@ html, body {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     text-align: center;
     flex-shrink: 0;
+    margin-right: 30px;
+    border-radius: 10px;
 }
 
 .portfolio-header img {
@@ -112,6 +123,9 @@ html, body {
     color: #fff;
     font-size: 24px;
     cursor: pointer;
+    border-radius: 50%;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .carousel-button.prev {
@@ -130,10 +144,16 @@ html, body {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 10px;
-    height: 81%;
+    height: calc(81% - 55px);
     width: 100%;
     margin-bottom: 30px;
+    overflow: hidden;
+}
 
+.main-content {
+    width: 85%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .stock-header {
@@ -170,11 +190,14 @@ html, body {
     height: 300px;
     background-color: #e0f7fa;
     margin-top: 20px;
+    border-radius: 10px;
 }
+
 .chart-intervals {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    overflow: hidden;
 }
 
 .interval-button {
@@ -183,6 +206,7 @@ html, body {
     color: #fff;
     margin-left: 5px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .interval-button.active,
@@ -202,43 +226,22 @@ html, body {
 .selector select {
     padding: 5px;
     font-size: 14px;
-}
-
-/* Round corners for portfolio boxes */
-.portfolio-item {
-    border-radius: 10px;
-}
-
-
-/* Round corners for chart rounded class */
-.chart {
-    border-radius: 10px;
-}
-
-/* Round corners for interval buttons */
-.interval-button {
     border-radius: 5px;
 }
 
-/* Round corners for select dropdowns */
-.selector select {
-    border-radius: 5px;
-}
-
-/* Make active button darker */
 .interval-button.active {
-    background: #008fd4; /* Darker blue */
+    background: #008fd4;
     color: white;
     font-weight: bold;
 }
 
 #suggestions {
-    list-style-type: none; /* Remove bullet points */
+    list-style-type: none;
     padding: 0;
     margin: 0;
     border: 1px solid #ccc;
-    max-height: 200px; /* Set a max height */
-    overflow-y: auto; /* Add scroll for overflow */
+    max-height: 200px;
+    overflow-y: auto;
     background-color: #fff;
 }
 
