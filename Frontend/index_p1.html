@@ -10,15 +10,7 @@
     <div class="container">
         <div class="sidebar">
             <h1>Stocks Dashboard</h1>
-            <div class="score">
-                <div class="score-meter">
-                    <div class="score-value">485</div>
-                    <div class="score-label">Fair</div>
-                </div>
-                <div class="score-range">
-                    <span>300</span>
-                    <span>850</span>
-                </div>
+            <div id="score-meter" class="score">
             </div>
             <div class="last-updated">Last Updated - 2025-02-19 06:44 am</div>
             <div class="selectors">
@@ -26,6 +18,10 @@
                     <p>Search for Ticker/s to select</p>
                     <input type="text" id="ticker-selector" placeholder="Type to search..." onkeyup="fetchSuggestions()" onclick="showSuggestions()">
                     <ul id="suggestions" style="display: none;"></ul>                    
+                </div>
+                <div class="selected-tickers">
+                    <h3>Selected ticker/s</h3>
+                    <ul id="selected-list" class="selected-list"></ul>
                 </div>
                 <div class="selector">
                     <p>Select Plot Date Range</p>
@@ -36,11 +32,14 @@
             </div>
         </div>
         <div class="main-content">
-            <div class="navigation">
-                <button class="nav-button">Ticker Overview</button>
-                <button class="nav-button">Historical Data</button>
-                <button class="nav-button">Health & Ratios</button>
+            <div class="header">
+                <div class="navigation">
+                    <button class="nav-button">Ticker Overview</button>
+                    <button class="nav-button">Historical Data</button>
+                    <button class="nav-button">Health & Ratios</button>
+                </div>
             </div>
+        <div class = "shadow">
             <div class="portfolio-carousel">
                 <div class="portfolio">
                     <div class="portfolio-item">
@@ -106,7 +105,7 @@
                 </div>
                 <button class="carousel-button prev">❮</button>
                 <button class="carousel-button next">❯</button>
-            </div>
+            </div>            
             <div class="stock-details">
                 <div class="stock-header">
                     <h2>APPL</h2>
@@ -136,8 +135,10 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
     <script src="js/config.js"></script>
     <script src="js/UIscripts_p1.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

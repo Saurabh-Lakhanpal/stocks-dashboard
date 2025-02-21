@@ -49,15 +49,25 @@ function handleSelection(checkbox) {
     if (checkbox.checked) {
         if (selectedTickers.length < 5) {
             selectedTickers.push(checkbox.value);
+            updateSelectedList();
         } else {
             checkbox.checked = false;
             alert('You can select up to 5 tickers only.');
         }
     } else {
         selectedTickers = selectedTickers.filter(ticker => ticker !== checkbox.value);
+        updateSelectedList();
     }
+}
 
-    document.getElementById('ticker-selector').value = selectedTickers.join(', ');
+function updateSelectedList() {
+    const selectedList = document.getElementById('selected-list');
+    selectedList.innerHTML = '';
+    selectedTickers.forEach(ticker => {
+        const li = document.createElement('li');
+        li.textContent = ticker;
+        selectedList.appendChild(li);
+    });
 }
 
 function showSuggestions() {
@@ -73,23 +83,7 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// This script allows us to select
-document.addEventListener("DOMContentLoaded", function() {
-    const intervalButtons = document.querySelectorAll(".interval-button");
-
-    intervalButtons.forEach(button => {
-        button.addEventListener("click", function() {
-            // Remove active class from all buttons
-            intervalButtons.forEach(btn => btn.classList.remove("active"));
-            
-            // Add active class to the clicked button
-            this.classList.add("active");
-        });
-    });
-});
-
-// This is the Carousel
-
+// Carousel Script
 document.addEventListener('DOMContentLoaded', function() {
     const prevButton = document.querySelector('.carousel-button.prev');
     const nextButton = document.querySelector('.carousel-button.next');
@@ -113,4 +107,19 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateCarousel() {
         portfolio.style.transform = `translateX(-${currentPosition * 25}%)`;
     }
+});
+
+// Interval Button Script
+document.addEventListener("DOMContentLoaded", function() {
+    const intervalButtons = document.querySelectorAll(".interval-button");
+
+    intervalButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            // Remove active class from all buttons
+            intervalButtons.forEach(btn => btn.classList.remove("active"));
+            
+            // Add active class to the clicked button
+            this.classList.add("active");
+        });
+    });
 });
