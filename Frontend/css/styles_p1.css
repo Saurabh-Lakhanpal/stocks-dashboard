@@ -3,10 +3,11 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
     background-color: #F5F7F9;
+    font-family: 'Shafarik', sans-serif;
     overflow: hidden;
 }
+
 
 .shadow {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
@@ -29,6 +30,7 @@ html, body {
     background-color: #fff;
     padding: 20px;
     overflow: hidden;
+    gap: 30px;
 }
 
 .header {
@@ -92,6 +94,7 @@ html, body {
     flex-shrink: 0;
     margin-right: 30px;
     border-radius: 10px;
+    padding: 10px;
 }
 
 .portfolio-header img {
@@ -107,25 +110,33 @@ html, body {
 .portfolio-body span:first-child {
     font-size: 14px;
     color: #888;
+    margin: 0;
 }
 
 .portfolio-body span:last-child {
     font-size: 24px;
-    font-weight: bold;
+    margin: 0;
+}
+
+
+.logo {
+    width: 64px;
+    height: auto;
 }
 
 .carousel-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #00aaff;
-    border: none;
-    color: #fff;
-    font-size: 24px;
-    cursor: pointer;
-    border-radius: 50%;
-    padding: 10px 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: rgba(32, 10, 10, 0.5);
+    color: white; 
+    border: none; 
+    border-radius: 50%; 
+    cursor: pointer; 
+    width: 40px; 
+    height: 40px; 
+    font-size: 20px; 
+    padding: 0; 
 }
 
 .carousel-button.prev {
@@ -158,8 +169,9 @@ html, body {
 
 .stock-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
+    gap: 30px;
 }
 
 .stock-header h2 {
@@ -171,33 +183,37 @@ html, body {
     font-size: 18px;
 }
 
-.stock-price h3 {
-    margin: 0;
-    font-size: 36px;
+.stock-price {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.stock-price p {
-    font-size: 14px;
-    color: #888;
+.ticker{
+    margin-left: 30px;
+}
+.price{
+    order: 1;
+    margin-left: 30px;
 }
 
-.layer-selector {
-    margin-top: 20px;
+.layer-selector{
+    order: 2;
 }
-
 .chart {
     width: 100%;
-    height: 300px;
+    height: 100%;
     background-color: #e0f7fa;
     margin-top: 20px;
-    border-radius: 10px;
 }
 
 .chart-intervals {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
     overflow: hidden;
+    order: 3;
+    margin-right: 30px;
 }
 
 .interval-button {
@@ -216,6 +232,7 @@ html, body {
 
 .selector {
     margin-top: 20px;
+    width: 100%;
 }
 
 .selector label {
@@ -248,4 +265,20 @@ html, body {
 
 #suggestions li input[type="checkbox"] {
     margin-right: 10px;
+}
+
+.score{
+    margin-top: 30px;
+}
+
+.last-updated{
+    font-size: 14;
+    text-align: center;
+}
+
+.separator {
+    border: 0;
+    height: 1px;
+    background: #333;
+    margin: 10px 0;
 }
