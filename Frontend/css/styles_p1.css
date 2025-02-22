@@ -87,6 +87,8 @@ html, body {
 }
 
 .portfolio-item {
+    display: flex;
+    align-items: center;
     min-width: 25%;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -97,26 +99,30 @@ html, body {
     padding: 10px;
 }
 
-.portfolio-header img {
-    width: 40px;
-    height: 40px;
+.portfolio-header {
+    width: 30%;
+    height: auto;
+    vertical-align: middle;
+    align-content: center;
 }
 
-.portfolio-header span {
-    margin-left: 10px;
-    color: green;
+.portfolio-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-body span {
+    margin: 0;
 }
 
 .portfolio-body span:first-child {
     font-size: 14px;
-    color: #888;
-    margin: 0;
 }
 
 .portfolio-body span:last-child {
     font-size: 24px;
-    margin: 0;
 }
+
 
 
 .logo {
