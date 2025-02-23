@@ -1,0 +1,4 @@
+config.py
+endpoint/Resources/Clean_all_stocks_data_5yrs_cleaned.csv
+endpoint/Resources/Ticker_data.csv
+endpoint/.kaggle/kaggle.json
