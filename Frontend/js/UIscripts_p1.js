@@ -73,33 +73,39 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Range and Intervals =============================================================
 document.addEventListener('DOMContentLoaded', function() {
     const rangeSelector = document.getElementById('range-selector');
     const intervalButtons = document.querySelectorAll('.interval-button');
 
     const rules = {
-        'range1': ['1m', '5m', '15m'],
-        'range2': ['1m', '5m', '15m', '1d'],
-        'range3': ['15m', '1d', '1wk'],
-        'range4': ['1d', '1wk', '1mo'],
-        'range5': ['1d', '1wk', '1mo'],
-        'range6': ['1d', '1wk', '1mo'],
-        'range7': ['1wk', '1mo'],
+        'range1': { intervals: ['1m', '5m', '15m'], default: '5m' },
+        'range2': { intervals: ['1m', '5m', '15m', '1d'], default: '15m' },
+        'range3': { intervals: ['15m', '1d', '1wk'], default: '1d' },
+        'range4': { intervals: ['1d', '1wk', '1mo'], default: '1d' },
+        'range5': { intervals: ['1d', '1wk', '1mo'], default: '1d' },
+        'range6': { intervals: ['1d', '1wk', '1mo'], default: '1wk' },
+        'range7': { intervals: ['1wk', '1mo'], default: '1mo' },
     };
 
-
-    // Range and Intervals =============================================================
     function updateIntervals() {
         const selectedRange = rangeSelector.value;
-        const allowedIntervals = rules[selectedRange];
+        const allowedIntervals = rules[selectedRange].intervals;
+        const defaultInterval = rules[selectedRange].default;
 
         intervalButtons.forEach(button => {
             if (allowedIntervals.includes(button.textContent)) {
                 button.disabled = false;
                 button.classList.remove('disabled');
+                if (button.textContent === defaultInterval) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
             } else {
                 button.disabled = true;
                 button.classList.add('disabled');
+                button.classList.remove('active');
             }
         });
     }
