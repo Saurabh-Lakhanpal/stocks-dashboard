@@ -1,7 +1,5 @@
 let selectedTickers = [];
-
-// Ensure config.js is loaded before using API_KEY
-console.log('API_KEY:', API_KEY); // Log the API key
+let selectedTickerNames = {}; // Store ticker names
 
 async function fetchSuggestions() {
     const query = document.getElementById('ticker-selector').value;
@@ -23,7 +21,6 @@ async function fetchSuggestions() {
         }
 
         const data = await response.json();
-        console.log('API Response:', data); // Log the API response
 
         const suggestions = data.ResultSet.Result;
         const suggestionsList = document.getElementById('suggestions');
@@ -35,13 +32,14 @@ async function fetchSuggestions() {
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.value = suggestion.symbol;
+            checkbox.dataset.name = suggestion.name; // Store company name in data attribute
             checkbox.onchange = () => handleSelection(checkbox);
             li.appendChild(checkbox);
             li.appendChild(document.createTextNode(suggestion.symbol));
             suggestionsList.appendChild(li);
         });
     } catch (error) {
-        console.error('Error fetching suggestions:', error); // Log any errors
+        console.error('Error fetching suggestions:', error);
     }
 }
 
@@ -49,6 +47,7 @@ function handleSelection(checkbox) {
     if (checkbox.checked) {
         if (selectedTickers.length < 5) {
             selectedTickers.push(checkbox.value);
+            selectedTickerNames[checkbox.value] = checkbox.dataset.name; // Store the company name
             updateSelectedList();
         } else {
             checkbox.checked = false;
@@ -56,6 +55,7 @@ function handleSelection(checkbox) {
         }
     } else {
         selectedTickers = selectedTickers.filter(ticker => ticker !== checkbox.value);
+        delete selectedTickerNames[checkbox.value]; // Remove the company name
         updateSelectedList();
     }
 }
@@ -65,9 +65,16 @@ function updateSelectedList() {
     selectedList.innerHTML = '';
     selectedTickers.forEach(ticker => {
         const li = document.createElement('li');
-        li.textContent = ticker;
+        li.textContent = ticker; // Use ticker symbol instead of company name
         selectedList.appendChild(li);
     });
+
+    if (selectedTickers.length > 0) {
+        // Display the name of the first selected ticker
+        document.getElementById('selected-ticker').textContent = selectedTickerNames[selectedTickers[0]];
+    } else {
+        document.getElementById('selected-ticker').textContent = '';
+    }
 }
 
 function showSuggestions() {

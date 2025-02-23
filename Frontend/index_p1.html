@@ -29,12 +29,18 @@
                     <ul id="selected-list" class="selected-list"></ul>
                 </div>
                 <hr class="separator">
+                <p>Select Date Range</p>
                 <div class="selector">
-                    <p>Select Date Range</p>
                     <select id="range-selector">
-                        <option value="5days">5Days</option>
+                        <option value="range1" selected>1d</option>
+                        <option value="range2">5d</option>
+                        <option value="range3">1mo</option>
+                        <option value="range4">3mo</option>
+                        <option value="range5">6mo</option>
+                        <option value="range6">1y</option>
+                        <option value="range7">5y</option>
                     </select>
-                </div>
+                </div>     
             </div>
         </div>
         <div class="main-content">
@@ -110,28 +116,29 @@
                 </div>                
                 <div class="stock-details">
                     <div class="stock-header">
-                        <span id= 'selected-ticker'class="ticker">APPL</span>
-                        <span id= 'stock-change-calc'class="stock-change">+1.66%</span>
+                        <span id= 'selected-ticker'class="ticker"> </span>
+                        <span id= 'stock-change-calc'class="stock-change"><p>+1.66%</p></span>
                     </div>
                     <div class="stock-price">
                         <span id= 'selected-ticker-price'class="price">USD 50.25</span>
-                        <div class="layer-selector">
-                            <label for="layer-selector">Layer Selector</label>
-                            <select id="layer-selector">
-                                <!-- Options here -->
-                            </select>
-                        </div>
+                            <div class="layer-selector">
+                                <select id="layer-selector">
+                                    <option value="" selected>Select Plot Layers</option>
+                                    <option value="layer3">Candlestick</option>
+                                    <option value="layer1">50 Day Moving Average</option>
+                                    <option value="layer2">200 Day Moving Average</option>
+                                </select>
+                            </div>                       
                         <div class="chart-intervals">
-                            <button id= 'interval-1' class="interval-button">1d</button>
-                            <button id= 'interval-2' class="interval-button">5d</button>
-                            <button id= 'interval-3' class="interval-button active">6m</button>
-                            <button id= 'interval-4' class="interval-button">1m</button>
-                            <button id= 'interval-5' class="interval-button">1y</button>
-                            <button id= 'interval-6' class="interval-button">5y</button>
-                            <button id= 'interval-7' class="interval-button">Max</button>
+                            <button id= 'interval-1' class="interval-button">1m</button>
+                            <button id= 'interval-2' class="interval-button active">5m</button>
+                            <button id= 'interval-3' class="interval-button">15m</button>
+                            <button id= 'interval-4' class="interval-button">1d</button>
+                            <button id= 'interval-5' class="interval-button">1wk</button>
+                            <button id= 'interval-6' class="interval-button">1mo</button>
                         </div>
                     </div>
-                    <div class="chart rounded" id='plot'>
+                    <div class="chart" id='plot'>
                         <!-- Chart will be rendered here -->
                     </div>
                 </div>
