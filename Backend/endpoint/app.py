@@ -54,14 +54,20 @@ def welcome():
         f"<li><a href='/api/v1.0/portfolio'>/api/v1.0/portfolio</a> - Get all portfolio data</li>"
         f"</ul>"
         f"<p>Example call for date range: <a href='/api/v1.0/sp500?start_date=2014-01-01&end_date=2015-01-01'>/api/v1.0/sp500?start_date=2014-01-01&end_date=2015-01-01</a></p>"
+        f"<p>Example call for ticker: <a href='/api/v1.0/ticker?ticker=AAPL'>/api/v1.0/ticker?ticker=AAPL</a> - Get company name by ticker (example for AAPL)</p>"
+        f"<p>Example call for S&P 500 data by ticker: <a href='/api/v1.0/sp500?ticker=AAPL&start_date=2014-01-01&end_date=2015-01-01'>/api/v1.0/sp500?ticker=AAPL&start_date=2014-01-01&end_date=2015-01-01</a> - Get S&P 500 data for AAPL within a specific date range</p>"
     )
-
 
 @app.route("/api/v1.0/ticker")
 def get_ticker_data():
     session = Session(engine)
+    ticker_symbol = request.args.get('ticker', default=None, type=str)
+    
     try:
-        results = session.query(Ticker).all()
+        if ticker_symbol:
+            results = session.query(Ticker).filter(Ticker.c.ticker == ticker_symbol).all()
+        else:
+            results = session.query(Ticker).all()
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
@@ -84,6 +90,9 @@ def get_ticker_data():
 def get_sp500_data():
     session = Session(engine)
     try:
+        # Get ticker symbol from query parameters
+        ticker_symbol = request.args.get('ticker', default=None, type=str)
+        
         # Get date range from query parameters
         start_date = request.args.get('start_date', default='2013-02-08', type=str)
         end_date = request.args.get('end_date', default='2018-02-07', type=str)
@@ -96,8 +105,11 @@ def get_sp500_data():
         if start_date < dt.datetime(2013, 2, 8) or end_date > dt.datetime(2018, 2, 7):
             return jsonify({"error": "Dates out of range. Valid date range is 2013-02-08 to 2018-02-07"}), 400
 
-        # Query data within the specified date range
-        results = session.query(SP500).filter(SP500.c.date >= start_date, SP500.c.date <= end_date).all()
+        # Query data within the specified date range and optional ticker symbol
+        if ticker_symbol:
+            results = session.query(SP500).filter(SP500.c.date >= start_date, SP500.c.date <= end_date, SP500.c.ticker == ticker_symbol).all()
+        else:
+            results = session.query(SP500).filter(SP500.c.date >= start_date, SP500.c.date <= end_date).all()
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
@@ -139,10 +151,8 @@ def get_portfolio_data():
         })
         portfolio_data.append(portfolio_dict)
 
-    return app.response_class(
-        response.json.dumps(portfolio_data, sort_keys=False),
-        mimetype='application/json'
-    )
+    return jsonify(portfolio_data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
