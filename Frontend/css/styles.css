@@ -290,10 +290,10 @@ html, body {
     text-align: center;
     background-color: #FFD700;
     padding: 10px;
-    border: none; /* Ensures no border is applied */
-    border-radius: 5px; /* Adds a slight curve to the corners */
-    color: #000000; /* Ensures text color is readable */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow effect */
+    border: none; 
+    border-radius: 5px; 
+    color: #000000; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
 }
 
 .last-updated:hover {
@@ -307,11 +307,14 @@ html, body {
     margin: 10px 0;
 }
 
+.plot-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+    padding: 10px; 
+}
 
-/* Pastel Red: #FF6F61
-
-Pastel Yellow: #FFD700
-
-Pastel Orange: #FFA07A
-
-Pastel Blue: #ADD8E6 */
+.plot-grid {
+    background-color: #f7eec5;
+    padding: 20px;
+}
