@@ -151,10 +151,8 @@ def get_portfolio_data():
         })
         portfolio_data.append(portfolio_dict)
 
-    return app.response_class(
-        response.json.dumps(portfolio_data, sort_keys=False),
-        mimetype='application/json'
-    )
+    return jsonify(portfolio_data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
