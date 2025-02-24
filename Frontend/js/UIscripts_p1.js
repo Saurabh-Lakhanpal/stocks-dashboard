@@ -31,10 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     intervalButtons.forEach(button => {
         button.addEventListener("click", function() {
-            // Remove active class from all buttons
             intervalButtons.forEach(btn => btn.classList.remove("active"));
-            
-            // Add active class to the clicked button
             this.classList.add("active");
         });
     });
@@ -53,7 +50,6 @@ document.getElementById('refreshButton').addEventListener('click', function() {
     location.reload();
 });
 
-// Initialize the button with the current timestamp on page load
 window.onload = function() {
     updateButtonTimestamp();
 }
@@ -111,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     rangeSelector.addEventListener('change', updateIntervals);
-
-    // Initial call to set intervals based on the default selected range
     updateIntervals();
 });
+

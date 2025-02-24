@@ -1,5 +1,36 @@
 let selectedTickers = [];
-let selectedTickerNames = {}; // Store ticker names
+let selectedTickerNames = {};
+let start_date = [];
+let end_date = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    var startDateInput = document.getElementById('start_date');
+    var endDateInput = document.getElementById('end_date');
+
+    // Set default dates
+    startDateInput.value = '2014-01-01';
+    endDateInput.value = '2014-06-30';
+
+    // Store default dates in variables
+    start_date.push('2014-01-01');
+    end_date.push('2014-06-30');
+
+    startDateInput.addEventListener('change', function() {
+        var startDate = this.value;
+        console.log("Start date: " + startDate);
+
+        // Store the selected start date in a variable
+        start_date[0] = startDate;
+    });
+
+    endDateInput.addEventListener('change', function() {
+        var endDate = this.value;
+        console.log("End date: " + endDate);
+
+        // Store the selected end date in a variable
+        end_date[0] = endDate;
+    });
+});
 
 async function fetchSuggestions() {
     const query = document.getElementById('ticker-selector').value;
@@ -25,14 +56,14 @@ async function fetchSuggestions() {
         const suggestions = data.ResultSet.Result;
         const suggestionsList = document.getElementById('suggestions');
         suggestionsList.innerHTML = '';
-        suggestionsList.style.display = 'block'; // Show the suggestions box
+        suggestionsList.style.display = 'block'; 
 
         suggestions.forEach(suggestion => {
             const li = document.createElement('li');
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.value = suggestion.symbol;
-            checkbox.dataset.name = suggestion.name; // Store company name in data attribute
+            checkbox.dataset.name = suggestion.name; 
             checkbox.onchange = () => handleSelection(checkbox);
             li.appendChild(checkbox);
             li.appendChild(document.createTextNode(suggestion.symbol));

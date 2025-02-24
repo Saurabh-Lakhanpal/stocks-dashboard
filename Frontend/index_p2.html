@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="https://fonts.googleapis.com/css2?family=Shafarik:wght@400;700&display=swap" rel="stylesheet">
     <title>Stocks Dashboard</title>
     <link rel="stylesheet" href="css/styles.css">
@@ -13,7 +12,7 @@
         <div class="sidebar">
             <img src="assets/logo.svg" alt="Stocks Dashboard Logo" height="15%">
             <hr class="separator">
-                <button id="refreshButton" class="last-updated">Reload Page</button>         
+            <button id="refreshButton" class="last-updated">Reload Page</button>         
             <div class="selectors">
                 <hr class="separator">
                 <div class="selector">
@@ -25,20 +24,19 @@
                     <ul id="selected-list" class="selected-list"></ul>
                 </div>
                 <hr class="separator">
+                <p>Select Date Range</p>
                 <div class="selector">
-                    <p>Select Date Range</p>
-                    <select id="range-selector">
-                        <option value="5days">5Days</option>
-                    </select>
-                </div>
+                    <input type="date" id="start_date" class="datepicker" placeholder="Start Date" />
+                    <input type="date" id="end_date" class="datepicker" placeholder="End Date" />
+                </div>     
             </div>
         </div>
         <div class="main-content">
             <div class="header">
                 <div class="navigation">
-                    <button id= 'overview' class="nav-button">Ticker Overview</button>
-                    <button id= 'historical' class="nav-button">Historical Data</button>
-                    <button id= 'ratios' class="nav-button">Health & Ratios</button>
+                    <button id="overview" class="nav-button">Ticker Overview</button>
+                    <button id="historical" class="nav-button">Historical Data</button>
+                    <button id="ratios" class="nav-button">Health & Ratios</button>
                 </div>
             </div>
             <div class="shadow plot-grid-container">
@@ -52,5 +50,6 @@
     <script src="js/config.js"></script>
     <script src="js/UIscripts_p1.js"></script>
     <script src="js/searchbar_p1.js"></script>
+    <script src="js/datePicker.js"></script>
 </body>
 </html>
