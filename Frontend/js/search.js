@@ -1,36 +1,7 @@
 let selectedTickers = [];
 let selectedTickerNames = {};
-let start_date = [];
-let end_date = [];
-
-document.addEventListener('DOMContentLoaded', function() {
-    var startDateInput = document.getElementById('start_date');
-    var endDateInput = document.getElementById('end_date');
-
-    // Set default dates
-    startDateInput.value = '2014-01-01';
-    endDateInput.value = '2014-06-30';
-
-    // Store default dates in variables
-    start_date.push('2014-01-01');
-    end_date.push('2014-06-30');
-
-    startDateInput.addEventListener('change', function() {
-        var startDate = this.value;
-        console.log("Start date: " + startDate);
-
-        // Store the selected start date in a variable
-        start_date[0] = startDate;
-    });
-
-    endDateInput.addEventListener('change', function() {
-        var endDate = this.value;
-        console.log("End date: " + endDate);
-
-        // Store the selected end date in a variable
-        end_date[0] = endDate;
-    });
-});
+let start_date = ["2014-01-01"];
+let end_date = ["2014-06-30"];
 
 async function fetchSuggestions() {
     const query = document.getElementById('ticker-selector').value;
@@ -119,4 +90,34 @@ document.addEventListener('click', function(event) {
     if (!suggestionsList.contains(event.target) && !searchBox.contains(event.target)) {
         suggestionsList.style.display = 'none';
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var startDateInput = document.getElementById('start_date');
+    var endDateInput = document.getElementById('end_date');
+
+    startDateInput.value = start_date[0];
+    endDateInput.value = end_date[0];
+
+    startDateInput.addEventListener('change', function() {
+        var startDate = this.value;
+        if (startDate < "2013-02-08" || startDate > "2018-02-07") {
+            alert("Start date must be within the range of 2013-02-08 to 2018-02-07.");
+            this.value = start_date[0];
+            return;
+        }
+        console.log("Start date: " + startDate);
+        start_date[0] = startDate;
+    });
+
+    endDateInput.addEventListener('change', function() {
+        var endDate = this.value;
+        if (endDate < "2013-02-08" || endDate > "2018-02-07") {
+            alert("End date must be within the range of 2013-02-08 to 2018-02-07.");
+            this.value = end_date[0];
+            return;
+        }
+        console.log("End date: " + endDate);
+        end_date[0] = endDate;
+    });
 });
