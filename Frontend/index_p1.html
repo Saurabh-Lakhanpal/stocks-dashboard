@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Shafarik:wght@400;700&display=swap" rel="stylesheet">
     <title>Stocks Dashboard</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -39,7 +40,9 @@
                         <option value="range6">1y</option>
                         <option value="range7">5y</option>
                     </select>
-                </div>     
+                </div>
+                <hr class="separator">
+                <button id="plot-button" class="last-updated">Plot</button>     
             </div>
         </div>
         <div class="main-content">
@@ -144,6 +147,8 @@
     </div>
     <script src="js/config.js"></script>
     <script src="js/UIscripts_p1.js"></script>
-    <script src="js/search.js"></script>
+    <script src="js/scripts_p1.js"></script>
+    <!-- <script src="js/search.js"></script>
+    <script src="js/plot_p1.js"></script> -->
 </body>
 </html>
