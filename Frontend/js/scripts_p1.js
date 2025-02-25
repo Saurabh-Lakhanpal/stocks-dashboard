@@ -1,8 +1,20 @@
+// Global variables
 let selectedTickers = ["AAPL"]; // Default ticker
 let selectedTickerNames = ["Apple Inc."]; // Default ticker name
 const defaultInterval = "5m";
 let interval = defaultInterval;
 let range = "range1"; // Default range
+
+// Debounce function to improve performance
+function debounce(func, delay) {
+    let debounceTimer;
+    return function() {
+        const context = this;
+        const args = arguments;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => func.apply(context, args), delay);
+    };
+}
 
 // Fetch suggestions and handle selection
 async function fetchSuggestions() {
@@ -28,14 +40,14 @@ async function fetchSuggestions() {
         const suggestions = data.ResultSet.Result;
         const suggestionsList = document.getElementById('suggestions');
         suggestionsList.innerHTML = '';
-        suggestionsList.style.display = 'block'; 
+        suggestionsList.style.display = 'block';
 
         suggestions.forEach(suggestion => {
             const li = document.createElement('li');
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.value = suggestion.symbol;
-            checkbox.dataset.name = suggestion.name; 
+            checkbox.dataset.name = suggestion.name;
             checkbox.onchange = () => handleSelection(checkbox);
             li.appendChild(checkbox);
             li.appendChild(document.createTextNode(suggestion.symbol));
@@ -43,6 +55,8 @@ async function fetchSuggestions() {
         });
     } catch (error) {
         console.error('Error fetching suggestions:', error);
+        // Provide user feedback on error
+        document.getElementById('suggestions').innerHTML = '<li class="error-message">Error fetching suggestions. Please try again later.</li>';
     }
 }
 
@@ -103,16 +117,7 @@ document.addEventListener('click', function(event) {
         suggestionsList.style.display = 'none';
     }
 });
-
 document.addEventListener("DOMContentLoaded", function() {
-    const defaultTicker = "AAPL";
-    const defaultRange = "range1";
-    const defaultInterval = "5m";
-    let selectedTickers = [defaultTicker];
-    let selectedTickerNames = ["Apple Inc."];
-    let range = defaultRange;
-    let interval = defaultInterval;
-
     // Populate the selected ticker name on page load
     document.getElementById('selected-ticker').textContent = selectedTickerNames[0];
 
@@ -122,10 +127,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Event listener for range selection
     document.getElementById("range-selector").addEventListener("change", function() {
         range = this.value;
-        const selectedTicker = selectedTickers[0];
-        const selectedInterval = interval;
-
-        fetchDataAndPlot(selectedTicker, range, selectedInterval);
     });
 
     // Event listener for interval button clicks
@@ -136,7 +137,6 @@ document.addEventListener("DOMContentLoaded", function() {
             this.classList.add("active");
             interval = this.textContent;
             const selectedTicker = selectedTickers[0];
-
             fetchDataAndPlot(selectedTicker, range, interval);
         });
     });
@@ -161,8 +161,13 @@ async function fetchDataAndPlot(ticker, range, interval) {
         const volumes = data.chart.result[0].indicators.quote[0].volume;
 
         plotData(timestamps, prices, volumes, ticker);
+
+        // Re-plot the chart when the window is resized
+        window.addEventListener('resize', () => plotData(timestamps, prices, volumes, ticker));
     } catch (error) {
         console.error("Error fetching data:", error);
+        // Provide user feedback on error
+        document.getElementById('plot').innerHTML = '<p class="error-message">Error fetching data. Please try again later.</p>';
     }
 }
 
@@ -171,42 +176,56 @@ function plotData(timestamps, prices, volumes, ticker) {
     // Clear any existing plots
     d3.select("#plot").selectAll("*").remove();
 
-    // Set up the dimensions and margins of the graph
-    const margin = {top: 20, right: 50, bottom: 30, left: 50};
-    const width = 960 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
+    // Get the dimensions of the parent container
+    const container = d3.select("#plot").node();
+    const width = container.getBoundingClientRect().width;
+    const height = container.getBoundingClientRect().height;
 
-    // Append the svg object to the body of the page
+    // Set up the dimensions and margins of the graph
+    const margin = {top: 20, right: 100, bottom: 20, left: 50};
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    // Append the svg object to the body of the page with viewBox and preserveAspectRatio attributes
     const svg = d3.select("#plot")
         .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("viewBox", `0 0 ${width} ${height}`)
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .style("overflow", "hidden")
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Add X axis
     const x = d3.scaleTime()
         .domain(d3.extent(timestamps))
-        .range([0, width]);
+        .range([0, innerWidth]);
     svg.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
+        .attr("transform", `translate(0,${innerHeight})`)
+        .call(d3.axisBottom(x))
+        .selectAll("text") // Select all text elements within the x-axis
+        .style("font-size", "12px"); // Set the font size
 
     // Add Y axis for prices
     const yPrice = d3.scaleLinear()
         .domain([d3.min(prices), d3.max(prices)])
-        .range([height, 0]);
+        .range([innerHeight, 0]);
     svg.append("g")
         .attr("class", "axisPrice")
-        .call(d3.axisLeft(yPrice));
+        .call(d3.axisLeft(yPrice))
+        .selectAll("text") // Select all text elements within the y-axis
+        .style("font-size", "12px"); // Set the font size
 
     // Add Y axis for volumes
     const yVolume = d3.scaleLinear()
         .domain([0, d3.max(volumes)])
-        .range([height, 0]);
+        .range([innerHeight, 0]);
     svg.append("g")
-        .attr("transform", `translate(${width},0)`)
-        .call(d3.axisRight(yVolume));
+        .attr("transform", `translate(${innerWidth},0)`)
+        .call(d3.axisRight(yVolume))
+        .selectAll("text") // Select all text elements within the right y-axis
+        .style("font-size", "12px"); // Set the font size
 
     // Add the price line
     svg.append("path")
@@ -227,6 +246,6 @@ function plotData(timestamps, prices, volumes, ticker) {
         .attr("x", (d, i) => x(d) - 0.5)
         .attr("y", (d, i) => yVolume(volumes[i]))
         .attr("width", 1)
-        .attr("height", (d, i) => height - yVolume(volumes[i]))
+        .attr("height", (d, i) => innerHeight - yVolume(volumes[i]))
         .attr("fill", "grey");
 }

@@ -173,7 +173,18 @@ html, body {
     width: 100%;
     margin-bottom: 30px;
     overflow: hidden;
+    position: relative; /* Add this line */
 }
+
+.chart {
+    width: 100%;
+    height: 80%; /* Adjust this value as needed */
+    background-color: #ffffff;
+    margin-top: 10px;
+    overflow: hidden; 
+    position: absolute; /* Add this line */
+}
+
 
 .main-content {
     width: 85%;
@@ -230,12 +241,6 @@ html, body {
 .layer-selector{
     order: 2;
     margin-left: 50px;
-}
-.chart {
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
-    margin-top: 10px;
 }
 
 .chart-intervals {
@@ -365,3 +370,9 @@ p {
     font-family: 'Shafarik', sans-serif;
     font-size: 16px;
 }
+
+.error-message {
+    margin-left: 30px;
+    color: #DB0A40; 
+}
+
