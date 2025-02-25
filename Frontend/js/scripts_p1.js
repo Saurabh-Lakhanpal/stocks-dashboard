@@ -77,6 +77,7 @@ function handleSelection(checkbox) {
         selectedTickerNames.push(checkbox.dataset.name);
         updateSelectedList();
         fetchDataAndPlot(selectedTickers[0], range, interval); 
+        updateSelectedTickerPrice(); // Update the price when a new ticker is selected
     }
 
     if (selectedTickers.length > 1) {
@@ -124,12 +125,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Fetch and plot data for the default ticker when the page loads
     fetchDataAndPlot(selectedTickers[0], range, interval);
+    updateSelectedTickerPrice(); // Update the price for the default ticker
 
     // Event listener for range selection
     document.getElementById("range-selector").addEventListener("change", function() {
         range = this.value;
         const selectedTicker = selectedTickers[0];
         fetchDataAndPlot(selectedTicker, range, interval);
+        updateSelectedTickerPrice(); // Update the price when the range changes
     });
 
     // Event listener for interval button clicks
@@ -141,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function() {
             interval = this.textContent;
             const selectedTicker = selectedTickers[0];
             fetchDataAndPlot(selectedTicker, range, interval);
+            updateSelectedTickerPrice(); // Update the price when the interval changes
         });
     });
 });
@@ -172,7 +176,7 @@ async function fetchDataAndPlot(ticker, range, interval) {
     } catch (error) {
         console.error("Error fetching data:", error);
         // Provide user feedback on error
-        document.getElementById('plot').innerHTML = '<p class="error-message">Error fetching data. Please try again later.</p>';
+        document.getElementById('plot').innerHTML = '<p class="error-message">Error fetching Plot data.</p>';
     }
 }
 
@@ -187,7 +191,7 @@ function plotData(timestamps, prices, volumes, ticker) {
     const height = container.getBoundingClientRect().height;
 
     // Set up the dimensions and margins of the graph
-    const margin = {top: 20, right: 100, bottom: 20, left: 50};
+    const margin = {top: 10, right: 100, bottom: 40, left: 50};
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -223,12 +227,14 @@ function plotData(timestamps, prices, volumes, ticker) {
         tickInterval = d3.timeHour.every(1); 
     }
 
-    // Add X axis with dynamic ticks
+    // Add X axis with dynamic ticks and rotate x-ticks 90 degrees
     svg.append("g")
         .attr("transform", `translate(0,${innerHeight})`)
         .call(d3.axisBottom(x).ticks(tickInterval)) 
         .selectAll("text")
-        .style("font-size", "12px");
+        .style("font-size", "12px")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start"); 
 
     // Add Y axis for prices
     const yPrice = d3.scaleLinear()
@@ -238,7 +244,7 @@ function plotData(timestamps, prices, volumes, ticker) {
         .attr("class", "axisPrice")
         .call(d3.axisLeft(yPrice))
         .selectAll("text")
-        .style("font-size", "12px"); 
+        .style("font-size", "12px");
 
     // Add Y axis for volumes
     const yVolume = d3.scaleLinear()
@@ -248,7 +254,7 @@ function plotData(timestamps, prices, volumes, ticker) {
         .attr("transform", `translate(${innerWidth},0)`)
         .call(d3.axisRight(yVolume))
         .selectAll("text")
-        .style("font-size", "12px"); 
+        .style("font-size", "12px");
 
     // Add the price line
     svg.append("path")
@@ -271,4 +277,33 @@ function plotData(timestamps, prices, volumes, ticker) {
         .attr("width", 1)
         .attr("height", (d, i) => innerHeight - yVolume(volumes[i]))
         .attr("fill", "grey");
+}
+
+// Function to update selected-ticker-price span
+async function updateSelectedTickerPrice() {
+    const ticker = selectedTickers[0];
+
+    try {
+        const response = await fetch(`https://yfapi.net/v8/finance/chart/${ticker}?range=${range}&interval=${interval}`, {
+            headers: {
+                'X-API-KEY': API_KEY
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        const latestPrice = data.chart.result[0].indicators.quote[0].close.pop(); // Get the latest price
+        const roundedPrice = latestPrice.toFixed(2); // Round to 2 decimal places
+
+        // Update the inner HTML of the span
+        const priceElement = document.getElementById('selected-ticker-price');
+        priceElement.innerHTML = `USD ${roundedPrice}`;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        // Provide user feedback on error
+        document.getElementById('selected-ticker-price').innerHTML = '<p class="error-message">Error Stock Price.</p>';
+    }
 }

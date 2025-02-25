@@ -204,11 +204,6 @@ html, body {
     margin: 0;
 }
 
-.stock-change {
-    color: green;
-    font-size: 18px;
-}
-
 .stock-price {
     margin-top: 10px;
     display: flex;
