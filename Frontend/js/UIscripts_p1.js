@@ -75,13 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const intervalButtons = document.querySelectorAll('.interval-button');
 
     const rules = {
-        'range1': { intervals: ['1m', '5m', '15m'], default: '5m' },
-        'range2': { intervals: ['1m', '5m', '15m', '1d'], default: '15m' },
-        'range3': { intervals: ['15m', '1d', '1wk'], default: '1d' },
-        'range4': { intervals: ['1d', '1wk', '1mo'], default: '1d' },
-        'range5': { intervals: ['1d', '1wk', '1mo'], default: '1d' },
-        'range6': { intervals: ['1d', '1wk', '1mo'], default: '1wk' },
-        'range7': { intervals: ['1wk', '1mo'], default: '1mo' },
+        '1d': { intervals: ['1m', '5m', '15m'], default: '5m' },
+        '5d': { intervals: ['1m', '5m', '15m', '1d'], default: '15m' },
+        '1mo': { intervals: ['15m', '1d', '1wk'], default: '1d' },
+        '3mo': { intervals: ['1d', '1wk', '1mo'], default: '1d' },
+        '6mo': { intervals: ['1d', '1wk', '1mo'], default: '1d' },
+        '1y': { intervals: ['1d', '1wk', '1mo'], default: '1wk' },
+        '5y': { intervals: ['1wk', '1mo'], default: '1mo' },
     };
 
     function updateIntervals() {

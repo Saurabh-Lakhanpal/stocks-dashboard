@@ -3,7 +3,7 @@ let selectedTickers = ["AAPL"]; // Default ticker
 let selectedTickerNames = ["Apple Inc."]; // Default ticker name
 const defaultInterval = "5m";
 let interval = defaultInterval;
-let range = "range1"; // Default range
+let range = "1d"; // Default range
 
 // Debounce function to improve performance
 function debounce(func, delay) {
@@ -117,6 +117,7 @@ document.addEventListener('click', function(event) {
         suggestionsList.style.display = 'none';
     }
 });
+
 document.addEventListener("DOMContentLoaded", function() {
     // Populate the selected ticker name on page load
     document.getElementById('selected-ticker').textContent = selectedTickerNames[0];
@@ -127,6 +128,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Event listener for range selection
     document.getElementById("range-selector").addEventListener("change", function() {
         range = this.value;
+        const selectedTicker = selectedTickers[0];
+        fetchDataAndPlot(selectedTicker, range, interval);
     });
 
     // Event listener for interval button clicks
@@ -144,8 +147,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Fetch and plot data function
 async function fetchDataAndPlot(ticker, range, interval) {
+    console.log(`Fetching data for range: ${range}, interval: ${interval}`);
+
     try {
-        const response = await fetch(`https://yfapi.net/v8/finance/chart/${ticker}?interval=${interval}`, {
+        const response = await fetch(`https://yfapi.net/v8/finance/chart/${ticker}?range=${range}&interval=${interval}`, {
             headers: {
                 'X-API-KEY': API_KEY
             }
@@ -203,9 +208,9 @@ function plotData(timestamps, prices, volumes, ticker) {
         .range([0, innerWidth]);
     svg.append("g")
         .attr("transform", `translate(0,${innerHeight})`)
-        .call(d3.axisBottom(x))
-        .selectAll("text") // Select all text elements within the x-axis
-        .style("font-size", "12px"); // Set the font size
+        .call(d3.axisBottom(x).ticks(d3.timeHour.every(1))) // Adjust tick intervals based on the time range
+        .selectAll("text")
+        .style("font-size", "12px");
 
     // Add Y axis for prices
     const yPrice = d3.scaleLinear()
