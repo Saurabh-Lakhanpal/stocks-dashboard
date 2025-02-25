@@ -1,9 +1,8 @@
 let selectedTickers = ["AAPL"]; // Default ticker
-let selectedTickerNames = {};
-let start_date = ["2014-01-01"];
-let end_date = ["2014-06-30"];
+let selectedTickerNames = ["Apple Inc."]; // Default ticker name
 const defaultInterval = "5m";
 let interval = defaultInterval;
+let range = "range1"; // Default range
 
 // Fetch suggestions and handle selection
 async function fetchSuggestions() {
@@ -48,18 +47,29 @@ async function fetchSuggestions() {
 }
 
 function handleSelection(checkbox) {
+    // If a ticker is already selected, clear it first
+    if (selectedTickers.length >= 1) {
+        // Uncheck all checkboxes
+        const checkboxes = document.querySelectorAll('#suggestions input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = false);
+
+        selectedTickers = [];
+        selectedTickerNames = [];
+    }
+
+    // If the checkbox is checked, add the ticker
     if (checkbox.checked) {
-        if (selectedTickers.length < 5) {
-            selectedTickers.push(checkbox.value);
-            selectedTickerNames[checkbox.value] = checkbox.dataset.name; // Store the company name
-            updateSelectedList();
-        } else {
-            checkbox.checked = false;
-            alert('You can select up to 5 tickers only.');
-        }
-    } else {
-        selectedTickers = selectedTickers.filter(ticker => ticker !== checkbox.value);
-        delete selectedTickerNames[checkbox.value]; // Remove the company name
+        selectedTickers.push(checkbox.value);
+        selectedTickerNames.push(checkbox.dataset.name);
+        updateSelectedList();
+        fetchDataAndPlot(selectedTickers[0], range, interval); // Update the chart with the new ticker
+    }
+
+    if (selectedTickers.length > 1) {
+        checkbox.checked = false;
+        alert('You can select up to 1 ticker only.');
+        selectedTickers.pop();
+        selectedTickerNames.pop();
         updateSelectedList();
     }
 }
@@ -75,7 +85,7 @@ function updateSelectedList() {
 
     if (selectedTickers.length > 0) {
         // Display the name of the first selected ticker
-        document.getElementById('selected-ticker').textContent = selectedTickerNames[selectedTickers[0]];
+        document.getElementById('selected-ticker').textContent = selectedTickerNames[0];
     } else {
         document.getElementById('selected-ticker').textContent = '';
     }
@@ -94,29 +104,31 @@ document.addEventListener('click', function(event) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function() {
     const defaultTicker = "AAPL";
     const defaultRange = "range1";
+    const defaultInterval = "5m";
+    let selectedTickers = [defaultTicker];
+    let selectedTickerNames = ["Apple Inc."];
+    let range = defaultRange;
+    let interval = defaultInterval;
+
+    // Populate the selected ticker name on page load
+    document.getElementById('selected-ticker').textContent = selectedTickerNames[0];
 
     // Fetch and plot data for the default ticker when the page loads
-    fetchDataAndPlot(selectedTickers[0], defaultRange, defaultInterval);
+    fetchDataAndPlot(selectedTickers[0], range, interval);
 
-    document.getElementById("plot-button").addEventListener("click", function() {
-        const selectedTicker = selectedTickers[0]; // Assuming only one ticker is selected
-        const selectedRange = document.getElementById("range-selector").value;
-        const activeIntervalButton = document.querySelector(".interval-button.active");
-        const selectedInterval = activeIntervalButton ? activeIntervalButton.textContent : defaultInterval;
-
-        fetchDataAndPlot(selectedTicker, selectedRange, selectedInterval);
-    });
-
-    // Event listeners for range and interval changes
+    // Event listener for range selection
     document.getElementById("range-selector").addEventListener("change", function() {
+        range = this.value;
         const selectedTicker = selectedTickers[0];
-        const selectedRange = this.value;
-        fetchDataAndPlot(selectedTicker, selectedRange, interval);
+        const selectedInterval = interval;
+
+        fetchDataAndPlot(selectedTicker, range, selectedInterval);
     });
 
+    // Event listener for interval button clicks
     const intervalButtons = document.querySelectorAll(".interval-button");
     intervalButtons.forEach(button => {
         button.addEventListener("click", function() {
@@ -124,8 +136,8 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add("active");
             interval = this.textContent;
             const selectedTicker = selectedTickers[0];
-            const selectedRange = document.getElementById("range-selector").value;
-            fetchDataAndPlot(selectedTicker, selectedRange, interval);
+
+            fetchDataAndPlot(selectedTicker, range, interval);
         });
     });
 });
@@ -218,39 +230,3 @@ function plotData(timestamps, prices, volumes, ticker) {
         .attr("height", (d, i) => height - yVolume(volumes[i]))
         .attr("fill", "grey");
 }
-
-// Initialize and update chart on page load
-document.addEventListener("DOMContentLoaded", function() {
-    const defaultTicker = "AAPL";
-    const defaultRange = "range1";
-    const defaultInterval = "5m";
-    let selectedTickers = [defaultTicker];
-    let range = defaultRange;
-    let interval = defaultInterval;
-
-    // Fetch and plot data for the default ticker when the page loads
-    fetchDataAndPlot(selectedTickers[0], range, interval);
-
-    document.getElementById("plot-button").addEventListener("click", function() {
-        const selectedTicker = selectedTickers[0]; // Assuming only one ticker is selected
-        const selectedRange = document.getElementById("range-selector").value;
-        const activeIntervalButton = document.querySelector(".interval-button.active");
-        const selectedInterval = activeIntervalButton ? activeIntervalButton.textContent : defaultInterval;
-
-        fetchDataAndPlot(selectedTicker, selectedRange, selectedInterval);
-    });
-
-    // Event listeners for range and interval changes
-    document.getElementById("range-selector").addEventListener("change", function() {
-        range = this.value;
-    });
-
-    const intervalButtons = document.querySelectorAll(".interval-button");
-    intervalButtons.forEach(button => {
-        button.addEventListener("click", function() {
-            intervalButtons.forEach(btn => btn.classList.remove("active"));
-            this.classList.add("active");
-            interval = this.textContent;
-        });
-    });
-});
