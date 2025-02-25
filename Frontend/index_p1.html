@@ -13,10 +13,6 @@
         <div class="sidebar">
             <img src="assets/logo.svg" alt="Stocks Dashboard Logo" height="15%">
             <hr class="separator">
-            <div id="score-meter" class="score">
-                                <!-- Confidence here -->
-            </div>
-                <hr class="separator">
                 <button id="refreshButton" class="last-updated">Reload Page</button>         
             <div class="selectors">
                 <hr class="separator">
@@ -42,6 +38,11 @@
                     </select>
                 </div>                
             </div>
+            <hr class="separator">
+            <div class="recommendation-card">
+                <p>Recommendations</p>
+                <ul id="recommended-symbols"></ul>
+            </div>            
         </div>
         <div class="main-content">
             <div class="header">
@@ -142,10 +143,10 @@
             </div>
         </div>
     </div>
-    <script src="js/p1_scripts/"></script>
+    <script src="js/p1_scripts/config.js"></script>
     <script src="js/p1_scripts/UIscripts_p1.js"></script>
     <script src="js/p1_scripts/events_p1.js"></script>
     <script src="js/p1_scripts/plot_p1.js"></script>
-
+    <script src="js/p1_scripts/recommendations_p1.js"></script>
 </body>
 </html>

@@ -1,4 +1,6 @@
-// Carousel Script ============================================================
+// These are the UI scripts, in UIscripts_p1.js
+
+// // Carousel Script ============================================================
 document.addEventListener('DOMContentLoaded', function() {
     const prevButton = document.querySelector('.carousel-button.prev');
     const nextButton = document.querySelector('.carousel-button.next');

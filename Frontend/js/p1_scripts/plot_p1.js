@@ -1,4 +1,5 @@
-// Fetch and plot data function
+// These are the plotting scripts, in plot_p1.js
+// // Fetch and plot data function
 async function fetchDataAndPlot(ticker, range, interval) {
     console.log(`Fetching data for range: ${range}, interval: ${interval}`);
 

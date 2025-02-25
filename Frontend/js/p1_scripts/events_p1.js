@@ -78,6 +78,7 @@ function handleSelection(checkbox) {
         updateSelectedList();
         fetchDataAndPlot(selectedTickers[0], range, interval); 
         updateSelectedTickerPrice(); // Update the price when a new ticker is selected
+        fetchAndDisplayRecommendations(selectedTickers[0]); // Update recommendations when a new ticker is selected
     }
 
     if (selectedTickers.length > 1) {
@@ -126,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Fetch and plot data for the default ticker when the page loads
     fetchDataAndPlot(selectedTickers[0], range, interval);
     updateSelectedTickerPrice(); // Update the price for the default ticker
+    fetchAndDisplayRecommendations(selectedTickers[0]); // Fetch and display recommendations for the default ticker
 
     // Event listener for range selection
     document.getElementById("range-selector").addEventListener("change", function() {
