@@ -1,9 +1,9 @@
 // Global variables
-let selectedTickers = ["AAPL"]; // Default ticker
-let selectedTickerNames = ["Apple Inc."]; // Default ticker name
+let selectedTickers = ["AAPL"]; 
+let selectedTickerNames = ["Apple Inc."]; 
 const defaultInterval = "5m";
 let interval = defaultInterval;
-let range = "1d"; // Default range
+let range = "1d"; 
 
 // Debounce function to improve performance
 function debounce(func, delay) {
@@ -76,7 +76,7 @@ function handleSelection(checkbox) {
         selectedTickers.push(checkbox.value);
         selectedTickerNames.push(checkbox.dataset.name);
         updateSelectedList();
-        fetchDataAndPlot(selectedTickers[0], range, interval); // Update the chart with the new ticker
+        fetchDataAndPlot(selectedTickers[0], range, interval); 
     }
 
     if (selectedTickers.length > 1) {
@@ -93,7 +93,7 @@ function updateSelectedList() {
     selectedList.innerHTML = '';
     selectedTickers.forEach(ticker => {
         const li = document.createElement('li');
-        li.textContent = ticker; // Use ticker symbol instead of company name
+        li.textContent = ticker; 
         selectedList.appendChild(li);
     });
 
@@ -206,9 +206,27 @@ function plotData(timestamps, prices, volumes, ticker) {
     const x = d3.scaleTime()
         .domain(d3.extent(timestamps))
         .range([0, innerWidth]);
+
+    // Determine tick interval based on the selected interval
+    let tickInterval;
+    if (interval === "1m" || interval === "5m" || interval === "15m") {
+        tickInterval = d3.timeMinute.every(parseInt(interval.replace('m', ''))); 
+    } else if (interval === "1h") {
+        tickInterval = d3.timeHour.every(1); 
+    } else if (interval === "1d") {
+        tickInterval = d3.timeDay.every(1); 
+    } else if (interval === "1wk") {
+        tickInterval = d3.timeWeek.every(1); 
+    } else if (interval === "1mo") {
+        tickInterval = d3.timeMonth.every(1); 
+    } else {
+        tickInterval = d3.timeHour.every(1); 
+    }
+
+    // Add X axis with dynamic ticks
     svg.append("g")
         .attr("transform", `translate(0,${innerHeight})`)
-        .call(d3.axisBottom(x).ticks(d3.timeHour.every(1))) // Adjust tick intervals based on the time range
+        .call(d3.axisBottom(x).ticks(tickInterval)) 
         .selectAll("text")
         .style("font-size", "12px");
 
@@ -219,8 +237,8 @@ function plotData(timestamps, prices, volumes, ticker) {
     svg.append("g")
         .attr("class", "axisPrice")
         .call(d3.axisLeft(yPrice))
-        .selectAll("text") // Select all text elements within the y-axis
-        .style("font-size", "12px"); // Set the font size
+        .selectAll("text")
+        .style("font-size", "12px"); 
 
     // Add Y axis for volumes
     const yVolume = d3.scaleLinear()
@@ -229,8 +247,8 @@ function plotData(timestamps, prices, volumes, ticker) {
     svg.append("g")
         .attr("transform", `translate(${innerWidth},0)`)
         .call(d3.axisRight(yVolume))
-        .selectAll("text") // Select all text elements within the right y-axis
-        .style("font-size", "12px"); // Set the font size
+        .selectAll("text")
+        .style("font-size", "12px"); 
 
     // Add the price line
     svg.append("path")
