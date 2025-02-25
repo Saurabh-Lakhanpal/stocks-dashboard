@@ -63,10 +63,10 @@ html, body {
     text-align: center;
     height: 100%;
     background-color: #FFD700;
-    border-radius: 10px; /* Adds a slight curve to the corners */
-    padding: 10px; /* Adds padding */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow effect */
-    font-family: Arial, sans-serif; /* Sets a clean, modern font */
+    border-radius: 10px; 
+    padding: 10px; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+    font-family: Arial, sans-serif; 
 }
 
 .nav-button:hover {
@@ -173,16 +173,16 @@ html, body {
     width: 100%;
     margin-bottom: 30px;
     overflow: hidden;
-    position: relative; /* Add this line */
+    position: relative; 
 }
 
 .chart {
     width: 100%;
-    height: 80%; /* Adjust this value as needed */
+    height: 80%; 
     background-color: #ffffff;
     margin-top: 10px;
     overflow: hidden; 
-    position: absolute; /* Add this line */
+    position: absolute; 
 }
 
 
