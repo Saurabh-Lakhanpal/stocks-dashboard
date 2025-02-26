@@ -28,18 +28,18 @@ Stocks-dashboard
 │   │   └── styles.css
 │   ├── js
 │   │   ├── p1_scripts
-|   |   |   ├── UIscripts_p1.js
-|   |   |   ├── events_p1.js
-|   |   |   ├── plot_p1.js
-|   |   |   └── recommendations_p1.js
+│   │   │   ├── UIscripts_p1.js
+│   │   │   ├── events_p1.js
+│   │   │   ├── plot_p1.js
+│   │   │   └── recommendations_p1.js
 │   │   ├── p2_scripts
-|   |   |   ├── UIscripts_p2.js
-|   |   |   ├── events_p2.js
-|   |   |   └── plot_p2.js
+│   │   │   ├── UIscripts_p2.js
+│   │   │   ├── events_p2.js
+│   │   │   └── plot_p2.js
 │   │   ├── p3_scripts
-|   |   |   ├── UIscripts_p3.js
-|   |   |   ├── events_p3.js
-|   |   |   └── plot_p3.js
+│   │   │   ├── UIscripts_p3.js
+│   │   │   ├── events_p3.js
+│   │   │   └── plot_p3.js
 ├── .gitignore
 ├── tutorials
 └── README.md
