@@ -67,12 +67,12 @@ function plotCandlestickLayer(data) {
             return height;
         })
         .attr("fill", d => d.open > d.close ? "#DB0A40" : "#0A3064")
-        .attr("rx", 5)  // Rounded corners
+        .attr("rx", 5)  
         .attr("ry", 5)
-        .attr("opacity", 0.8);  // Adjust the opacity value as needed (0.0 to 1.0)
+        .attr("opacity", 0.8);  
 
 
-    // Adding hover tooltip
+    // Hover tooltip
     const tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("position", "absolute")

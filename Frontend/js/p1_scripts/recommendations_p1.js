@@ -1,4 +1,4 @@
-// These are the scripts, in recommendations_p1.js
+// recommendations_p1.js
 
 // Function to fetch and display recommended symbols
 async function fetchAndDisplayRecommendations(ticker) {
@@ -18,7 +18,7 @@ async function fetchAndDisplayRecommendations(ticker) {
         displayRecommendations(recommendedSymbols);
     } catch (error) {
         console.error("Error fetching recommendations:", error);
-        // User feedback
+        // UI error display
         document.getElementById('recommended-symbols').innerHTML = '<li class="error-message">No Response from Recommendations.</li>';
     }
 }

@@ -1,4 +1,4 @@
-// These are the UI scripts, in UIscripts_p1.js
+// UIscripts_p1.js
 
 // // Carousel Script ============================================================
 document.addEventListener('DOMContentLoaded', function() {

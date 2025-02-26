@@ -1,4 +1,6 @@
 //portfolio_p1.js
+
+// Fetch from backend route for portfolio
 async function getPortfolioData() {
     const url = 'http://127.0.0.1:5000/api/v1.0/portfolio';
     try {
@@ -17,7 +19,7 @@ async function getPortfolioData() {
         return { shares, tickers };
     } catch (error) {
         console.error('Error fetching portfolio data:', error);
-        // Provide user feedback on error
+        // UI error to show
         document.getElementById('ticker-name-2').innerHTML = '<p class="error-message">Error Getting Portfolio Data.</p>';
         return { shares: [], tickers: [] };
     }

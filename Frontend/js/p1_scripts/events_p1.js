@@ -18,7 +18,7 @@ function debounce(func, delay) {
     };
 }
 
-// Fetch suggestions and handle selection
+// Fetch suggestions from Autocomplete API call and handle selection
 async function fetchSuggestions() {
     const query = document.getElementById('ticker-selector').value;
     if (query.length < 1) {
@@ -57,15 +57,15 @@ async function fetchSuggestions() {
     });
     } catch (error) {
         console.error('Error fetching suggestions:', error);
-        // Provide user feedback on error
+        // Error on screen
         document.getElementById('suggestions').innerHTML = '<li class="error-message">No Response from Autocomplete.</li>';
     }
 }
 
 function handleSelection(checkbox) {
-    // If a ticker is already selected, clear it first
+
     if (selectedTickers.length >= 1) {
-        // Uncheck all checkboxes
+
         const checkboxes = document.querySelectorAll('#suggestions input[type="checkbox"]');
         checkboxes.forEach(cb => cb.checked = false);
 
@@ -79,8 +79,8 @@ function handleSelection(checkbox) {
         selectedTickerNames.push(checkbox.dataset.name);
         updateSelectedList();
         fetchDataAndPlot(selectedTickers[0], range, interval); 
-        updateSelectedTickerPrice(); // Update the price when a new ticker is selected
-        fetchAndDisplayRecommendations(selectedTickers[0]); // Update recommendations when a new ticker is selected
+        updateSelectedTickerPrice(); 
+        fetchAndDisplayRecommendations(selectedTickers[0]); 
     }
 
     if (selectedTickers.length > 1) {
@@ -127,20 +127,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Fetch and plot data for the default ticker when the page loads
     fetchDataAndPlot(selectedTickers[0], range, interval);
-    updateSelectedTickerPrice(); // Update the price for the default ticker
-    fetchAndDisplayRecommendations(selectedTickers[0]); // Fetch and display recommendations for the default ticker
+    updateSelectedTickerPrice(); 
+    fetchAndDisplayRecommendations(selectedTickers[0]); 
 
     // Event listener for range selection
     document.getElementById("range-selector").addEventListener("change", function() {
         range = this.value;
         const selectedTicker = selectedTickers[0];
         fetchDataAndPlot(selectedTicker, range, interval);
-        updateSelectedTickerPrice(); // Update the price when the range changes
+        updateSelectedTickerPrice(); 
 
         // Reset the layer selector to its default value
         const layerSelector = document.getElementById("layer-selector");
         layerSelector.value = "";
-        clearCandlestickLayer(); // Clear candlesticks if any
+        clearCandlestickLayer(); 
     });
 
     // Event listener for interval button clicks
@@ -152,12 +152,12 @@ document.addEventListener("DOMContentLoaded", function() {
             interval = this.textContent;
             const selectedTicker = selectedTickers[0];
             fetchDataAndPlot(selectedTicker, range, interval);
-            updateSelectedTickerPrice(); // Update the price when the interval changes
+            updateSelectedTickerPrice(); 
 
             // Reset the layer selector to its default value
             const layerSelector = document.getElementById("layer-selector");
             layerSelector.value = "";
-            clearCandlestickLayer(); // Clear candlesticks if any
+            clearCandlestickLayer(); 
         });
     });
 
@@ -166,13 +166,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const selectedLayer = this.value;
         const selectedTicker = selectedTickers[0];
 
-        if (selectedLayer === "layer3") { // If Candlestick layer is selected
+        if (selectedLayer === "layer3") { 
             console.log('Layer selector changed, fetching data for:', selectedTicker);
             const data = await fetchDataAndPlot(selectedTicker, range, interval); 
             console.log('Data received in event listener:', data);
-            handleCandlestickData(data); // Pass the data to the function in layers_p1.js to handle and plot the data
+            handleCandlestickData(data); 
         } else {
-            clearCandlestickLayer(); // Clear candlesticks if a different layer is selected
+            clearCandlestickLayer(); 
         }
     });
 });

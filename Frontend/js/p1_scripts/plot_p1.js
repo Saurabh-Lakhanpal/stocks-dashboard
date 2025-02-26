@@ -1,6 +1,6 @@
-// These are the plotting scripts, in plot_p1.js
-// Fetch and plot data function
+// plot_p1.js
 
+// Fetch from Finance chart api and plot data function
 async function fetchDataAndPlot(ticker, range, interval) {
     console.log(`Fetching data for range: ${range}, interval: ${interval}`);
 
@@ -28,10 +28,10 @@ async function fetchDataAndPlot(ticker, range, interval) {
 
         plotData(timestamps, prices, volumes, ticker);
 
-        // Re-plot the chart when the window is resized
+        // Re-plot the chart when the window is resized for responsiveness
         window.addEventListener('resize', () => plotData(timestamps, prices, volumes, ticker));
 
-        return data; // Return the data for further use
+        return data; 
     } catch (error) {
         console.error("Error fetching data:", error);
         document.getElementById('plot').innerHTML = '<p class="error-message">Error fetching Plot data.</p>';
@@ -42,10 +42,10 @@ async function fetchDataAndPlot(ticker, range, interval) {
 
 // Plot data function using D3.js
 function plotData(timestamps, prices, volumes, ticker) {
-    // Clear any existing plots
+    
     d3.select("#plot").selectAll("*").remove();
 
-    // Get the dimensions of the parent container
+    // Get the dimensions of the parent div
     const container = d3.select("#plot").node();
     const width = container.getBoundingClientRect().width;
     const height = container.getBoundingClientRect().height;
@@ -116,24 +116,25 @@ function plotData(timestamps, prices, volumes, ticker) {
         .selectAll("text")
         .style("font-size", "12px");
 
-    // Add the volume bars
+    // Add the volume bars, handle missing data by setting height to 0
     svg.selectAll("bar")
         .data(timestamps)
         .enter()
         .append("rect")
         .attr("x", (d, i) => x(d) - 0.5)
-        .attr("y", (d, i) => yVolume(volumes[i]))
+        .attr("y", (d, i) => volumes[i] !== null ? yVolume(volumes[i]) : innerHeight)
         .attr("width", 10)
-        .attr("height", (d, i) => innerHeight - yVolume(volumes[i]))
+        .attr("height", (d, i) => volumes[i] !== null ? innerHeight - yVolume(volumes[i]) : 0)
         .attr("fill", "#6CB5DE");
     
-    // Add the price line
+    // Add the price line with handling for missing data
     svg.append("path")
-        .datum(timestamps.map((d, i) => ({date: d, value: prices[i]})))
+        .datum(timestamps.map((d, i) => ({ date: d, value: prices[i] !== null ? prices[i] : NaN })))
         .attr("fill", "none")
         .attr("stroke", "#DB0A40")
         .attr("stroke-width", 1.75)
         .attr("d", d3.line()
+            .defined(d => !isNaN(d.value))
             .x(d => x(d.date))
             .y(d => yPrice(d.value))
         );
@@ -161,8 +162,8 @@ function plotData(timestamps, prices, volumes, ticker) {
         .on("mouseover", function(event, d) {
             d3.select(this).attr("opacity", 1);
             d3.select("#tooltip")
-                .style("left", `${d3.pointer(event)[0]}px`)
-                .style("top", `${d3.pointer(event)[1]}px`)
+                .style("left", `${event.pageX + 10}px`)
+                .style("top", `${event.pageY - 10}px`)
                 .style("display", "block")
                 .html(`Date: ${d.date.toLocaleDateString()}<br>Price: ${d.value}</br>Volume: ${d.volume}`);
         })
@@ -188,8 +189,8 @@ async function updateSelectedTickerPrice() {
         }
 
         const data = await response.json();
-        const latestPrice = data.chart.result[0].indicators.quote[0].close.pop(); // Get the latest price
-        const roundedPrice = latestPrice.toFixed(2); // Round to 2 decimal places
+        const latestPrice = data.chart.result[0].indicators.quote[0].close.pop(); 
+        const roundedPrice = latestPrice.toFixed(2); 
 
         // Update the inner HTML of the span
         const priceElement = document.getElementById('selected-ticker-price');
