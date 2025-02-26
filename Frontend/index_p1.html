@@ -60,8 +60,9 @@
                                 <img src="assets/apple.svg" alt="Apple Logo" class="logo">
                             </div>                            
                             <div class="portfolio-body">
-                                <span>Apple, Inc</span>
-                                <span id='ticker-value-1'>15,215.70</span>
+                                <span id="ticker-name-1"></span>
+                                <span id="ticker-change-1"></span>
+                                <span id="ticker-value-1"></span>
                             </div>
                         </div>
                         <div class="portfolio-item">
@@ -69,8 +70,9 @@
                                 <img src="assets/nvidia.svg" alt="Nvidia Logo" class="logo">
                             </div>                            
                             <div class="portfolio-body">
-                                <span>Nvidia Corp</span>
-                                <span id='ticker-value-2'>5,300.0</span>
+                                <span id="ticker-name-2"></span>
+                                <span id="ticker-change-2"></span>
+                                <span id="ticker-value-2"></span>
                             </div>
                         </div>
                         <div class="portfolio-item">
@@ -78,8 +80,9 @@
                                 <img src="assets/Amazon.svg" alt="Amazon Logo" class="logo">
                             </div>                            
                             <div class="portfolio-body">
-                                <span>Amazon.com Inc</span>
-                                <span id='ticker-value-3'>7852.00</span>
+                                <span id="ticker-name-3"></span>
+                                <span id="ticker-change-3"></span>
+                                <span id="ticker-value-3"></span>
                             </div>
                         </div>
                         <div class="portfolio-item">
@@ -87,8 +90,9 @@
                                 <img src="assets/tesla.svg" alt="Tesla Logo" class="logo">
                             </div>                            
                             <div class="portfolio-body">
-                                <span>Tesla, Inc</span>
-                                <span id='ticker-value-4'>1589.25</span>
+                                <span id="ticker-name-4"></span>
+                                <span id="ticker-change-4"></span>
+                                <span id="ticker-value-4"></span>
                             </div>
                         </div>
                         <div class="portfolio-item">
@@ -96,8 +100,9 @@
                                 <img src="assets/netflix.svg" alt="Netflix Logo" class="logo">
                             </div>                            
                             <div class="portfolio-body">
-                                <span>Netflix Inc</span>
-                                <span id='ticker-value-5'>18000.00</span>
+                                <span id="ticker-name-5"></span>
+                                <span id="ticker-change-5"></span>
+                                <span id="ticker-value-5"></span>
                             </div>
                         </div>
                         <div class="portfolio-item">
@@ -105,8 +110,9 @@
                                 <img src="assets/mcdonalds.svg" alt="McDonald's Logo" class="logo">
                             </div>                            
                             <div class="portfolio-body">
-                                <span>McDonald's Corporation</span>
-                                <span id='ticker-value-6'>21587.25</span>
+                                <span id="ticker-name-6"></span>
+                                <span id="ticker-change-6"></span>
+                                <span id="ticker-value-6"></span>
                             </div>
                         </div>
                     </div>
@@ -137,8 +143,9 @@
                         </div>
                     </div>
                     <div class="chart" id='plot'>
-                        <!-- Chart will be rendered here -->
+                        <!-- Plot will be here -->
                     </div>
+                    <div id="tooltip" style="position: absolute; display: none; background-color: white; border: 1px solid black; padding: 5px;"></div>
                 </div>
             </div>
         </div>
@@ -148,5 +155,7 @@
     <script src="js/p1_scripts/events_p1.js"></script>
     <script src="js/p1_scripts/plot_p1.js"></script>
     <script src="js/p1_scripts/recommendations_p1.js"></script>
+    <script src="js/p1_scripts/portfolio_p1.js"></script>
+    <script src="js/p1_scripts/layers_p1.js"></script>
 </body>
 </html>

@@ -8,6 +8,8 @@ import datetime as dt
 from collections import OrderedDict
 import json
 
+from flask_cors import CORS
+
 # Database Setup
 db_params = {
     'dbname': 'stocks_dashboard_db',
@@ -29,6 +31,7 @@ Portfolio = Table('portfolio_tb', metadata, autoload_with=engine)
 
 # Flask Setup
 app = Flask(__name__)
+CORS(app)  # Enable CORS
 
 # Error Handlers
 @app.errorhandler(400)
@@ -152,7 +155,6 @@ def get_portfolio_data():
         portfolio_data.append(portfolio_dict)
 
     return jsonify(portfolio_data)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

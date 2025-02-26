@@ -18,6 +18,8 @@ async function fetchAndDisplayRecommendations(ticker) {
         displayRecommendations(recommendedSymbols);
     } catch (error) {
         console.error("Error fetching recommendations:", error);
+        // User feedback
+        document.getElementById('recommended-symbols').innerHTML = '<li class="error-message">No Response from Recommendations.</li>';
     }
 }
 

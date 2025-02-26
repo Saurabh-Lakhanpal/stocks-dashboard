@@ -1,5 +1,7 @@
 // These are the plotting scripts, in plot_p1.js
 // // Fetch and plot data function
+// plots_p1.js
+
 async function fetchDataAndPlot(ticker, range, interval) {
     console.log(`Fetching data for range: ${range}, interval: ${interval}`);
 
@@ -15,20 +17,29 @@ async function fetchDataAndPlot(ticker, range, interval) {
         }
 
         const data = await response.json();
+        console.log('Data received in fetchDataAndPlot:', data);
+
         const timestamps = data.chart.result[0].timestamp.map(ts => new Date(ts * 1000));
         const prices = data.chart.result[0].indicators.quote[0].close;
         const volumes = data.chart.result[0].indicators.quote[0].volume;
+
+        console.log('Timestamps:', timestamps);
+        console.log('Prices:', prices);
+        console.log('Volumes:', volumes);
 
         plotData(timestamps, prices, volumes, ticker);
 
         // Re-plot the chart when the window is resized
         window.addEventListener('resize', () => plotData(timestamps, prices, volumes, ticker));
+
+        return data; // Return the data for further use
     } catch (error) {
         console.error("Error fetching data:", error);
-        // Provide user feedback on error
         document.getElementById('plot').innerHTML = '<p class="error-message">Error fetching Plot data.</p>';
+        return null;
     }
 }
+
 
 // Plot data function using D3.js
 function plotData(timestamps, prices, volumes, ticker) {
@@ -106,17 +117,6 @@ function plotData(timestamps, prices, volumes, ticker) {
         .selectAll("text")
         .style("font-size", "12px");
 
-    // Add the price line
-    svg.append("path")
-        .datum(timestamps.map((d, i) => ({date: d, value: prices[i]})))
-        .attr("fill", "none")
-        .attr("stroke", "blue")
-        .attr("stroke-width", 1.5)
-        .attr("d", d3.line()
-            .x(d => x(d.date))
-            .y(d => yPrice(d.value))
-        );
-
     // Add the volume bars
     svg.selectAll("bar")
         .data(timestamps)
@@ -124,9 +124,53 @@ function plotData(timestamps, prices, volumes, ticker) {
         .append("rect")
         .attr("x", (d, i) => x(d) - 0.5)
         .attr("y", (d, i) => yVolume(volumes[i]))
-        .attr("width", 1)
+        .attr("width", 10)
         .attr("height", (d, i) => innerHeight - yVolume(volumes[i]))
-        .attr("fill", "grey");
+        .attr("fill", "#6CB5DE");
+    
+    // Add the price line
+    svg.append("path")
+        .datum(timestamps.map((d, i) => ({date: d, value: prices[i]})))
+        .attr("fill", "none")
+        .attr("stroke", "#DB0A40")
+        .attr("stroke-width", 1.75)
+        .attr("d", d3.line()
+            .x(d => x(d.date))
+            .y(d => yPrice(d.value))
+        );
+
+    // Add points to the price line
+    svg.selectAll("dot")
+        .data(timestamps.map((d, i) => ({date: d, value: prices[i]})))
+        .enter()
+        .append("circle")
+        .attr("cx", d => x(d.date))
+        .attr("cy", d => yPrice(d.value))
+        .attr("r", 3)
+        .attr("fill", "#DB0A40");
+
+    // Add points for hover functionality
+    svg.selectAll("dot")
+        .data(timestamps.map((d, i) => ({date: d, value: prices[i], volume: volumes[i]})))
+        .enter()
+        .append("circle")
+        .attr("cx", d => x(d.date))
+        .attr("cy", d => yPrice(d.value))
+        .attr("r", 5)
+        .attr("fill", "#DB0A40")
+        .attr("opacity", 0)
+        .on("mouseover", function(event, d) {
+            d3.select(this).attr("opacity", 1);
+            d3.select("#tooltip")
+                .style("left", `${d3.pointer(event)[0]}px`)
+                .style("top", `${d3.pointer(event)[1]}px`)
+                .style("display", "block")
+                .html(`Date: ${d.date.toLocaleDateString()}<br>Price: ${d.value}</br>Volume: ${d.volume}`);
+        })
+    .on("mouseout", function() {
+        d3.select(this).attr("opacity", 0);
+        d3.select("#tooltip").style("display", "none");
+    });
 }
 
 // Function to update selected-ticker-price span
@@ -154,6 +198,6 @@ async function updateSelectedTickerPrice() {
     } catch (error) {
         console.error("Error fetching data:", error);
         // Provide user feedback on error
-        document.getElementById('selected-ticker-price').innerHTML = '<p class="error-message">Error Stock Price.</p>';
+        document.getElementById('selected-ticker-price').innerHTML = '<p class="error-message">Error Getting Quote Price.</p>';
     }
 }

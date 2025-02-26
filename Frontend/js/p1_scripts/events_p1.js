@@ -27,36 +27,36 @@ async function fetchSuggestions() {
 
     try {
         const response = await fetch(`https://yfapi.net/v6/finance/autocomplete?region=US&lang=en&query=${query}`, {
-            headers: {
-                'X-API-KEY': API_KEY
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        headers: {
+            'X-API-KEY': API_KEY
         }
+    });
 
-        const data = await response.json();
-        const suggestions = data.ResultSet.Result;
-        const suggestionsList = document.getElementById('suggestions');
-        suggestionsList.innerHTML = '';
-        suggestionsList.style.display = 'block';
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
 
-        suggestions.forEach(suggestion => {
-            const li = document.createElement('li');
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.value = suggestion.symbol;
-            checkbox.dataset.name = suggestion.name;
-            checkbox.onchange = () => handleSelection(checkbox);
-            li.appendChild(checkbox);
-            li.appendChild(document.createTextNode(suggestion.symbol));
-            suggestionsList.appendChild(li);
-        });
+    const data = await response.json();
+    const suggestions = data.ResultSet.Result;
+    const suggestionsList = document.getElementById('suggestions');
+    suggestionsList.innerHTML = '';
+    suggestionsList.style.display = 'block';
+
+    suggestions.forEach(suggestion => {
+        const li = document.createElement('li');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = suggestion.symbol;
+        checkbox.dataset.name = suggestion.name;
+        checkbox.onchange = () => handleSelection(checkbox);
+        li.appendChild(checkbox);
+        li.appendChild(document.createTextNode(suggestion.symbol));
+        suggestionsList.appendChild(li);
+    });
     } catch (error) {
         console.error('Error fetching suggestions:', error);
         // Provide user feedback on error
-        document.getElementById('suggestions').innerHTML = '<li class="error-message">Error fetching suggestions. Please try again later.</li>';
+        document.getElementById('suggestions').innerHTML = '<li class="error-message">No Response from Autocomplete.</li>';
     }
 }
 
@@ -119,7 +119,6 @@ document.addEventListener('click', function(event) {
         suggestionsList.style.display = 'none';
     }
 });
-
 document.addEventListener("DOMContentLoaded", function() {
     // Populate the selected ticker name on page load
     document.getElementById('selected-ticker').textContent = selectedTickerNames[0];
@@ -135,6 +134,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const selectedTicker = selectedTickers[0];
         fetchDataAndPlot(selectedTicker, range, interval);
         updateSelectedTickerPrice(); // Update the price when the range changes
+
+        // Reset the layer selector to its default value
+        const layerSelector = document.getElementById("layer-selector");
+        layerSelector.value = "";
+        clearCandlestickLayer(); // Clear candlesticks if any
     });
 
     // Event listener for interval button clicks
@@ -147,6 +151,32 @@ document.addEventListener("DOMContentLoaded", function() {
             const selectedTicker = selectedTickers[0];
             fetchDataAndPlot(selectedTicker, range, interval);
             updateSelectedTickerPrice(); // Update the price when the interval changes
+
+            // Reset the layer selector to its default value
+            const layerSelector = document.getElementById("layer-selector");
+            layerSelector.value = "";
+            clearCandlestickLayer(); // Clear candlesticks if any
         });
     });
+
+    // Event listener for candlesticks layer
+    document.getElementById("layer-selector").addEventListener("change", async function() {
+        const selectedLayer = this.value;
+        const selectedTicker = selectedTickers[0];
+
+        if (selectedLayer === "layer3") { // If Candlestick layer is selected
+            console.log('Layer selector changed, fetching data for:', selectedTicker);
+            const data = await fetchDataAndPlot(selectedTicker, range, interval); 
+            console.log('Data received in event listener:', data);
+            handleCandlestickData(data); // Pass the data to the function in layers_p1.js to handle and plot the data
+        } else {
+            clearCandlestickLayer(); // Clear candlesticks if a different layer is selected
+        }
+    });
 });
+
+// Function to clear the candlestick layer
+function clearCandlestickLayer() {
+    const svg = d3.select("#plot svg g");
+    svg.selectAll(".candlestick-layer").remove();
+}
