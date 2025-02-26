@@ -33,7 +33,7 @@ function plotCandlestickLayer(data) {
 
     console.log('Container dimensions:', width, height);
 
-    const margin = { top: 10, right: 20, bottom: 40, left: 50 };
+    const margin = { top: 10, right: 100, bottom: 40, left: 50 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -68,7 +68,9 @@ function plotCandlestickLayer(data) {
         })
         .attr("fill", d => d.open > d.close ? "#DB0A40" : "#0A3064")
         .attr("rx", 5)  // Rounded corners
-        .attr("ry", 5);
+        .attr("ry", 5)
+        .attr("opacity", 0.8);  // Adjust the opacity value as needed (0.0 to 1.0)
+
 
     // Adding hover tooltip
     const tooltip = d3.select("body").append("div")
