@@ -160,10 +160,10 @@ function plotData(timestamps, prices, volumes, ticker) {
         .attr("fill", "#DB0A40")
         .attr("opacity", 0)
         .on("mouseover", function(event, d) {
-            d3.select(this).attr("opacity", 1);
+            d3.select(this).attr("opacity", 0.7);
             d3.select("#tooltip")
-                .style("left", `${event.pageX + 10}px`)
-                .style("top", `${event.pageY - 10}px`)
+                .style("left", `${event.pageX + 5}px`)
+                .style("top", `${event.pageY - 5}px`)
                 .style("display", "block")
                 .html(`Date: ${d.date.toLocaleDateString()}<br>Price: ${d.value}</br>Volume: ${d.volume}`);
         })
