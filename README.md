@@ -40,7 +40,7 @@ Stocks-dashboard
 |   |   |   ├── UIscripts_p3.js
 |   |   |   ├── events_p3.js
 |   |   |   └── plot_p3.js
-├── tutorials 
-├── .gitignore 
+├── .gitignore
+├── tutorials
 └── README.md
 ```
