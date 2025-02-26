@@ -6,11 +6,8 @@
 ```
 Stocks-dashboard
 ├── Backend
-<<<<<<< HEAD
 │   ├── .kaggle
 │   │   └── kaggle.json
-=======
->>>>>>> 9731d30b6e60ac0c2d8cfe351c1b7aa7871914df
 │   ├── Resources
 │   │   ├── data_portfolio.js
 │   │   ├── data_s&p500_3mo.js  
