@@ -1,3 +1,5 @@
+// events_p1.js
+
 // Global variables
 let selectedTickers = ["AAPL"]; 
 let selectedTickerNames = ["Apple Inc."]; 

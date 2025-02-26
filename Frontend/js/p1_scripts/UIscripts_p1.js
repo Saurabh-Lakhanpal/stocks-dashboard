@@ -41,20 +41,37 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 // Refresh Button Script =======================================================
+// Function to update the timestamp on the refresh button
 function updateButtonTimestamp() {
     let now = new Date();
     let timestamp = now.toISOString().slice(0, 19).replace('T', ' ');
     document.getElementById('refreshButton').innerText = `Last Updated: ${timestamp}`;
 }
 
+// Event listener for the refresh button
 document.getElementById('refreshButton').addEventListener('click', function() {
     updateButtonTimestamp();
     location.reload();
 });
 
+// Event listener for changes in range selector
+document.getElementById('range-selector').addEventListener('change', function() {
+    updateButtonTimestamp();
+});
+
+// Event listeners for changes in interval buttons
+const intervalButtons = document.querySelectorAll('.interval-button');
+intervalButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        updateButtonTimestamp();
+    });
+});
+
+// Update the timestamp when the page loads
 window.onload = function() {
     updateButtonTimestamp();
 }
+
 
 // Page navigation =============================================================
 document.addEventListener('DOMContentLoaded', function() {
