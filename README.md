@@ -39,9 +39,10 @@ Stocks-dashboard
 │   │   │   ├── events_p2.js
 │   │   │   └── plot_p2.js
 │   │   └── p3_scripts
-│   │       ├── UIscripts_p3.js
-│   │       ├── events_p3.js
-│   │       └── plot_p3.js
+│   │   │   ├── UIscripts_p3.js
+│   │   │   ├── events_p3.js
+│   │   │   └── plot_p3.js
+│   │   └── config.js
 │   ├── index_p1.js
 │   ├── index_p2.js
 │   └── index_p3.js
