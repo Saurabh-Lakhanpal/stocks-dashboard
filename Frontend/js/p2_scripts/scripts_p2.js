@@ -1,7 +1,5 @@
-let selectedTickers = ["AAPL"]; 
+let selectedTickers = [];
 let selectedTickerNames = {};
-let start_date = ["2014-01-01"];
-let end_date = ["2014-06-30"];
 
 // Fetch suggestions and handle selection
 async function fetchSuggestions() {
@@ -57,9 +55,9 @@ function handleSelection(checkbox) {
         }
     } else {
         selectedTickers = selectedTickers.filter(ticker => ticker !== checkbox.value);
-        delete selectedTickerNames[checkbox.value]; // Remove the company name
+        delete selectedTickerNames[checkbox.value]; 
+    }// Remove the company name
         updateSelectedList();
-    }
 }
 
 // Changes the list to new selected ticker
@@ -93,62 +91,67 @@ document.addEventListener('click', function(event) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const defaultTicker = "AAPL";
-    // const defaultRange = "range1";
-
-    fetchDataAndPlot(selectedTickers[0]);
-
-    document.getElementById("plot-button").addEventListener("click", function() {
-        const selectedTicker = selectedTickers[0]; 
-        fetchDataAndPlot(selectedTicker);
-    });
+// Handle "Plot" button click
+document.getElementById("plot-button").addEventListener("click", function() {
+    // Fetch and plot data for all selected tickers, but only plot once
+    fetchDataAndPlot();
 });
 
-
-// Fetch and plot data function
-async function fetchDataAndPlot(ticker) {
+// Function to fetch data and plot for all selected tickers at once
+async function fetchDataAndPlot() {
     try {
-        const response = await fetch(`https://yfapi.net/v8/finance/chart/${ticker}?interval=${interval}`, {
-            headers: {
-                'X-API-KEY': API_KEY
+        // Clear the previous plots before adding new ones
+        d3.select("#plot_p2").selectAll("*").remove();
+
+        let svgIndex = 0;  // Initialize the index for SVG placement
+        const margin = {top: 20, right: 50, bottom: 30, left: 50};
+        const width = 960 - margin.left - margin.right;
+        const height = 500 - margin.top - margin.bottom;
+
+        // Create a single SVG container for all tickers
+        const svgContainer = d3.select("#plot_p2")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", (selectedTickers.length * (height + margin.top + margin.bottom)))
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Loop over each ticker and plot them sequentially within the single SVG
+        for (let ticker of selectedTickers) {
+            const response = await fetch(`https://yfapi.net/v8/finance/chart/${ticker}`, {
+                headers: {
+                    'X-API-KEY': API_KEY
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
             }
-        });
 
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
+            const data = await response.json();
+            const timestamps = data.chart.result[0].timestamp.map(ts => new Date(ts * 1000));
+            const prices = data.chart.result[0].indicators.quote[0].close;
+            const volumes = data.chart.result[0].indicators.quote[0].volume;
+
+            const yPosition = svgIndex * (height + margin.top + margin.bottom); // Set Y-position for the current ticker's chart
+
+            // Plot the data for this ticker
+            plotData(timestamps, prices, volumes, ticker, svgContainer, width, height, yPosition);
+
+            svgIndex++; // Increment index to position the next chart
         }
-
-        const data = await response.json();
-        const timestamps = data.chart.result[0].timestamp.map(ts => new Date(ts * 1000));
-        const prices = data.chart.result[0].indicators.quote[0].close;
-        const volumes = data.chart.result[0].indicators.quote[0].volume;
-
-        plotData(timestamps, prices, volumes, ticker);
     } catch (error) {
         console.error("Error fetching data:", error);
     }
 }
 
-// Plot data function using D3.js
-function plotData(timestamps, prices, volumes, ticker) {
-    // Clear any existing plots
-    d3.select("#plot").selectAll("*").remove();
+// Function to plot data with multiple layers (price, RSI, Bollinger Bands, and Drawdown)
+function plotData(timestamps, prices, volumes, ticker, svgContainer, width, height, yPosition) {
+    // Add a group for each ticker to separate them visually
+    const svg = svgContainer.append("g")
+        .attr("transform", `translate(0, ${yPosition})`); // Adjust position for each ticker
 
-    // Set up the dimensions and margins of the graph
-    const margin = {top: 20, right: 50, bottom: 30, left: 50};
-    const width = 960 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
-
-    // Append the svg object to the body of the page
-    const svg = d3.select("#plot")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
-
-    // Add X axis
+    // Add X axis (timestamps)
     const x = d3.scaleTime()
         .domain(d3.extent(timestamps))
         .range([0, width]);
@@ -164,15 +167,7 @@ function plotData(timestamps, prices, volumes, ticker) {
         .attr("class", "axisPrice")
         .call(d3.axisLeft(yPrice));
 
-    // Add Y axis for volumes
-    const yVolume = d3.scaleLinear()
-        .domain([0, d3.max(volumes)])
-        .range([height, 0]);
-    svg.append("g")
-        .attr("transform", `translate(${width},0)`)
-        .call(d3.axisRight(yVolume));
-
-    // Add the price line
+    // Plot the price line (Historical Price)
     svg.append("path")
         .datum(timestamps.map((d, i) => ({date: d, value: prices[i]})))
         .attr("fill", "none")
@@ -183,7 +178,14 @@ function plotData(timestamps, prices, volumes, ticker) {
             .y(d => yPrice(d.value))
         );
 
-    // Add the volume bars
+    // Plot the volume bars (on the right axis)
+    const yVolume = d3.scaleLinear()
+        .domain([0, d3.max(volumes)])
+        .range([height, 0]);
+    svg.append("g")
+        .attr("transform", `translate(${width},0)`)
+        .call(d3.axisRight(yVolume));
+
     svg.selectAll("bar")
         .data(timestamps)
         .enter()
@@ -193,38 +195,67 @@ function plotData(timestamps, prices, volumes, ticker) {
         .attr("width", 1)
         .attr("height", (d, i) => height - yVolume(volumes[i]))
         .attr("fill", "grey");
+
+    // Add additional layers here: RSI, Bollinger Bands, and Drawdown
+    plotRSI(timestamps, ticker, x, yPrice, svg);
+    // plotBollingerBands(timestamps, ticker, x, yPrice, svg);
+    // plotDrawdown(timestamps, ticker, x, yPrice, svg);
 }
 
-// Initialize and update chart on page load
-document.addEventListener("DOMContentLoaded", function() {
-    const defaultTicker = "AAPL";
-    let selectedTickers = [defaultTicker];
-    let range = defaultRange;
-    let interval = defaultInterval;
+// Plot RSI
+function plotRSI(timestamps, ticker, x, yPrice, svg) {
+    const rsiData = calculateRSI(timestamps, ticker); // Placeholder function
+    svg.append("path")
+        .datum(rsiData)
+        .attr("fill", "none")
+        .attr("stroke", "green")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+            .x(d => x(d.date))
+            .y(d => yPrice(d.value))
+        );
+}
 
-    // Fetch and plot data for the default ticker when the page loads
-    fetchDataAndPlot(selectedTickers[0], range, interval);
+// Plot Bollinger Bands
+function plotBollingerBands(timestamps, ticker, x, yPrice, svg) {
+    const bollingerData = calculateBollingerBands(timestamps, ticker); // Placeholder function
+    svg.append("path")
+        .datum(bollingerData.upper)
+        .attr("fill", "none")
+        .attr("stroke", "orange")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+            .x(d => x(d.date))
+            .y(d => yPrice(d.value))
+        );
+}
 
-    document.getElementById("plot-button").addEventListener("click", function() {
-        const selectedTicker = selectedTickers[0]; // Assuming only one ticker is selected
-        const selectedRange = document.getElementById("range-selector").value;
-        const activeIntervalButton = document.querySelector(".interval-button.active");
-        const selectedInterval = activeIntervalButton ? activeIntervalButton.textContent : defaultInterval;
+//Plot Drawdown
+function plotDrawdown(timestamps, ticker, x, yPrice, svg) {
+    const drawdownData = calculateDrawdown(timestamps, ticker); // Placeholder function
+    svg.append("path")
+        .datum(drawdownData)
+        .attr("fill", "none")
+        .attr("stroke", "red")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+            .x(d => x(d.date))
+            .y(d => yPrice(d.value))
+        );
+}
 
-        fetchDataAndPlot(selectedTicker, selectedRange, selectedInterval);
-    });
+// Placeholder functions for RSI, Bollinger Bands, and Drawdown calculations
+function calculateRSI(timestamps, ticker) {
+    return timestamps.map((date, index) => ({ date, value: Math.random() * 100 })); // Random data for illustration
+}
 
-    // Event listeners for range and interval changes
-    document.getElementById("range-selector").addEventListener("change", function() {
-        range = this.value;
-    });
+function calculateBollingerBands(timestamps, ticker) {
+    return {
+        upper: timestamps.map((date, index) => ({ date, value: Math.random() * 100 })),
+        lower: timestamps.map((date, index) => ({ date, value: Math.random() * 50 }))
+    };
+}
 
-    const intervalButtons = document.querySelectorAll(".interval-button");
-    intervalButtons.forEach(button => {
-        button.addEventListener("click", function() {
-            intervalButtons.forEach(btn => btn.classList.remove("active"));
-            this.classList.add("active");
-            interval = this.textContent;
-        });
-    });
-});
+function calculateDrawdown(timestamps, ticker) {
+    return timestamps.map((date, index) => ({ date, value: Math.random() * 30 }));
+}
