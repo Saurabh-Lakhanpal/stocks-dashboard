@@ -6,16 +6,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Shafarik:wght@400;700&display=swap" rel="stylesheet">
     <title>Stocks Dashboard</title>
     <link rel="stylesheet" href="css/styles.css">
-
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-
+    <script src="https://d3js.org/d3.v7.min.js"></script>   
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
             <img src="assets/logo.svg" alt="Stocks Dashboard Logo" height="15%">
             <hr class="separator">
-            <button id="refreshButton" class="last-updated">Reload Page</button>         
+            <button id="refreshButton" class="last-updated">Refresh Backend</button>         
             <div class="selectors">
                 <hr class="separator">
                 <div class="selector">
@@ -43,27 +41,31 @@
                 <div class="navigation">
                     <button id="overview" class="nav-button">Ticker Overview</button>
                     <button id="historical" class="nav-button">Historical S&P500 Data</button>
-                    <button id="ratios" class="nav-button">Health & Ratios</button>
+                    <!-- <button id="ratios" class="nav-button">Health & Ratios</button> -->
                 </div>
             </div>
+            <div class="shadow">
             <div class="shadow_p2">
                 <div class="stock-details_p2">
                     <div class="stock-header">
                         <span id= 'selected-ticker'class="ticker">test</span>
-                        <button id="toggleButton">Stop Sliding</button>
+                        <!-- <button id="toggleButton">Stop Sliding</button> -->
                     </div>
-                    <div class="chart_p2 slider" id='plot_p2' style="background-image: url('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg'); height: 100%; width: 1540px; background-size: cover;">
+                    <div class="chart_p2 slider" id='plot_p2'>
                      <!-- Plot will be here -->
                     </div>
                 </div>
+            </div>
             </div>  
         </div>
+        <div id="tooltip" style="position: absolute; display: none; background-color: white; border: 1px solid black; padding: 5px;"></div>    
     </div>
     <script src="js/config.js"></script>
     <script src="js/p2_scripts/UIscripts_p2.js"></script>
     <script src="js/p2_scripts/scripts_p2.js"></script>
-
-    
+    <script src="js/p2_scripts/plots_p2.js"></script>
+    <script src="js/p2_scripts/events_p2.js"></script>
+    <script src="js/p2_scripts/verifyTicker.js"></script> 
 </body>
 </html>
 

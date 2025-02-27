@@ -1,3 +1,4 @@
+/*styles.css*/
 html, body {
     width: 100%;
     height: 100%;
@@ -7,7 +8,6 @@ html, body {
     font-family: 'Shafarik', sans-serif;
     overflow: hidden;
 }
-
 
 .shadow {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
@@ -129,8 +129,6 @@ html, body {
     font-size: 24px;
 }
 
-
-
 .logo {
     width: 64px;
     height: auto;
@@ -173,6 +171,17 @@ html, body {
     margin-bottom: 30px;
     overflow: hidden;
     position: relative; 
+}
+
+.stock-details_p2 {
+    flex: 1; 
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    position: relative; 
+    height: calc(100% - 60px);
 }
 
 .chart {
@@ -406,24 +415,14 @@ p {
 .shadow_p2 {
     display: flex;
     align-items: stretch; 
-    height: 90%;
-    padding: 30px;
+    height: 100%;
     overflow: hidden;
 }
 
-.stock-details_p2 {
-    flex: 1; 
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    margin-bottom: 60px;
-    overflow: hidden;
-    position: relative; 
-}
 
-
-.slider {
-    width: 7700px; /* 1540X5 */
+/*===============================================================================*/
+/*.slider {
+    width: 7700px; 
     height: 100%; 
     position: absolute;
     left: 0;
@@ -442,7 +441,7 @@ p {
       left: 0;
     }
     to {
-      left: -1540px; /* controls how much auto slide */
+      left: -1540px; 
   }
   
   button {
@@ -457,4 +456,4 @@ p {
     color: #000000; 
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);  
   }
-  }
+  }*/

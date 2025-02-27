@@ -1,14 +1,10 @@
-# Import necessary modules
-import subprocess
-import sys
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from sqlalchemy import create_engine, func, Table, MetaData
 from sqlalchemy.orm import Session, declarative_base
 import datetime as dt
 from collections import OrderedDict
 import json
-
-from flask_cors import CORS
 
 # Database Setup
 db_params = {
@@ -31,7 +27,7 @@ Portfolio = Table('portfolio_tb', metadata, autoload_with=engine)
 
 # Flask Setup
 app = Flask(__name__)
-CORS(app)  # Enable CORS
+CORS(app, resources={r"/*": {"origins": "*"}})  # Enable CORS
 
 # Error Handlers
 @app.errorhandler(400)
