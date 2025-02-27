@@ -1,3 +1,4 @@
+// scripts_p2.js
 let selectedTickers = ["AAPL"]; 
 let selectedTickerNames = {};
 let start_date = ["2014-01-01"];
