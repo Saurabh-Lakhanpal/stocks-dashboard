@@ -24,10 +24,12 @@
                     <ul id="selected-list" class="selected-list"></ul>
                 </div>
                 <hr class="separator">
-                <p>Select Date Range</p>
-                <div class="selector">
-                    <input type="date" id="start_date" class="datepicker" placeholder="Start Date" />
-                    <input type="date" id="end_date" class="datepicker" placeholder="End Date" />
+                <p>Select Plot Layers</p>
+                <div class = 'checkbox'>
+                    <label><input type="checkbox" id="show-historical-price" checked>Historical price</label>
+                    <label><input type="checkbox" id="show-rsi"> RSI</label>
+                    <label><input type="checkbox" id="show-bollinger"> Bollinger Bands</label>
+                    <label><input type="checkbox" id="show-drawdown"> Drawdown Chart</label>
                 </div>
                 <hr class="separator">
                 <button id="plot-button" class="last-updated">Plot</button>        
@@ -41,11 +43,15 @@
                     <button id="ratios" class="nav-button">Health & Ratios</button>
                 </div>
             </div>
-            <div class="shadow plot-grid-container">
-                <div id="plot-1-p2" class="plot-grid"></div>
-                <div id="plot-2-p2" class="plot-grid"></div>
-                <div id="plot-3-p2" class="plot-grid"></div>
-                <div id="plot-4-p2" class="plot-grid"></div>
+            <div class="shadow">
+                <div class="stock-details">
+                    <div class="stock-header">
+                        <span id= 'selected-ticker'class="ticker">test</span>
+                    </div>
+                    <div class="chart_p2" id='plot_p2'>
+                        <!-- Plot will be here -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>

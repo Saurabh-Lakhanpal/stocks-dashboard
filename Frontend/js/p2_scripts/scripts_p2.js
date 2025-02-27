@@ -1,9 +1,7 @@
-let selectedTickers = ["AAPL"]; // Default ticker
+let selectedTickers = ["AAPL"]; 
 let selectedTickerNames = {};
 let start_date = ["2014-01-01"];
 let end_date = ["2014-06-30"];
-const defaultInterval = "5m";
-let interval = defaultInterval;
 
 // Fetch suggestions and handle selection
 async function fetchSuggestions() {
@@ -64,6 +62,7 @@ function handleSelection(checkbox) {
     }
 }
 
+// Changes the list to new selected ticker
 function updateSelectedList() {
     const selectedList = document.getElementById('selected-list');
     selectedList.innerHTML = '';
@@ -96,42 +95,19 @@ document.addEventListener('click', function(event) {
 
 document.addEventListener('DOMContentLoaded', function() {
     const defaultTicker = "AAPL";
-    const defaultRange = "range1";
+    // const defaultRange = "range1";
 
-    // Fetch and plot data for the default ticker when the page loads
-    fetchDataAndPlot(selectedTickers[0], defaultRange, defaultInterval);
+    fetchDataAndPlot(selectedTickers[0]);
 
     document.getElementById("plot-button").addEventListener("click", function() {
-        const selectedTicker = selectedTickers[0]; // Assuming only one ticker is selected
-        const selectedRange = document.getElementById("range-selector").value;
-        const activeIntervalButton = document.querySelector(".interval-button.active");
-        const selectedInterval = activeIntervalButton ? activeIntervalButton.textContent : defaultInterval;
-
-        fetchDataAndPlot(selectedTicker, selectedRange, selectedInterval);
-    });
-
-    // Event listeners for range and interval changes
-    document.getElementById("range-selector").addEventListener("change", function() {
-        const selectedTicker = selectedTickers[0];
-        const selectedRange = this.value;
-        fetchDataAndPlot(selectedTicker, selectedRange, interval);
-    });
-
-    const intervalButtons = document.querySelectorAll(".interval-button");
-    intervalButtons.forEach(button => {
-        button.addEventListener("click", function() {
-            intervalButtons.forEach(btn => btn.classList.remove("active"));
-            this.classList.add("active");
-            interval = this.textContent;
-            const selectedTicker = selectedTickers[0];
-            const selectedRange = document.getElementById("range-selector").value;
-            fetchDataAndPlot(selectedTicker, selectedRange, interval);
-        });
+        const selectedTicker = selectedTickers[0]; 
+        fetchDataAndPlot(selectedTicker);
     });
 });
 
+
 // Fetch and plot data function
-async function fetchDataAndPlot(ticker, range, interval) {
+async function fetchDataAndPlot(ticker) {
     try {
         const response = await fetch(`https://yfapi.net/v8/finance/chart/${ticker}?interval=${interval}`, {
             headers: {
@@ -222,8 +198,6 @@ function plotData(timestamps, prices, volumes, ticker) {
 // Initialize and update chart on page load
 document.addEventListener("DOMContentLoaded", function() {
     const defaultTicker = "AAPL";
-    const defaultRange = "range1";
-    const defaultInterval = "5m";
     let selectedTickers = [defaultTicker];
     let range = defaultRange;
     let interval = defaultInterval;

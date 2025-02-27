@@ -1,5 +1,6 @@
 // layers_p1.js
 
+// Function to handle candlestick data
 function handleCandlestickData(data) {
     console.log('handleCandlestickData function called');
     if (!data) {
@@ -24,6 +25,7 @@ function handleCandlestickData(data) {
     plotCandlestickLayer(historicalData);
 }
 
+// Function to plot candlestick layer
 function plotCandlestickLayer(data) {
     console.log('plotCandlestickLayer function called with data:', data);
 
@@ -40,9 +42,10 @@ function plotCandlestickLayer(data) {
     const svg = d3.select("#plot svg g");
     console.log('SVG element selected:', svg);
 
-    const x = d3.scaleTime()
-        .domain(d3.extent(data, d => d.date))
-        .range([0, innerWidth]);
+    const x = d3.scaleBand()
+        .domain(data.map(d => d.date))
+        .range([0, innerWidth])
+        .padding(0.1);
 
     const y = d3.scaleLinear()
         .domain([d3.min(data, d => d.low), d3.max(data, d => d.high)])
@@ -50,7 +53,7 @@ function plotCandlestickLayer(data) {
 
     console.log('Scales created:', x, y);
 
-    const candlestickWidth = innerWidth / data.length;
+    const candlestickWidth = x.bandwidth();
     console.log('Candlestick width:', candlestickWidth);
 
     const candlesticks = svg.selectAll(".candlestick-layer")
@@ -70,7 +73,6 @@ function plotCandlestickLayer(data) {
         .attr("rx", 5)  
         .attr("ry", 5)
         .attr("opacity", 0.8);  
-
 
     // Hover tooltip
     const tooltip = d3.select("body").append("div")

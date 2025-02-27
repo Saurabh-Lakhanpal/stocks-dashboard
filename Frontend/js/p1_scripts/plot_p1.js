@@ -42,7 +42,6 @@ async function fetchDataAndPlot(ticker, range, interval) {
 
 // Plot data function using D3.js
 function plotData(timestamps, prices, volumes, ticker) {
-    
     d3.select("#plot").selectAll("*").remove();
 
     // Get the dimensions of the parent div
@@ -51,11 +50,11 @@ function plotData(timestamps, prices, volumes, ticker) {
     const height = container.getBoundingClientRect().height;
 
     // Set up the dimensions and margins of the graph
-    const margin = {top: 10, right: 100, bottom: 40, left: 50};
+    const margin = { top: 10, right: 100, bottom: 40, left: 50 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
-    // Append the svg object to the body of the page with viewBox and preserveAspectRatio attributes
+    // Append the svg object to the body of the page
     const svg = d3.select("#plot")
         .append("svg")
         .attr("viewBox", `0 0 ${width} ${height}`)
@@ -67,39 +66,31 @@ function plotData(timestamps, prices, volumes, ticker) {
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Add X axis
-    const x = d3.scaleTime()
-        .domain(d3.extent(timestamps))
-        .range([0, innerWidth]);
-
-    // Determine tick interval based on the selected interval
-    let tickInterval;
-    if (interval === "1m" || interval === "5m" || interval === "15m") {
-        tickInterval = d3.timeMinute.every(parseInt(interval.replace('m', ''))); 
-    } else if (interval === "1h") {
-        tickInterval = d3.timeHour.every(1); 
-    } else if (interval === "1d") {
-        tickInterval = d3.timeDay.every(1); 
-    } else if (interval === "1wk") {
-        tickInterval = d3.timeWeek.every(1); 
-    } else if (interval === "1mo") {
-        tickInterval = d3.timeMonth.every(1); 
-    } else {
-        tickInterval = d3.timeHour.every(1); 
-    }
-
-    // Add X axis with dynamic ticks and rotate x-ticks 90 degrees
-    svg.append("g")
-        .attr("transform", `translate(0,${innerHeight})`)
-        .call(d3.axisBottom(x).ticks(tickInterval)) 
-        .selectAll("text")
-        .style("font-size", "12px")
-        .attr("transform", "rotate(90)")
-        .style("text-anchor", "start"); 
+    const x = d3.scaleBand()
+        .domain(timestamps)
+        .range([0, innerWidth])
+        .padding(0.1);
 
     // Add Y axis for prices
     const yPrice = d3.scaleLinear()
         .domain([d3.min(prices), d3.max(prices)])
         .range([innerHeight, 0]);
+
+    // Add Y axis for volumes
+    const yVolume = d3.scaleLinear()
+        .domain([0, d3.max(volumes)])
+        .range([innerHeight, 0]);
+
+    // Add X axis with dynamic ticks and rotate x-ticks 90 degrees
+    svg.append("g")
+        .attr("transform", `translate(0,${innerHeight})`)
+        .call(d3.axisBottom(x).tickValues(timestamps))
+        .selectAll("text")
+        .style("font-size", "12px")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start");
+
+    // Add Y axis for prices
     svg.append("g")
         .attr("class", "axisPrice")
         .call(d3.axisLeft(yPrice))
@@ -107,26 +98,23 @@ function plotData(timestamps, prices, volumes, ticker) {
         .style("font-size", "12px");
 
     // Add Y axis for volumes
-    const yVolume = d3.scaleLinear()
-        .domain([0, d3.max(volumes)])
-        .range([innerHeight, 0]);
     svg.append("g")
         .attr("transform", `translate(${innerWidth},0)`)
         .call(d3.axisRight(yVolume))
         .selectAll("text")
         .style("font-size", "12px");
 
-    // Add the volume bars, handle missing data by setting height to 0
+    // Add the volume bars
     svg.selectAll("bar")
         .data(timestamps)
         .enter()
         .append("rect")
-        .attr("x", (d, i) => x(d) - 0.5)
+        .attr("x", (d, i) => x(d))
         .attr("y", (d, i) => volumes[i] !== null ? yVolume(volumes[i]) : innerHeight)
-        .attr("width", 10)
+        .attr("width", x.bandwidth())
         .attr("height", (d, i) => volumes[i] !== null ? innerHeight - yVolume(volumes[i]) : 0)
         .attr("fill", "#6CB5DE");
-    
+
     // Add the price line with handling for missing data
     svg.append("path")
         .datum(timestamps.map((d, i) => ({ date: d, value: prices[i] !== null ? prices[i] : NaN })))
@@ -135,31 +123,31 @@ function plotData(timestamps, prices, volumes, ticker) {
         .attr("stroke-width", 1.75)
         .attr("d", d3.line()
             .defined(d => !isNaN(d.value))
-            .x(d => x(d.date))
+            .x(d => x(d.date) + x.bandwidth() / 2)
             .y(d => yPrice(d.value))
         );
 
     // Add points to the price line
     svg.selectAll("dot")
-        .data(timestamps.map((d, i) => ({date: d, value: prices[i]})))
+        .data(timestamps.map((d, i) => ({ date: d, value: prices[i] })))
         .enter()
         .append("circle")
-        .attr("cx", d => x(d.date))
+        .attr("cx", d => x(d.date) + x.bandwidth() / 2)
         .attr("cy", d => yPrice(d.value))
         .attr("r", 3)
         .attr("fill", "#DB0A40");
 
     // Add points for hover functionality
     svg.selectAll("dot")
-        .data(timestamps.map((d, i) => ({date: d, value: prices[i], volume: volumes[i]})))
+        .data(timestamps.map((d, i) => ({ date: d, value: prices[i], volume: volumes[i] })))
         .enter()
         .append("circle")
-        .attr("cx", d => x(d.date))
+        .attr("cx", d => x(d.date) + x.bandwidth() / 2)
         .attr("cy", d => yPrice(d.value))
         .attr("r", 5)
         .attr("fill", "#DB0A40")
         .attr("opacity", 0)
-        .on("mouseover", function(event, d) {
+        .on("mouseover", function (event, d) {
             d3.select(this).attr("opacity", 0.7);
             d3.select("#tooltip")
                 .style("left", `${event.pageX + 5}px`)
@@ -167,10 +155,10 @@ function plotData(timestamps, prices, volumes, ticker) {
                 .style("display", "block")
                 .html(`Date: ${d.date.toLocaleDateString()}<br>Price: ${d.value}</br>Volume: ${d.volume}`);
         })
-    .on("mouseout", function() {
-        d3.select(this).attr("opacity", 0);
-        d3.select("#tooltip").style("display", "none");
-    });
+        .on("mouseout", function () {
+            d3.select(this).attr("opacity", 0);
+            d3.select("#tooltip").style("display", "none");
+        });
 }
 
 // Function to update selected-ticker-price span
