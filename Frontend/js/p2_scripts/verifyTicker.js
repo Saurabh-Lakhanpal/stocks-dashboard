@@ -1,3 +1,4 @@
+// verifyTicker.js
 // Function to fetch ticker data for the specific ticker and date range
 async function fetchTickerData(ticker, startDate, endDate) {
     const url = `http://127.0.0.1:5000/api/v1.0/sp500?ticker=${ticker}&start_date=${startDate}&end_date=${endDate}`;

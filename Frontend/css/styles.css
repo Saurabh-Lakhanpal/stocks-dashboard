@@ -194,6 +194,15 @@ html, body {
     position: absolute; 
 }
 
+.chart_p2 {
+    width: 100%;
+    height: 90%; 
+    background-color: #ffffff;
+    margin-top: 10px;
+    overflow: hidden; 
+    position: relative;
+} 
+
 .main-content {
     width: 85%;
     height: 100%;
@@ -431,13 +440,13 @@ p {
 }
 
 /*===============================================================================*/
-/*.slider {
-    width: 7700px; 
-    height: 100%; 
+.slider {
+    width: 4500px; 
+    /* height: 100%;  */
     position: absolute;
     left: 0;
     transition: left 0.5s ease-in-out;
-    cursor: grab;
+    cursor: move;
     background-size: cover;
     animation: slide 60s linear infinite alternate;
   }
@@ -451,7 +460,7 @@ p {
       left: 0;
     }
     to {
-      left: -1540px; 
+      left: -3500px; 
   }
   
   button {
@@ -466,4 +475,7 @@ p {
     color: #000000; 
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);  
   }
-  }*/
+  }
+
+
+

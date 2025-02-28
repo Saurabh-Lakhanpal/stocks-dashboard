@@ -1,6 +1,8 @@
 // scripts_p2.js
 
 document.addEventListener('DOMContentLoaded', function() {
+       // Populate the selected ticker name on page load
+       document.getElementById('selected-ticker').textContent = selectedTickerNames[0];
     // Function to fetch ticker data
     async function fetchTickerData(ticker) {
         const url = ticker ? `http://127.0.0.1:5000/api/v1.0/ticker?ticker=${ticker}` : 'http://127.0.0.1:5000/api/v1.0/ticker';

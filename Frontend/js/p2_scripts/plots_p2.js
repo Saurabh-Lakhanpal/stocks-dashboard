@@ -1,354 +1,473 @@
-// plots_p2.js (part1)===================================================================================
-
-// Function to plot stock analysis
+// plots_p2.js
 // Function to plot stock analysis
 async function plotStockAnalysis(ticker, startDate, endDate, showHistoricalPrice, showRSI, showBollinger, showDrawdown) {
     const url = `http://127.0.0.1:5000/api/v1.0/sp500?ticker=${ticker}&start_date=${startDate}&end_date=${endDate}`;
-    
     try {
         const response = await fetch(url);
-        
-        if (!response.ok) {
-            console.error('Error fetching data:', response.statusText);
-            return;
-        }
-        
+        if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-
         if (data.length === 0) {
             console.log(`No data found for ticker: ${ticker}`);
             return;
         }
-
         // Ensure the data is sorted by date
         data.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-        // Filter out invalid or NaN values
-        const validData = data.filter(d => !isNaN(d.close_price) && !isNaN(d.volume));
-        
-        if (validData.length === 0) {
-            console.error('No valid data to plot for ticker:', ticker);
-            return;
-        }
-
-        // Now that validData is properly initialized, extract values
-        const dates = validData.map(d => new Date(d.date));
-        const closePrices = validData.map(d => d.close_price);
-
-        // Add check for NaN values in closePrices and dates
-        const cleanData = dates.filter((date, index) => !isNaN(closePrices[index]) && closePrices[index] !== null);
-
-        if (cleanData.length === 0) {
-            console.error('No valid data after cleaning.');
-            return;
-        }
-
+        // Prepare data for plotting
+        const dates = data.map(d => new Date(d.date));
+        const closePrices = data.map(d => d.close_price);
+        const volumes = data.map(d => d.volume);
         // Clear previous plots
         d3.select("#plot_p2").selectAll("*").remove();
-
         // Plot Historical Price Trends
         if (showHistoricalPrice) {
             plotLineChart(dates, closePrices, 'Closing Price', 'Price (USD)', 'Historical Price Trends', 'blue', 'plot_p2');
         }
-
         // Plot RSI
         if (showRSI) {
             const rsi = calculateRSI(closePrices);
             plotLineChart(dates, rsi, 'RSI', 'RSI', 'RSI for ' + ticker, 'purple', 'plot_p2', { yMin: 0, yMax: 100, horizontalLines: [30, 70] });
-            console.log(rsiData);
         }
-
         // Plot Bollinger Bands
         if (showBollinger) {
-            const bollingerBands = calculateBollingerBands(closePrices, 20);  // Assuming a window size of 20
-            plotBollingerBands(dates, closePrices, bollingerBands, 'Bollinger Bands for ' + ticker, 'plot_p2');
+            const [bollingerUpper, bollingerLower] = calculateBollingerBands(closePrices);
+            plotBollingerBands(dates, closePrices, bollingerUpper, bollingerLower, 'Bollinger Bands for ' + ticker, 'plot_p2');
         }
-
-
         // Plot Drawdown
         if (showDrawdown) {
             const drawdown = calculateDrawdown(closePrices);
             plotAreaChart(dates, drawdown, 'Drawdown', 'Drawdown', 'Drawdown for ' + ticker, 'red', 'plot_p2');
         }
-
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
 
-
 // Function to plot line chart using D3.js
-function plotLineChart(dates, values, label, ylabel, title, color, elementId, options = {}) {
-    const margin = { top: 20, right: 30, bottom: 50, left: 70 };
-    const width = 800 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
-    const svg = d3.select(`#${elementId}`).append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+function plotLineChart(dates, values, label, ylabel, title, color, elementId, options = {}, volumes = null) {
+    d3.select(`#${elementId}`).selectAll("*").remove();
+
+    const container = d3.select(`#${elementId}`).node();
+    const width = container.getBoundingClientRect().width;
+    const height = container.getBoundingClientRect().height;
+
+    const margin = { top: 20, right: 50, bottom: 50, left: 70 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    const svg = d3.select(`#${elementId}`)
+        .append("svg")
+        .attr("viewBox", `0 0 ${width} ${height}`)
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .style("overflow", "hidden")
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     const x = d3.scaleTime()
         .domain(d3.extent(dates))
-        .range([0, width]);
-    
+        .range([0, innerWidth]);
+
     const y = d3.scaleLinear()
         .domain([d3.min(values), d3.max(values)])
-        .range([height, 0]);
-    
+        .range([innerHeight, 0]);
+
+    const xBand = d3.scaleBand()
+        .domain(dates)
+        .range([0, innerWidth])
+        .padding(0.1);
+
+    const yVolume = volumes ? d3.scaleLinear()
+        .domain([0, d3.max(volumes)])
+        .range([innerHeight, 0]) : null;
+
+    const xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat("%U-%b-%y")).ticks(d3.timeWeek.every(1));
+
     svg.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
-    
+        .attr("transform", `translate(0,${innerHeight})`)
+        .call(xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start")
+        .attr("dy", "5px"); 
+
     svg.append("g")
         .call(d3.axisLeft(y));
-    
+
+    if (volumes) {
+        svg.append("g")
+            .attr("transform", `translate(${innerWidth},0)`)
+            .call(d3.axisRight(yVolume));
+
+        svg.selectAll(".bar")
+            .data(dates)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", d => xBand(d))
+            .attr("y", (d, i) => yVolume(volumes[i]))
+            .attr("width", xBand.bandwidth())
+            .attr("height", (d, i) => innerHeight - yVolume(volumes[i]))
+            .attr("fill", "gray");
+    }
+
     svg.append("path")
-        .datum(dates.map((date, index) => ({ date: date, value: values[index] })))
+        .datum(dates.map((date, index) => ({ date, value: values[index] })))
         .attr("fill", "none")
         .attr("stroke", color)
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
+            .defined(d => !isNaN(d.value))
             .x(d => x(d.date))
             .y(d => y(d.value))
         );
 
-    svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", 0 - margin.top / 2)
-        .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .text(title);
+    svg.selectAll("dot")
+        .data(dates.map((date, index) => ({ date, value: values[index] })))
+        .enter()
+        .append("circle")
+        .attr("cx", d => x(d.date))
+        .attr("cy", d => y(d.value))
+        .attr("r", 3)
+        .attr("fill", color);
+
+    svg.selectAll("dot")
+        .data(dates.map((date, index) => ({ date, value: values[index], volume: volumes ? volumes[index] : null })))
+        .enter()
+        .append("circle")
+        .attr("cx", d => x(d.date))
+        .attr("cy", d => y(d.value))
+        .attr("r", 5)
+        .attr("fill", color)
+        .attr("opacity", 0)
+        .on("mouseover", function (event, d) {
+            d3.select(this).attr("opacity", 0.7);
+            d3.select("#tooltip")
+                .style("left", `${event.pageX + 5}px`)
+                .style("top", `${event.pageY - 5}px`)
+                .style("display", "block")
+                .html(`Date: ${d.date.toLocaleDateString()}<br>Value: ${d.value}</br>${volumes ? `Volume: ${d.volume}` : ''}`);
+        })
+        .on("mouseout", function () {
+            d3.select(this).attr("opacity", 0);
+            d3.select("#tooltip").style("display", "none");
+        });
 
     if (options.yMin !== undefined && options.yMax !== undefined) {
         y.domain([options.yMin, options.yMax]);
     }
-    
+
     if (options.horizontalLines) {
         options.horizontalLines.forEach(line => {
             svg.append("line")
                 .style("stroke", "red")
                 .attr("x1", 0)
                 .attr("y1", y(line))
-                .attr("x2", width)
+                .attr("x2", innerWidth)
                 .attr("y2", y(line));
         });
     }
-}
-
-
-// Function to plot Bollinger Bands using D3.js
-function plotBollingerBands(dates, closePrices, upper, lower, title, elementId) {
-
-    if (!Array.isArray(prices) || prices.length === 0) {
-        console.error('Bollinger Bands data is invalid or empty');
-        return;
-    }
-    
-    const margin = { top: 20, right: 30, bottom: 50, left: 70 };
-    const width = 800 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
-    const svg = d3.select(`#${elementId}`).append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
-
-    const x = d3.scaleTime()
-        .domain(d3.extent(dates))
-        .range([0, width]);
-
-    const y = d3.scaleLinear()
-        .domain([d3.min(lower), d3.max(upper)])
-        .range([height, 0]);
-
-    svg.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
-
-    svg.append("g")
-        .call(d3.axisLeft(y));
-
-    // Clean data: remove NaN or null values before plotting
-    const cleanData = dates.filter((date, index) => {
-        return !isNaN(closePrices[index]) && closePrices[index] !== null &&
-               !isNaN(upper[index]) && upper[index] !== null &&
-               !isNaN(lower[index]) && lower[index] !== null;
-    });
-
-    if (cleanData.length === 0) {
-        console.error('Bollinger Bands data contains invalid values.');
-        return;
-    }
-
-    // Plot Close Prices
-    svg.append("path")
-        .datum(cleanData.map((date, index) => ({ date: date, value: closePrices[index] })))
-        .attr("fill", "none")
-        .attr("stroke", "blue")
-        .attr("stroke-width", 1.5)
-        .attr("d", d3.line()
-            .x(d => x(d.date))
-            .y(d => y(d.value))
-        );
-
-    // Plot Upper Bollinger Band
-    svg.append("path")
-        .datum(cleanData.map((date, index) => ({ date: date, value: upper[index] })))
-        .attr("fill", "none")
-        .attr("stroke", "green")
-        .attr("stroke-width", 1.5)
-        .attr("d", d3.line()
-            .x(d => x(d.date))
-            .y(d => y(d.value))
-        );
-
-    // Plot Lower Bollinger Band
-    svg.append("path")
-        .datum(cleanData.map((date, index) => ({ date: date, value: lower[index] })))
-        .attr("fill", "none")
-        .attr("stroke", "red")
-        .attr("stroke-width", 1.5)
-        .attr("d", d3.line()
-            .x(d => x(d.date))
-            .y(d => y(d.value))
-        );
 
     svg.append("text")
-        .attr("x", width / 2)
+        .attr("x", innerWidth / 2)
         .attr("y", 0 - margin.top / 2)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
+        .style("font-family", "'Shafarik', sans-serif")
         .text(title);
 }
 
-
-
-
-// plots_p2.js (part2) =================================================================================================
-// plots_p2.js (part2)
-
-// Function to plot area chart using D3.js
-function plotAreaChart(dates, values, label, ylabel, title, color, elementId) {
-    const margin = { top: 20, right: 30, bottom: 50, left: 70 };
-    const width = 800 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
-    const svg = d3.select(`#${elementId}`).append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
-    
-    const x = d3.scaleTime()
-        .domain(d3.extent(dates))
-        .range([0, width]);
-    
-    const y = d3.scaleLinear()
-        .domain([d3.min(values), d3.max(values)])
-        .range([height, 0]);
-    
-    svg.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
-    
-    svg.append("g")
-        .call(d3.axisLeft(y));
-    
-    svg.append("path")
-        .datum(dates.map((date, index) => ({ date: date, value: values[index] })))
-        .attr("fill", color)
-        .attr("stroke", color)
-        .attr("stroke-width", 1.5)
-        .attr("d", d3.area()
-            .x(d => x(d.date))
-            .y0(height)
-            .y1(d => y(d.value))
-        );
-    
-    svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", 0 - margin.top / 2)
-        .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .text(title);
-}
-
+// Calculation of RSI, Bollinger and Drawdown====================================================================
 // Function to calculate RSI
-function calculateRSI(prices, period = 14) {
-    let gains = [];
-    let losses = [];
-    let avgGain = 0;
-    let avgLoss = 0;
+function calculateRSI(data, window = 14) {
+    const rsi = [];
+    const gains = [];
+    const losses = [];
 
-    // Calculate initial gains and losses
-    for (let i = 1; i < period; i++) {
-        const change = prices[i] - prices[i - 1];
-        if (change > 0) {
-            gains.push(change);
+    for (let i = 1; i < data.length; i++) {
+        const delta = data[i] - data[i - 1];
+        if (delta > 0) {
+            gains.push(delta);
             losses.push(0);
         } else {
             gains.push(0);
-            losses.push(-change);
+            losses.push(-delta);
+        }
+
+        if (i >= window) {
+            const avgGain = d3.mean(gains.slice(i - window, i));
+            const avgLoss = d3.mean(losses.slice(i - window, i));
+            const rs = avgGain / avgLoss;
+            rsi.push(100 - (100 / (1 + rs)));
+        } else {
+            rsi.push(null);
         }
     }
-
-    avgGain = gains.reduce((acc, val) => acc + val, 0) / period;
-    avgLoss = losses.reduce((acc, val) => acc + val, 0) / period;
-
-    // Calculate RSI for the rest of the data
-    const rsiValues = [];
-    for (let i = period; i < prices.length; i++) {
-        const change = prices[i] - prices[i - 1];
-        const gain = change > 0 ? change : 0;
-        const loss = change < 0 ? -change : 0;
-
-        avgGain = (avgGain * (period - 1) + gain) / period;
-        avgLoss = (avgLoss * (period - 1) + loss) / period;
-
-        const rs = avgGain / avgLoss;
-        const rsi = 100 - (100 / (1 + rs));
-        rsiValues.push(rsi);
-    }
-
-    return rsiValues;
+    return rsi;
 }
 
-
- // Function to calculate Bollinger Bands
- function calculateBollingerBands(closePrices, windowSize) {
+// Function to calculate Bollinger Bands
+function calculateBollingerBands(data, window = 20) {
     const rollingMean = [];
     const rollingStd = [];
     const upper = [];
     const lower = [];
-
-    for (let i = 0; i < closePrices.length; i++) {
-        if (i >= windowSize - 1) {
-            const windowSlice = closePrices.slice(i - windowSize + 1, i + 1);
-            const mean = d3.mean(windowSlice);
-            const std = d3.deviation(windowSlice);
-            rollingMean.push(mean);
-            rollingStd.push(std);
-            upper.push(mean + 2 * std);
-            lower.push(mean - 2 * std);
-        } else {
-            rollingMean.push(null);
-            rollingStd.push(null);
-            upper.push(null);
-            lower.push(null);
-        }
+    for (let i = 0; i < data.length; i++) {
+        const start = Math.max(0, i - window + 1);
+        const windowData = data.slice(start, i + 1);
+        const mean = d3.mean(windowData);
+        const std = d3.deviation(windowData);
+        rollingMean.push(mean);
+        rollingStd.push(std);
+        upper.push(mean + std * 2);
+        lower.push(mean - std * 2);
     }
-
-    return { upper, lower };
+    return [upper, lower];
 }
 
 // Function to calculate Drawdown
 function calculateDrawdown(data) {
+    const cumReturns = [];
     const drawdown = [];
-    let peak = data[0];
+    let maxReturn = 0;
     for (let i = 0; i < data.length; i++) {
-        peak = Math.max(peak, data[i]);
-        const drawdownVal = (data[i] - peak) / peak;
-        drawdown.push(drawdownVal);
+        const returnVal = data[i] / data[0];
+        cumReturns.push(returnVal);
+        maxReturn = Math.max(maxReturn, returnVal);
+        drawdown.push(returnVal - maxReturn);
     }
     return drawdown;
 }
+
+// Plot non default charts =============================================================================
+
+// Function to plot line chart with Bollinger Bands using D3.js
+function plotBollingerBands(dates, prices, upper, lower, title, elementId) {
+    d3.select(`#${elementId}`).selectAll("*").remove();
+
+    const container = d3.select(`#${elementId}`).node();
+    const width = container.getBoundingClientRect().width;
+    const height = container.getBoundingClientRect().height;
+
+    const margin = { top: 20, right: 50, bottom: 50, left: 70 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    const svg = d3.select(`#${elementId}`)
+        .append("svg")
+        .attr("viewBox", `0 0 ${width} ${height}`)
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .style("overflow", "hidden")
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const x = d3.scaleTime()
+        .domain(d3.extent(dates))
+        .range([0, innerWidth]);
+
+    const y = d3.scaleLinear()
+        .domain([d3.min(lower), d3.max(upper)])
+        .range([innerHeight, 0]);
+
+    const xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat("%U-%b-%y")).ticks(d3.timeWeek.every(1));
+
+    svg.append("g")
+        .attr("transform", `translate(0,${innerHeight})`)
+        .call(xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start")
+        .attr("dy", "5px");
+
+    svg.append("g")
+        .call(d3.axisLeft(y));
+
+    // Add the price line
+    svg.append("path")
+        .datum(dates.map((date, index) => ({ date, value: prices[index] })))
+        .attr("fill", "none")
+        .attr("stroke", "blue")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+            .defined(d => !isNaN(d.value))
+            .x(d => x(d.date))
+            .y(d => y(d.value))
+        );
+
+    // Add the upper band line
+    svg.append("path")
+        .datum(dates.map((date, index) => ({ date, value: upper[index] })))
+        .attr("fill", "none")
+        .attr("stroke", "red")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+            .defined(d => !isNaN(d.value))
+            .x(d => x(d.date))
+            .y(d => y(d.value))
+        );
+
+    // Add the lower band line
+    svg.append("path")
+        .datum(dates.map((date, index) => ({ date, value: lower[index] })))
+        .attr("fill", "none")
+        .attr("stroke", "green")
+        .attr("stroke-width", 1.5)
+        .attr("d", d3.line()
+            .defined(d => !isNaN(d.value))
+            .x(d => x(d.date))
+            .y(d => y(d.value))
+        );
+
+    // Add tooltip
+    svg.selectAll("dot")
+        .data(dates.map((date, index) => ({ date, value: prices[index] })))
+        .enter()
+        .append("circle")
+        .attr("cx", d => x(d.date))
+        .attr("cy", d => y(d.value))
+        .attr("r", 3)
+        .attr("fill", "blue");
+
+    svg.selectAll("dot")
+        .data(dates.map((date, index) => ({ date, value: prices[index], upper: upper[index], lower: lower[index] })))
+        .enter()
+        .append("circle")
+        .attr("cx", d => x(d.date))
+        .attr("cy", d => y(d.value))
+        .attr("r", 5)
+        .attr("fill", "blue")
+        .attr("opacity", 0)
+        .on("mouseover", function (event, d) {
+            d3.select(this).attr("opacity", 0.7);
+            d3.select("#tooltip")
+                .style("left", `${event.pageX + 5}px`)
+                .style("top", `${event.pageY - 5}px`)
+                .style("display", "block")
+                .html(`Date: ${d.date.toLocaleDateString()}<br>Price: ${d.value}<br>Upper Band: ${d.upper}<br>Lower Band: ${d.lower}`);
+        })
+        .on("mouseout", function () {
+            d3.select(this).attr("opacity", 0);
+            d3.select("#tooltip").style("display", "none");
+        });
+
+    svg.append("text")
+        .attr("x", innerWidth / 2)
+        .attr("y", 0 - margin.top / 2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-family", "'Shafarik', sans-serif")
+        .text(title);
+}
+
+// Function to plot area chart using D3.js
+function plotAreaChart(dates, values, label, ylabel, title, color, elementId) {
+    d3.select(`#${elementId}`).selectAll("*").remove();
+
+    const container = d3.select(`#${elementId}`).node();
+    const width = container.getBoundingClientRect().width;
+    const height = container.getBoundingClientRect().height;
+
+    const margin = { top: 30, right: 50, bottom: 50, left: 70 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    const svg = d3.select(`#${elementId}`)
+        .append("svg")
+        .attr("viewBox", `0 0 ${width} ${height}`)
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .style("overflow", "hidden")
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Define the gradient
+    const gradient = svg.append("defs")
+        .append("linearGradient")
+        .attr("id", "area-gradient")
+        .attr("x1", "0%")
+        .attr("x2", "0%")
+        .attr("y1", "0%")
+        .attr("y2", "100%");
+    
+    gradient.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", color)
+        .attr("stop-opacity", 0.7);
+    
+    gradient.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", color)
+        .attr("stop-opacity", 0.1);
+
+    const x = d3.scaleTime()
+        .domain(d3.extent(dates))
+        .range([0, innerWidth]);
+
+    const y = d3.scaleLinear()
+        .domain([d3.min(values), d3.max(values)])
+        .range([innerHeight, 0]);
+
+    const xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat("%U-%b-%y")).ticks(d3.timeWeek.every(1));
+
+    svg.append("g")
+        .attr("transform", `translate(0,${innerHeight})`)
+        .call(xAxis)
+        .selectAll("text")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start")
+        .attr("dy", "5px");
+
+    svg.append("g")
+        .call(d3.axisLeft(y));
+
+    // Add area path with gradient fill
+    const area = d3.area()
+        .x(d => x(d.date))
+        .y0(innerHeight)
+        .y1(d => y(d.value))
+        .curve(d3.curveMonotoneX);
+
+    svg.append("path")
+        .datum(dates.map((date, index) => ({ date, value: values[index] })))
+        .attr("fill", "url(#area-gradient)")
+        .attr("stroke", color)
+        .attr("stroke-width", 1.5)
+        .attr("d", area);
+
+    // Add tooltip
+    svg.selectAll("dot")
+        .data(dates.map((date, index) => ({ date, value: values[index] })))
+        .enter()
+        .append("circle")
+        .attr("cx", d => x(d.date))
+        .attr("cy", d => y(d.value))
+        .attr("r", 3)
+        .attr("fill", color);
+
+    svg.selectAll("dot")
+        .data(dates.map((date, index) => ({ date, value: values[index], volume: null })))
+        .enter()
+        .append("circle")
+        .attr("cx", d => x(d.date))
+        .attr("cy", d => y(d.value))
+        .attr("r", 5)
+        .attr("fill", color)
+        .attr("opacity", 0)
+        .on("mouseover", function (event, d) {
+            d3.select(this).attr("opacity", 0.7);
+            d3.select("#tooltip")
+                .style("left", `${event.pageX + 5}px`)
+                .style("top", `${event.pageY - 5}px`)
+                .style("display", "block")
+                .html(`Date: ${d.date.toLocaleDateString()}<br>Value: ${d.value}`);
+        })
+        .on("mouseout", function () {
+            d3.select(this).attr("opacity", 0);
+            d3.select("#tooltip").style("display", "none");
+        });
+}
+
+

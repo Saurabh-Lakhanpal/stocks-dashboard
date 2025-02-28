@@ -48,103 +48,73 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleCheckboxChange(event) {
         const target = event.target;
-        if (target.id === 'show-rsi' || target.id === 'show-bollinger') {
-            if (rsiCheckbox.checked && bollingerCheckbox.checked) {
-                historicalCheckbox.checked = false;
-                drawdownCheckbox.checked = false;
-            }
-        } else {
-            rsiCheckbox.checked = false;
+
+        // Disable concurrent selection of RSI and Bollinger
+        if (target.id === 'show-rsi' && target.checked) {
             bollingerCheckbox.checked = false;
-            if (target.checked) {
-                checkboxes.forEach(checkbox => {
-                    if (checkbox !== target) {
-                        checkbox.checked = false;
-                    }
-                });
-            }
+        } else if (target.id === 'show-bollinger' && target.checked) {
+            rsiCheckbox.checked = false;
         }
-        if (historicalCheckbox.checked) {
-            if (rsiCheckbox.checked || bollingerCheckbox.checked || drawdownCheckbox.checked) {
-                historicalCheckbox.checked = false;
-            }
-        }
-        if (drawdownCheckbox.checked) {
-            if (rsiCheckbox.checked || bollingerCheckbox.checked || historicalCheckbox.checked) {
-                drawdownCheckbox.checked = false;
-            }
+
+        // Deselect other checkboxes when one is selected
+        if (target.checked) {
+            checkboxes.forEach(checkbox => {
+                if (checkbox !== target) {
+                    checkbox.checked = false;
+                }
+            });
         }
     }
 });
 
 
 // // Slider =====================================================================
-// const slider = document.getElementById('plot_p2');
-// const toggleButton = document.getElementById('toggleButton');
-// let isDragging = false;
-// let startX = 0;
-// let currentX = 0;
-// const containerWidth = 450; // 150px * 3
-// const sliderWidth = 1200; // 400px * 3
+const slider = document.getElementById('plot_p2');
+const toggleButton = document.getElementById('toggleButton');
+let isDragging = false;
+let startX = 0;
+let currentX = 0;
+const containerWidth = 450; // 150px * 3
+const sliderWidth = 3500; 
 
-// let isSliding = true;
+let isSliding = true;
 
-// // Dragging event listeners
-// slider.addEventListener('mousedown', (e) => {
-// isDragging = true;
-// startX = e.clientX - slider.offsetLeft;
-// slider.style.transition = 'none';
-// if (isSliding) {
-//   slider.style.animation = 'none';
-// }
-// });
+// Dragging event listeners
+slider.addEventListener('mousedown', (e) => {
+isDragging = true;
+startX = e.clientX - slider.offsetLeft;
+slider.style.transition = 'none';
+if (isSliding) {
+  slider.style.animation = 'none';
+}
+});
 
-// document.addEventListener('mousemove', (e) => {
-// if (isDragging) {
-//   currentX = e.clientX - startX;
-//   currentX = Math.max(containerWidth - sliderWidth, Math.min(currentX, 0));
-//   slider.style.left = `${currentX}px`;
-// }
-// });
+document.addEventListener('mousemove', (e) => {
+if (isDragging) {
+  currentX = e.clientX - startX;
+  currentX = Math.max(containerWidth - sliderWidth, Math.min(currentX, 0));
+  slider.style.left = `${currentX}px`;
+}
+});
 
-// document.addEventListener('mouseup', () => {
-// if (isDragging) {
-//   isDragging = false;
-//   slider.style.transition = 'left 0.5s ease-in-out';
-//   if (isSliding) {
-//     slider.style.animation = 'slide 60s linear infinite alternate';
-//   }
-// }
-// });
+document.addEventListener('mouseup', () => {
+if (isDragging) {
+  isDragging = false;
+  slider.style.transition = 'left 0.5s ease-in-out';
+  if (isSliding) {
+    slider.style.animation = 'slide 60s linear infinite alternate';
+  }
+}
+});
 
-// // Keyboard event listeners
-// slider.addEventListener('keydown', (e) => {
-// switch (e.key) {
-//   case 'ArrowRight':
-//     currentX = Math.max(currentX - 10, containerWidth - sliderWidth);
-//     slider.style.left = `${currentX}px`;
-//     if (isSliding) {
-//       slider.style.animation = 'none';
-//     }
-//     break;
-//   case 'ArrowLeft':
-//     currentX = Math.min(currentX + 10, 0);
-//     slider.style.left = `${currentX}px`;
-//     if (isSliding) {
-//       slider.style.animation = 'none';
-//     }
-//     break;
-// }
-// });
-
-// // Toggle button event listener
-// toggleButton.addEventListener('click', () => {
-// isSliding = !isSliding;
-// if (isSliding) {
-//   slider.style.animation = 'slide 60s linear infinite alternate';
-//   toggleButton.textContent = 'Stop Sliding';
-// } else {
-//   slider.style.animation = 'none';
-//   toggleButton.textContent = 'Start Sliding';
-// }
-// });
+// Toggle button event listener
+toggleButton.addEventListener('click', () => {
+isSliding = !isSliding;
+if (isSliding) {
+  slider.style.animation = 'slide 60s linear infinite alternate';
+  toggleButton.textContent = 'Stop Sliding';
+} else {
+  slider.style.animation = 'none';
+  toggleButton.textContent = 'Start Sliding';
+}
+});
