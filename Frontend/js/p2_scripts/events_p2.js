@@ -51,8 +51,55 @@ async function fetchSuggestions() {
     }
 }
 
-// Updated handleSelection function to include verification of the selected ticker
-async function handleSelection(checkbox) { // Modified line to make the function async
+async function fetchDataAndPlot(ticker) {
+    try {
+        const interval = '1d';  // Adjusted to valid interval
+        const response = await fetch(`https://yfapi.net/v8/finance/chart/${ticker}?interval=${interval}`, {
+            headers: {
+                'X-API-KEY': API_KEY
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        console.log("Fetched Data:", data);
+        const chartData = data.chart?.result?.[0];
+
+        // Check if the chart data exists
+        if (!chartData) {
+            console.error("Chart data is missing in the response:", data);
+            return;
+        }
+
+        const timestamps = chartData.timestamp.map(ts => new Date(ts * 1000));
+        const prices = chartData.indicators?.quote?.[0]?.close;
+
+        // Check if prices are available
+        if (!prices || prices.length === 0) {
+            console.error("Prices data is missing or empty.");
+            return;
+        }
+        // Calculate RSI data
+        const rsiData = calculateRSI(prices);
+        
+        // Plotting the data
+        plotRSI(timestamps, rsiData, ticker);
+        plotStockAnalysis(timestamps, prices);
+
+        // Plotting the Bollinger Bands
+        plotBollingerBands(timestamps, prices);
+
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+
+
+
+function handleSelection(checkbox) {
     if (selectedTickers.length >= 1) {
         const checkboxes = document.querySelectorAll('#suggestions input[type="checkbox"]');
         checkboxes.forEach(cb => cb.checked = false);
@@ -62,9 +109,7 @@ async function handleSelection(checkbox) { // Modified line to make the function
     if (checkbox.checked) {
         selectedTickers.push(checkbox.value);
         updateSelectedList();
-        fetchAndDisplayRecommendations(selectedTickers[0]);
-        // Verify the selected ticker
-        await verifySelectedTicker(checkbox.value, start_date, end_date); // Modified line to pass start_date and end_date
+        fetchDataAndPlot(selectedTickers[0]);
     }
     if (selectedTickers.length > 1) {
         checkbox.checked = false;
@@ -101,22 +146,16 @@ document.addEventListener('click', function(event) {
         suggestionsList.style.display = 'none';
     }
 });
-
-// Updated event listener for the plot button to verify the selected ticker before plotting
-document.getElementById('plot-button').addEventListener('click', async function() { // Modified line to make the function async
+//events_p2.js (part2)==============================================================
+// Event listener for the plot button to trigger the plotStockAnalysis function
+document.getElementById('plot-button').addEventListener('click', function() {
     const selectedTicker = selectedTickers[0];
-    const isValid = await verifySelectedTicker(selectedTicker, start_date, end_date); // Modified line to pass start_date and end_date
-    if (!isValid) {
-        return; // Added line to return early if the ticker is not valid
-    }
     const showHistoricalPrice = document.getElementById('show-historical-price').checked;
     const showRSI = document.getElementById('show-rsi').checked;
     const showBollinger = document.getElementById('show-bollinger').checked;
     const showDrawdown = document.getElementById('show-drawdown').checked;
     plotStockAnalysis(selectedTicker, start_date, end_date, showHistoricalPrice, showRSI, showBollinger, showDrawdown);
 });
-
-// events_p2.js (part 2) ====================================================================================================
 
 // Plot data function using D3.js
 function plotData(timestamps, prices, volumes, ticker) {
