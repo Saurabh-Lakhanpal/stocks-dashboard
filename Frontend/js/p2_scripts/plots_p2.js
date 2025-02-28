@@ -384,23 +384,41 @@ function plotAreaChart(dates, values, label, ylabel, title, color, elementId) {
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Define the gradient
-    const gradient = svg.append("defs")
+    // Define the gradients
+    const gradientAbove = svg.append("defs")
         .append("linearGradient")
-        .attr("id", "area-gradient")
+        .attr("id", "area-gradient-above")
         .attr("x1", "0%")
         .attr("x2", "0%")
         .attr("y1", "0%")
         .attr("y2", "100%");
-    
-    gradient.append("stop")
+
+    gradientAbove.append("stop")
         .attr("offset", "0%")
         .attr("stop-color", color)
-        .attr("stop-opacity", 0.7);
-    
-    gradient.append("stop")
+        .attr("stop-opacity", 0.1);
+
+    gradientAbove.append("stop")
         .attr("offset", "100%")
         .attr("stop-color", color)
+        .attr("stop-opacity", 0.7);
+
+    const gradientBelow = svg.append("defs")
+        .append("linearGradient")
+        .attr("id", "area-gradient-below")
+        .attr("x1", "0%")
+        .attr("x2", "0%")
+        .attr("y1", "100%")
+        .attr("y2", "0%");
+
+    gradientBelow.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "#C7E5F7")
+        .attr("stop-opacity", 0.7);
+
+    gradientBelow.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "#C7E5F7")
         .attr("stop-opacity", 0.1);
 
     const x = d3.scaleTime()
@@ -424,8 +442,22 @@ function plotAreaChart(dates, values, label, ylabel, title, color, elementId) {
     svg.append("g")
         .call(d3.axisLeft(y));
 
-    // Add area path with gradient fill
-    const area = d3.area()
+    // Add area path with gradient fill above the line
+    const areaAbove = d3.area()
+        .x(d => x(d.date))
+        .y0(0)
+        .y1(d => y(d.value))
+        .curve(d3.curveMonotoneX);
+
+    svg.append("path")
+        .datum(dates.map((date, index) => ({ date, value: values[index] })))
+        .attr("fill", "url(#area-gradient-above)")
+        .attr("stroke", color)
+        .attr("stroke-width", 1.5)
+        .attr("d", areaAbove);
+
+    // Add area path with gradient fill below the line
+    const areaBelow = d3.area()
         .x(d => x(d.date))
         .y0(innerHeight)
         .y1(d => y(d.value))
@@ -433,10 +465,10 @@ function plotAreaChart(dates, values, label, ylabel, title, color, elementId) {
 
     svg.append("path")
         .datum(dates.map((date, index) => ({ date, value: values[index] })))
-        .attr("fill", "url(#area-gradient)")
-        .attr("stroke", color)
+        .attr("fill", "url(#area-gradient-below)")
+        .attr("stroke", "#C7E5F7")
         .attr("stroke-width", 1.5)
-        .attr("d", area);
+        .attr("d", areaBelow);
 
     // Add tooltip
     svg.selectAll("dot")
@@ -470,5 +502,3 @@ function plotAreaChart(dates, values, label, ylabel, title, color, elementId) {
             d3.select("#tooltip").style("display", "none");
         });
 }
-
-
