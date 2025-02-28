@@ -25,7 +25,7 @@ async function fetchFinancialRatios(ticker) {
         return data;
     } catch (error) {
         console.error("Error fetching financial ratios:", error);
-        document.getElementById('ratios').innerHTML = '<p class="error-message">Error fetching financial ratios data.</p>';
+        document.getElementById('ratios').innerHTML = '<p class="error-message">Error fetching from Quote Summary.</p>';
         return null;
     }
 }

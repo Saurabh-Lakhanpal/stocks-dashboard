@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Process and display the ticker data
         } catch (error) {
             console.error('Error fetching ticker data:', error);
+            document.getElementById('selected-ticker').innerHTML = '<li class="error-message">No Response from Backend.</li>';
         }
     }
 
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Process and plot the S&P 500 data
         } catch (error) {
             console.error('Error fetching S&P 500 data:', error);
+            document.getElementById('selected-ticker').innerHTML = '<li class="error-message">No Response from Backend.</li>';
         }
     }
 
@@ -42,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Process and display the portfolio data
         } catch (error) {
             console.error('Error fetching portfolio data:', error);
+            document.getElementById('selected-ticker').innerHTML = '<li class="error-message">No Response from Backend.</li>';
         }
     }
     // Function to plot stock analysis with console logs for debugging
@@ -88,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Error fetching data:', error);
+            document.getElementById('selected-ticker').innerHTML = '<li class="error-message">No Response from Backend.</li>';
         }
     }
 
