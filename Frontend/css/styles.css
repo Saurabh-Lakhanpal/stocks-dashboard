@@ -31,6 +31,7 @@ html, body {
     padding: 20px;
     overflow: hidden;
     gap: 30px;
+    flex-direction: column;    
 }
 
 .header {
@@ -419,6 +420,15 @@ p {
     overflow: hidden;
 }
 
+.ratios {
+    flex-grow: 1;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    overflow: auto;
+}
 
 /*===============================================================================*/
 /*.slider {
