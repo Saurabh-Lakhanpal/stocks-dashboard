@@ -1,6 +1,6 @@
 # stocks-dashbaords
-- [Plan](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Ideation/dashbaord-planning.md)
-- [Workflow](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Ideation/workflow.md)
+ 1. Project Overview
+ 2. 
 
 ## Directory Structure
 ```
@@ -9,9 +9,7 @@ Stocks-dashboard
 │   ├── .kaggle
 │   │   └── kaggle.json
 │   ├── Resources
-│   │   ├── data_portfolio.js
-│   │   ├── data_s&p500_3mo.js  
-│   │   └── data_ticker.js 
+│   │   └── "csv gets downloaded, consumed and purged in this folder" 
 │   ├── stocks_dashboard_ETL.ipynb
 │   ├── app.py
 │   ├── stocks_dashboard_db_schema.sql      
@@ -30,22 +28,23 @@ Stocks-dashboard
 │   │   └── styles.css
 │   ├── js
 │   │   ├── p1_scripts
-│   │   │   ├── UIscripts_p1.js
 │   │   │   ├── events_p1.js
+│   │   │   ├── layers_p1.js
 │   │   │   ├── plot_p1.js
-│   │   │   └── recommendations_p1.js
+│   │   │   ├── portfolio_p1.js.js
+│   │   │   ├── recommendations_p1.js
+│   │   │   └── UIscripts_p1.js
 │   │   ├── p2_scripts
-│   │   │   ├── UIscripts_p2.js
 │   │   │   ├── events_p2.js
-│   │   │   └── plot_p2.js
-│   │   └── p3_scripts
-│   │   │   ├── UIscripts_p3.js
-│   │   │   ├── events_p3.js
-│   │   │   └── plot_p3.js
+│   │   │   ├── plots_p2.js
+│   │   │   ├── ratios_p2.js
+│   │   │   ├── scripts_p2.js
+│   │   │   ├── UIscripts_p2.js
+│   │   │   └── verifyTicker_p2.js
 │   │   └── config.js
 │   ├── index_p1.js
 │   ├── index_p2.js
 │   └── index_p3.js
 ├── .gitignore
-├── tutorials
-└── README.md
+├── README.md
+└── Installation-Guide.md

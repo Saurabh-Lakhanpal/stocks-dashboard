@@ -1,10 +1,9 @@
-//events_p2.js=========================================================
+// events_p2.js=========================================================
 // Global variables
 let selectedTickers = ["AAPL"];
-let selectedTickerNames = ["Apple Inc."]; 
+let selectedTickerNames = ["Apple Inc."];
 let start_date = "2013-02-08";
 let end_date = "2018-02-07";
-
 
 // Debounce function to improve performance
 function debounce(func, delay) {
@@ -54,7 +53,7 @@ async function fetchSuggestions() {
 }
 
 // Updated handleSelection function to include verification of the selected ticker
-async function handleSelection(checkbox) { // Modified line to make the function async
+async function handleSelection(checkbox) {
     if (selectedTickers.length >= 1) {
         const checkboxes = document.querySelectorAll('#suggestions input[type="checkbox"]');
         checkboxes.forEach(cb => cb.checked = false);
@@ -67,7 +66,9 @@ async function handleSelection(checkbox) { // Modified line to make the function
         updateSelectedList();
         fetchAndDisplayRecommendations(selectedTickers[0]);
         // Verify the selected ticker
-        await verifySelectedTicker(checkbox.value, start_date, end_date); // Modified line to pass start_date and end_date
+        await verifySelectedTicker(checkbox.value, start_date, end_date);
+        // Update ratios after selecting the ticker
+        updateRatios();
     }
     if (selectedTickers.length > 1) {
         checkbox.checked = false;
@@ -106,15 +107,29 @@ document.addEventListener('click', function(event) {
 });
 
 // Updated event listener for the plot button to verify the selected ticker before plotting
-document.getElementById('plot-button').addEventListener('click', async function() { // Modified line to make the function async
+document.getElementById('plot-button').addEventListener('click', async function() {
     const selectedTicker = selectedTickers[0];
-    const isValid = await verifySelectedTicker(selectedTicker, start_date, end_date); // Modified line to pass start_date and end_date
+    const isValid = await verifySelectedTicker(selectedTicker, start_date, end_date);
     if (!isValid) {
-        return; // Added line to return early if the ticker is not valid
+        return;
     }
     const showHistoricalPrice = document.getElementById('show-historical-price').checked;
     const showRSI = document.getElementById('show-rsi').checked;
     const showBollinger = document.getElementById('show-bollinger').checked;
     const showDrawdown = document.getElementById('show-drawdown').checked;
     plotStockAnalysis(selectedTicker, start_date, end_date, showHistoricalPrice, showRSI, showBollinger, showDrawdown);
+    // Update ratios after plotting
+    updateRatios();
+});
+
+// Function to update ratios based on the selected ticker
+function updateRatios() {
+    if (selectedTickers.length > 0) {
+        fetchFinancialRatios(selectedTickers[0]);
+    }
+}
+
+// Call updateRatios to fetch ratios on page load
+document.addEventListener('DOMContentLoaded', function () {
+    updateRatios();
 });
