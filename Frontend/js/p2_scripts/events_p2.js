@@ -52,6 +52,7 @@ async function fetchSuggestions() {
     }
 }
 
+
 // Updated handleSelection function to include verification of the selected ticker
 async function handleSelection(checkbox) {
     if (selectedTickers.length >= 1) {
