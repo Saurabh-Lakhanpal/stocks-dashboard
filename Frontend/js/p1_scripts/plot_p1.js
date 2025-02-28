@@ -70,7 +70,7 @@ function plotData(timestamps, prices, volumes, ticker) {
         .domain(timestamps)
         .range([0, innerWidth])
         .padding(0.1);
-
+    
     // Add Y axis for prices
     const yPrice = d3.scaleLinear()
         .domain([d3.min(prices), d3.max(prices)])
@@ -87,6 +87,7 @@ function plotData(timestamps, prices, volumes, ticker) {
         .call(d3.axisBottom(x).tickValues(timestamps))
         .selectAll("text")
         .style("font-size", "12px")
+        .style("color", "#ffffff")
         .attr("transform", "rotate(90)")
         .style("text-anchor", "start");
 
