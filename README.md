@@ -200,4 +200,22 @@ Stocks-dashboard
 │   └── Project-workflow.md
 ├── .gitignore
 └── README.md
+
+```
+
+## Technical Requirments
+
+```
+flask
+flask-cors
+sqlalchemy
+psycopg2-binary
+pandas
+kaggle - API key
+yfinance - API key
+pandas-datareader
+requests
+beautifulsoup4
+
+```
  
