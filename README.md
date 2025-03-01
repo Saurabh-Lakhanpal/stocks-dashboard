@@ -8,7 +8,7 @@
 - [Technologies Used](#technologies-used)
 - [Features](#features)
 - [Getting Started](#getting-started)
-- [Folder Structure](#folder-structure)
+- [Directory Structure](#directory-structure)
 - [Setup and Installation](#setup-and-installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -78,7 +78,7 @@ To get a copy of this project up and running on your local machine for developme
 - Node.js & npm (optional, for running frontend dependencies)
 - A SQL database (e.g., MySQL, PostgreSQL, or SQLite)
 
-### Setup
+### Setup and Installation
 
 1. **Clone the Repository**:
 
