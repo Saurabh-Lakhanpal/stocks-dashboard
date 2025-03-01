@@ -39,7 +39,6 @@ This project consists of two main pages:
   - HTML
   - CSS
   - JavaScript (with D3.js for data visualization)
-  - Bootstrap (for responsive design)
   
 - **Backend**:
   - Python
@@ -350,7 +349,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 You should refer to the Yahoo! Finance terms of use:
 - [Yahoo! Terms of Use](https://www.verizonmedia.com/policies/us/en/verizonmedia/terms/otos/index.html)
-- [Yahoo! Privacy Policy](https://www.verizonmedia.com/policies/us/en/verizonmedia/privacypolicy/index.html)
 
 For more information, you can check out the following:
 - [S&P 500 stock data](https://www.kaggle.com/datasets/camnugent/sandp500)
@@ -364,7 +362,6 @@ For more information, you can check out the following:
 - **D3.js**: JavaScript library for creating dynamic, interactive data visualizations.
 - **Flask**: A lightweight Python web framework used to serve API requests.
 - **pandas**: Python library used for data manipulation and analysis.
-- **Bootstrap**: Frontend framework used for responsive design.
 - **Jupyter**: Used for running the ETL pipeline and processing stock data.
 
 ---
