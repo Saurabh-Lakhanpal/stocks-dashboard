@@ -168,14 +168,14 @@ Stocks-dashboard
 │   │   │   ├── UIscripts_p2.js
 │   │   │   └── verifyTicker_p2.js
 │   │   └── config.js
-│   ├── index_p1.js
-│   ├── index_p2.js
-│   └── index_p3.js
 ├── Project-resources
 │   ├── About-data-analysis.md
 │   ├── Installation-Guide.md
 │   └── Project-workflow.md
 ├── .gitignore
+├── index_p1.html
+├── index_p2.html
+├── LICENSE
 └── README.md
 
 ```
