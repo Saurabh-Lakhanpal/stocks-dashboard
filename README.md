@@ -9,6 +9,7 @@ Stocks-dashboard
 │   ├── .kaggle
 │   │   └── kaggle.json
 │   ├── Resources
+│   │   ├── Stock-DB-API-Doc.md
 │   │   └── "csv gets downloaded, consumed and purged in this folder" 
 │   ├── stocks_dashboard_ETL.ipynb
 │   ├── app.py
