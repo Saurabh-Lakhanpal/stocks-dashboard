@@ -1,9 +1,18 @@
 ## stocks-dashboard-workflow
 ![image](https://github.com/user-attachments/assets/0abd04e2-7742-4e29-b18c-02afdfd59ffb)
 
-1. Install the necessary libraries using pip:
+1. Install the necessary libraries:
      ```bash
-     pip install flask pandas requests plotly sqlalchemy psycopg2-binary
+    flask
+     flask-cors
+     sqlalchemy
+     psycopg2-binary
+     pandas
+     kaggle - API key
+     yfinance - API key
+     pandas-datareader
+     requests
+     beautifulsoup4
      ```
 2. Prepare and understand the datasets:
      - [Kaggle API](https://www.kaggle.com/datasets/camnugent/sandp500) for S&P 500 stock data for Historical analysis.
