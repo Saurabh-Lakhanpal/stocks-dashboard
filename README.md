@@ -372,3 +372,8 @@ With this **Stocks Dashboard**, analyze stock performance, and get valuable insi
 
 ---
 
+## Group 3 - Project Team
+- Asif Shehzad
+- Bansri Patel
+- Evan Gowans
+- Saurabh Lakhanpal
