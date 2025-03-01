@@ -1,6 +1,6 @@
 # Stocks Dashboard
 
-> A comprehensive web application for managing and analyzing stock data in real-time and providing advanced stock analysis features.
+> A comprehensive web application for managing and analyzing stock data in real-time and providing historical stock analysis features.
 
 ## 📖 Table of Contents
 
@@ -18,7 +18,7 @@
 
 ## Project Overview
 
-The **Stocks Dashboard** is a dynamic web application that allows users to manage their stock portfolios, analyze real-time stock data, and visualize various financial metrics. The application integrates with various APIs to provide real-time stock data and allows users to select stocks, view historical data, and perform advanced technical analysis.
+The **Stocks Dashboard** is a dynamic web application that allows users to manage their stock portfolios, analyze real-time stock data, and visualize various financial metrics. The application integrates with various APIs to provide real-time stock data and allows users to select stocks, view historical data, and perform historical technical analysis.
 
 This project consists of two main pages:
 1. **Page 1 (Stock Overview)**: View and manage selected stocks, track portfolio performance, and visualize real-time stock data.
@@ -27,7 +27,7 @@ This project consists of two main pages:
 ![Page-1](https://github.com/user-attachments/assets/db748ee2-eba3-4c4e-aa63-27a54028041e)
 
 
-2. **Page 2 (Advanced Stock Analysis)**: Plot advanced stock data layers (e.g., RSI, Bollinger Bands), analyze stock health, and view various financial ratios.
+2. **Page 2 (Historical Stock Analysis)**: Plot historical stock data layers (e.g., RSI, Bollinger Bands), analyze stock health, and view various financial ratios.
 
 
 ![Page-2](https://github.com/user-attachments/assets/411b34b2-47c8-4f5f-ac1b-d9cc7c1215c6)
