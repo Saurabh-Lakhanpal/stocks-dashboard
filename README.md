@@ -11,7 +11,6 @@
 - [Directory Structure](#directory-structure)
 - [Setup and Installation](#setup-and-installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
@@ -348,6 +347,16 @@ Sources:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+You should refer to the Yahoo! Finance terms of use:
+- [Yahoo! Terms of Use](https://www.verizonmedia.com/policies/us/en/verizonmedia/terms/otos/index.html)
+- [Yahoo! Privacy Policy](https://www.verizonmedia.com/policies/us/en/verizonmedia/privacypolicy/index.html)
+- [Yahoo! Cookie Policy](https://www.verizonmedia.com/policies/us/en/verizonmedia/cookie/index.html)
+
+For more information, you can check out the following:
+- [S&P 500 stock data](https://www.kaggle.com/datasets/camnugent/sandp500)
+- [S&P 500 Companies list](https://en.wikipedia.org/wiki/List_of_S%26P_500_companies)
+- [YH Finance API](https://financeapi.net/)
 
 ---
 
