@@ -1,3 +1,4 @@
+--stocks_dashboard_schema.sql
 -- Drop tables if they exist
 DROP TABLE IF EXISTS sp500_tb;
 DROP TABLE IF EXISTS ticker_tb;
