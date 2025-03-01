@@ -331,16 +331,16 @@ Sources:
 
 ## Technical Requirments
     ```
-    flask
-    flask-cors
-    sqlalchemy
-    psycopg2-binary
-    pandas
-    kaggle - API key
-    yfinance - API key
-    pandas-datareader
-    requests
-    beautifulsoup4
+      flask
+      flask-cors
+      sqlalchemy
+      psycopg2-binary
+      pandas
+      kaggle - API key
+      yfinance - API key
+      pandas-datareader
+      requests
+      beautifulsoup4
     ```
 
 ## License
