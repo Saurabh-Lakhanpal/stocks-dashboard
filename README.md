@@ -168,14 +168,14 @@ Stocks-dashboard
 │   │   │   ├── UIscripts_p2.js
 │   │   │   └── verifyTicker_p2.js
 │   │   └── config.js
-│   ├── index_p1.js
-│   ├── index_p2.js
-│   └── index_p3.js
 ├── Project-resources
 │   ├── About-data-analysis.md
 │   ├── Installation-Guide.md
 │   └── Project-workflow.md
 ├── .gitignore
+├── index_p1.html
+├── index_p2.html
+├── LICENSE
 └── README.md
 
 ```
@@ -322,7 +322,8 @@ Stocks-dashboard
         "value": 1.5
       }
     ]
-  }```
+  }
+  ```
 
 Sources:
 1. [S&P 500 stock data](https://www.kaggle.com/datasets/camnugent/sandp500)
@@ -330,7 +331,7 @@ Sources:
 3. [YH Finance API](https://financeapi.net/)
 
 ## Technical Requirments
-    ```
+  ```
       flask
       flask-cors
       sqlalchemy
@@ -341,7 +342,7 @@ Sources:
       pandas-datareader
       requests
       beautifulsoup4
-    ```
+```
 
 ## License
 
@@ -367,7 +368,12 @@ For more information, you can check out the following:
 
 ---
 
-With this **Stocks Dashboard**, you can manage your stock portfolio, analyze stock performance, and get valuable insights into market trends. 
+With this **Stocks Dashboard**, analyze stock performance, and get valuable insights into market trends. 
 
 ---
 
+## Group 3 - Project Team
+- Asif Shehzad
+- Bansri Patel
+- Evan Gowans
+- Saurabh Lakhanpal
