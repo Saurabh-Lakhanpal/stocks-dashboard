@@ -28,7 +28,7 @@ Portfolio = Table('portfolio_tb', metadata, autoload_with=engine)
 
 # Flask Setup
 app = Flask(__name__)
-# CORS(app, resources={r"/*": {"origins": "*"}})  # Enable CORS
+CORS(app, resources={r"/*": {"origins": "*"}})  # Enable CORS
 
 # Error Handlers
 @app.errorhandler(400)
@@ -154,6 +154,6 @@ def get_portfolio_data():
     return jsonify(portfolio_data)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=8080)
+    # app.run(host="0.0.0.0",port=8080)
     app.run(debug=True)
 
