@@ -1,6 +1,6 @@
 ## 📖 Table of Contents
 
-- [Deploying this Project on Local Machine](#Deploying this Project on Local Machine)
+- [Deploying the Project on a Local Machine](#Deploying the Project on a Local Machine)
 - [Deploying this Project on EC2](#Deploying this Project on EC2)
 
 ---

@@ -334,16 +334,20 @@ Sources:
 
 ## Technical Requirments
   ```
-      flask
-      flask-cors
-      sqlalchemy
-      psycopg2-binary
-      pandas
-      kaggle - API key
-      yfinance - API key
-      pandas-datareader
-      requests
-      beautifulsoup4
+  Kaggle
+  pandas
+  sqlalchemy
+  psycopg2-binary
+  yfinance
+  pandas_datareader
+  requests
+  beautifulsoup4
+  flask
+  flask_cors
+  python-dateutil==2.8.2
+  notebook
+  nbconvert
+  sudo yum install postgresql15 postgresql15-server -y
 ```
 
 ## License
