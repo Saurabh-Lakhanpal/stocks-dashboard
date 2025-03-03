@@ -4,7 +4,8 @@
 This API allows users to interact with a stock dashboard, providing data about tickers, S&P 500 stocks, and portfolios. It uses Flask for the web framework and SQLAlchemy for database interactions.
 
 ## Base URL
-The base URL for all API endpoints is: `http://localhost:5000`
+The base URL for all API endpoints is: `http://localhost:5000` if you run the appLocal.py
+The base URL for all API endpoints is: `http://ec2-18-226-222-149.us-east-2.compute.amazonaws.com:8080` if you use EC2.
 
 ## Endpoints
 

@@ -1,7 +1,6 @@
 # Stocks Dashboard
 
 > A comprehensive web application for managing and analyzing stock data in real-time and providing historical stock analysis features.
-[View Dashboard](https://saurabh-lakhanpal.github.io/stocks-dashboard/)
 
 ## 📖 Table of Contents
 
@@ -19,11 +18,11 @@
 
 ## Documentation
 
-- [S&P 500 Backend API]()
-- [Installation Guides]()
-- [requirements.txt]()
-- [S&P 500 Data Analysis Understanding]()
-- [Workflow and Ideation of this project]()
+- [S&P 500 Backend API](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Backend/Resources/Stock-DB-API-Doc.md)
+- [Installation Guides](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/tree/main/Project-resources/Installation-Guides)
+- [requirements.txt](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Installation-Guides/requirements.txt)
+- [S&P 500 Data Analysis Understanding](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/About-data-analysis.md)
+- [Workflow and Ideation of this project](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Project-workflow.md)
 
 ---
 

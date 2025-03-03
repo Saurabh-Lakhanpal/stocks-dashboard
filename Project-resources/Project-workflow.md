@@ -23,4 +23,4 @@
 6. HTML and CSS:
      - Create an HTML file with a style sheet to create the web pages.
      - HTML to plot the JavaScript D3 plots.
-7. [Deploy on AWS]()
+7. [Deploy on AWS](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Installation-Guides/Deploy%20on%20AWS.md)
