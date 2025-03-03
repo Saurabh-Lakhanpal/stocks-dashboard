@@ -2,7 +2,7 @@
 
 // Fetch from backend route for portfolio
 async function getPortfolioData() {
-    const url = 'http://127.0.0.1:5000/api/v1.0/portfolio';
+    const url = 'http://ec2-18-226-222-149.us-east-2.compute.amazonaws.com:8080/api/v1.0/portfolio';
     try {
         console.log('Fetching portfolio data from:', url);
         const response = await fetch(url);

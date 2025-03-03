@@ -83,9 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'index.html';
     });
 
-    document.getElementById('ratios').addEventListener('click', function() {
-        window.location.href = 'index_p3.html';
-    });
+    // document.getElementById('ratios').addEventListener('click', function() {
+    //     window.location.href = 'index_p3.html';
+    // });
 });
 
 // Range and Intervals =============================================================

@@ -2,18 +2,6 @@
 ![image](https://github.com/user-attachments/assets/0abd04e2-7742-4e29-b18c-02afdfd59ffb)
 
 1. Install the necessary libraries:
-     ```bash
-    flask
-     flask-cors
-     sqlalchemy
-     psycopg2-binary
-     pandas
-     kaggle - API key
-     yfinance - API key
-     pandas-datareader
-     requests
-     beautifulsoup4
-     ```
 2. Prepare and understand the datasets:
      - [Kaggle API](https://www.kaggle.com/datasets/camnugent/sandp500) for S&P 500 stock data for Historical analysis.
      - [YH Finance API](https://financeapi.net/tutorial) for live stocks overview analytics.
@@ -35,4 +23,4 @@
 6. HTML and CSS:
      - Create an HTML file with a style sheet to create the web pages.
      - HTML to plot the JavaScript D3 plots.
-7. [Deploy on AWS](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Installation-Guide.md)
+7. [Deploy on AWS]()
