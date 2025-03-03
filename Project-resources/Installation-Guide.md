@@ -5,7 +5,7 @@
 
 ---
 
-### **Deploying the Project on a Local Machine**
+## **Deploying the Project on a Local Machine**
 
 #### **1. Obtain API Keys**
    - **YH Finance API Key:**
@@ -71,7 +71,7 @@
 
 ---
 
-### **Deploying this Project on EC2**
+## **Deploying this Project on EC2**
 
 #### **1. Create an AWS Account and Log In**
    - Visit [AWS](https://aws.amazon.com/) and create an account by following the registration process.
