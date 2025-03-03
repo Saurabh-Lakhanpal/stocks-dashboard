@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('overview').addEventListener('click', function() {
-        window.location.href = 'index_p1.html';
+        window.location.href = 'index.html';
     });
 
     document.getElementById('ratios').addEventListener('click', function() {

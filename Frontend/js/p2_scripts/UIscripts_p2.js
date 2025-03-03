@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'index_p2.html';
     });
     document.getElementById('overview').addEventListener('click', function() {
-        window.location.href = 'index_p1.html';
+        window.location.href = 'index.html';
     });
 });
 
