@@ -223,45 +223,53 @@ Stocks-dashboard
 
 ### Page 2 - Historical Data Insights of S&P500 2013-2018
 
-#### **1. Historical Price Trends**
+#### **1. Historical Price Trends (Closing Price)**
 - **Chart Type:*Line Chart* 
 - **Data Source:** Historical stock prices
-- **Filters:** Stock Ticker, Date Range
+- **Filters:** Stock Ticker
 - **Description:** Analyzes historical price patterns and trends.
+
+#### **2. Relative Strength Index (RSI)**
+- **Chart Type:*Scatter Plot* 
+- **Data Source:** Historical stock prices
+- **Filters:** Stock Ticker
+- **Description:**  Momentum oscillator that measures the speed and magnitude of recent price changes.
+
+#### **3. Bollinger Bands**
+- **Chart Type:*Line Chart* 
+- **Data Source:** Historical stock prices
+- **Filters:** Stock Ticker
+- **Description:** Visual indicator of stock price volatility.
+
+#### **4. Drawdown Chart**
+- **Chart Type:*Area Plot* 
+- **Data Source:** Historical stock prices
+- **Filters:** Stock Ticker
+- **Description:** Percentage decline of the stock price from its previous peak over a specific period of time.
+
 - **API Call:** 
   ```url
-  https://yfapi.net/v8/finance/chart/{ticker}?range={range}&interval={interval}
+  http://ec2-18-226-222-149.us-east-2.compute.amazonaws.com:8080/api/v1.0/sp500?ticker={ticker}&start_date=2014-01-01&end_date=2015-01-01
   ```
   - **Parameters:**
     - `ticker`: The stock ticker symbol (e.g., AAPL)
-    - `range`: The date range (e.g., 1y for 1 year)
-    - `interval`: The time interval (e.g., 1d for 1 day)
 - **JSON Data Example:**
   ```json
-  {
-    "ticker": "AAPL",
-    "historical_data": [
-      {
-        "date": "2025-02-10",
-        "open": 150.00,
-        "high": 155.00,
-        "low": 149.50,
-        "close": 154.00,
-        "volume": 1000000
-      },
-      {
-        "date": "2025-02-11",
-        "open": 154.50,
-        "high": 156.00,
-        "low": 152.50,
-        "close": 153.00,
-        "volume": 1100000
-      }
-    ]
-  }
+  [
+    {
+      "date": "2014-01-02",
+      "open_price": 79.3828,
+      "close_price": 79.0185,
+      "low_price": 78.8601,
+      "high_price": 79.5756,
+      "volume": 58791957,
+      "ticker": "AAPL"
+    },
+    ...
+  ]
   ```
 
-#### **2. Financial Ratios**
+#### **5. Financial Ratios**
 - **Chart Type:** Bar Chart
 - **Data Source:** Financial statement data
 - **Filters:** Stock Ticker, Financial Metric
