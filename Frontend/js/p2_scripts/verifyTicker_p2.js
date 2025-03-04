@@ -1,7 +1,7 @@
 // verifyTicker.js
 // Function to fetch ticker data for the specific ticker and date range
 async function fetchTickerData(ticker, startDate, endDate) {
-    const url = `http://ec2-18-226-222-149.us-east-2.compute.amazonaws.com:8080/api/v1.0/sp500?ticker=${ticker}&start_date=${startDate}&end_date=${endDate}`;
+    const url = `http://ec2-18-226-222-149.us-east-2.compute.amazonaws.com/api/v1.0/sp500?ticker=${ticker}&start_date=${startDate}&end_date=${endDate}`;
     try {
         const response = await fetch(url);
         if (!response.ok) throw new Error('Network response was not ok');
