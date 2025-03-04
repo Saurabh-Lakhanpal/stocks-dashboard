@@ -1,5 +1,5 @@
 ## stocks-dashboard-workflow
-![image](https://github.com/user-attachments/assets/0abd04e2-7742-4e29-b18c-02afdfd59ffb)
+![image](https://github.com/user-attachments/assets/2f573233-5962-4b13-8003-d18b8658d49b)
 
 1. Install the necessary libraries:
 2. Prepare and understand the datasets:
