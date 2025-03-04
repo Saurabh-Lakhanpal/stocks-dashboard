@@ -23,6 +23,7 @@
 - [requirements.txt](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Installation-Guides/requirements.txt)
 - [S&P 500 Data Analysis Understanding](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/About-data-analysis.md)
 - [Workflow and Ideation of this project](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Project-workflow.md)
+- [Postgres ERD]()
 
 ---
 
@@ -359,4 +360,5 @@ With this **Stocks Dashboard**, analyze stock performance, and get valuable insi
 ---
 
 ## Team Presentation
-[Presentation()](https://prezi.com/p/tla986dney5v/?present=1)
+[![Presentation](https://github.com/user-attachments/assets/e63574af-fe18-4a71-9bf0-bb3cf9369e00)
+](https://prezi.com/p/tla986dney5v/?present=1)
