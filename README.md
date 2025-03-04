@@ -23,7 +23,7 @@
 - [requirements.txt](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Installation-Guides/requirements.txt)
 - [S&P 500 Data Analysis Understanding](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/About-data-analysis.md)
 - [Workflow and Ideation of this project](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Project-workflow.md)
-- [Postgres ERD]()
+- [Postgres ERD](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/tree/main/Project-resources)
 
 ---
 
