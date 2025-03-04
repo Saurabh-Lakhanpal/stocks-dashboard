@@ -80,8 +80,8 @@ This project consists of two main pages:
 ---
 
 ## Getting Started
-- [Deploy on Local Machine]
-- [Deploy on your own EC2 instance]
+- [Deploy on Local Machine](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Installation-Guides/Deploy%20on%20Local.md)
+- [Deploy on your own EC2 instance](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Installation-Guides/Deploy%20on%20AWS.md)
 
 ---
 
@@ -93,7 +93,6 @@ Stocks-dashboard
 │   │   └── kaggle.json
 │   ├── Resources
 │   │   ├── stocks.csv
-│   │   ├── Stock-DB-API-Doc.md
 │   │   └── "csv gets downloaded, consumed and purged in this folder" 
 │   ├── stocks_dashboard_ETL.ipynb
 │   ├── app.py
@@ -133,6 +132,8 @@ Stocks-dashboard
 │   ├── About-data-analysis.md
 │   ├── Installation-Guides
 │   │   ├── requirements.txt
+│   │   ├── Stock-DB-API-Doc.md
+│   │   ├── ERD.md
 │   │   ├── Deploy on Local
 │   │   └── Deploy on AWS
 │   └── Project-workflow.md
@@ -354,3 +355,8 @@ With this **Stocks Dashboard**, analyze stock performance, and get valuable insi
 - Bansri Patel
 - Evan Gowans
 - Saurabh Lakhanpal
+
+---
+
+## Team Presentation
+[Presentation()](https://prezi.com/p/tla986dney5v/?present=1)
