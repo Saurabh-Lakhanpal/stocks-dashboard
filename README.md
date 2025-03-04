@@ -18,7 +18,7 @@
 
 ## Documentation
 
-- [S&P 500 Backend API](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Backend/Resources/Stock-DB-API-Doc.md)
+- [S&P 500 Backend API](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Stock-DB-API-Doc.md)
 - [Installation Guides](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/tree/main/Project-resources/Installation-Guides)
 - [requirements.txt](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/Installation-Guides/requirements.txt)
 - [S&P 500 Data Analysis Understanding](https://github.com/Saurabh-Lakhanpal/stocks-dashboard/blob/main/Project-resources/About-data-analysis.md)
