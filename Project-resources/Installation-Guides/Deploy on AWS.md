@@ -153,6 +153,8 @@ pip3 install nbconvert
 /home/ec2-user/
     ├── Stocks-dashboard
     │   └── Backend
+    │       ├── .kaggle
+    │       │   └── kaggle.json
     │       ├── Resources
     │       │   └── "csv files get downloaded, consumed, and purged here"
     │       ├── stocks_dashboard_ETL.ipynb
