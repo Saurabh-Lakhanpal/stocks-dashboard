@@ -1,7 +1,7 @@
 # Stocks Dashboard
 
 > A comprehensive web application for managing and analyzing stock data in real-time and providing historical stock analysis features.
-
+> [stocks-dashboard full webapp on AWS EC2 Linux](https://ec2-18-226-222-149.us-east-2.compute.amazonaws.com/index.html)
 ## 📖 Table of Contents
 
 - [Project Overview](#project-overview)
@@ -128,6 +128,7 @@ Stocks-dashboard
 │   │   │   ├── scripts_p2.js
 │   │   │   ├── UIscripts_p2.js
 │   │   │   └── verifyTicker_p2.js
+│   │   ├── url.js
 │   │   └── config.js
 ├── Project-resources
 │   ├── About-data-analysis.md

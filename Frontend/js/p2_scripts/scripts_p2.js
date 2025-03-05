@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
        document.getElementById('selected-ticker').textContent = selectedTickerNames[0];
     // Function to fetch ticker data
     async function fetchTickerData(ticker) {
-        const url = ticker ? `https://ec2-18-226-222-149.us-east-2.compute.amazonaws.com/api/v1.0/ticker?ticker=${ticker}` : 'https://ec2-18-226-222-149.us-east-2.compute.amazonaws.com/api/v1.0/ticker';
+        const url = ticker ? `${window.baseUrl}/api/v1.0/ticker?ticker=${ticker}` : `${window.baseUrl}/api/v1.0/ticker`;
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error('Network response was not ok');
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to fetch S&P 500 data
     async function fetchSP500Data(ticker, startDate, endDate) {
-        const url = ticker ? `https://ec2-18-226-222-149.us-east-2.compute.amazonaws.com/api/v1.0/sp500?ticker=${ticker}&start_date=${startDate}&end_date=${endDate}` : `https://ec2-18-226-222-149.us-east-2.compute.amazonaws.com/api/v1.0/sp500?start_date=${startDate}&end_date=${endDate}`;
+        const url = ticker ? `${window.baseUrl}/api/v1.0/sp500?ticker=${ticker}&start_date=${startDate}&end_date=${endDate}` : `${window.baseUrl}/api/v1.0/sp500?start_date=${startDate}&end_date=${endDate}`;
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error('Network response was not ok');
@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Process and plot the S&P 500 data
         } catch (error) {
             console.error('Error fetching S&P 500 data:', error);
-            document.getElementById('selected-ticker').innerHTML = '<li class="error-message">No Response from Backend.</li>';
+            document.getElementById('selected-ticker').innerHTML = '<li class="error-message">No Response from Backend API.</li>';
         }
     }
 
     // Function to fetch portfolio data
     async function fetchPortfolioData() {
-        const url = 'https://ec2-18-226-222-149.us-east-2.compute.amazonaws.com/api/v1.0/portfolio';
+        const url = `${window.baseUrl}/api/v1.0/portfolio`;
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error('Network response was not ok');
@@ -44,12 +44,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Process and display the portfolio data
         } catch (error) {
             console.error('Error fetching portfolio data:', error);
-            document.getElementById('selected-ticker').innerHTML = '<li class="error-message">No Response from Backend.</li>';
+            document.getElementById('selected-ticker').innerHTML = '<li class="error-message">No Response from Backend API.</li>';
         }
     }
     // Function to plot stock analysis with console logs for debugging
     async function plotStockAnalysis(ticker, startDate, endDate, showHistoricalPrice, showRSI, showBollinger, showDrawdown) {
-        const url = `https://ec2-18-226-222-149.us-east-2.compute.amazonaws.com/api/v1.0/sp500?ticker=${ticker}&start_date=${startDate}&end_date=${endDate}`;
+        const url = `${window.baseUrl}/api/v1.0/sp500?ticker=${ticker}&start_date=${startDate}&end_date=${endDate}`;
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error('Network response was not ok');

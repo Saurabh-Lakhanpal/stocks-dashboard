@@ -82,6 +82,7 @@
      ```bash
      nohup python3 appLocal.py &
      ```
+    - You may uncomment the baseUrl and use the one that fetches json form EC2 endpoint if its up and running. In that case there is no need to run this file
 
 ---
 
