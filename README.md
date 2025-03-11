@@ -2,7 +2,7 @@
 
 > A comprehensive web application for managing and analyzing stock data in real-time and providing historical stock analysis features.
 
-> https://tickers.saurabhlakhanpal.tech/
+> https://tickers.saurabhlakhanpal.tech/index.html
 ## 📖 Table of Contents
 
 - [Project Overview](#project-overview)
