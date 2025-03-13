@@ -349,9 +349,5 @@ For more information, you can check out the following:
 
 ---
 
-With this **Stocks Dashboard**, analyze stock performance, and get valuable insights into market trends. 
-
----
-
 ## Team Presentation
 [![Presentation](https://github.com/user-attachments/assets/f4d8e0a3-627a-48ff-9194-d0a66bfee1f5)](https://prezi.com/p/tla986dney5v/?present=1)
