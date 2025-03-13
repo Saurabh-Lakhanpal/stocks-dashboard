@@ -340,14 +340,5 @@ For more information, you can check out the following:
 
 ---
 
-## Acknowledgements
-
-- **D3.js**: JavaScript library for creating dynamic, interactive data visualizations.
-- **Flask**: A lightweight Python web framework used to serve API requests.
-- **pandas**: Python library used for data manipulation and analysis.
-- **Jupyter**: Used for running the ETL pipeline and processing stock data.
-
----
-
 ## Team Presentation
 [![Presentation](https://github.com/user-attachments/assets/f4d8e0a3-627a-48ff-9194-d0a66bfee1f5)](https://prezi.com/p/tla986dney5v/?present=1)
